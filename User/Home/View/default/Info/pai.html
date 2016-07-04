@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="ie lt-ie9 lt-ie8 lt-ie7 fluid top-full sidebar sidebar-full sticky-sidebar">
+<![endif]-->
+<!--[if IE 7]>
+<html class="ie lt-ie9 lt-ie8 fluid top-full sticky-top sidebar sidebar-full sticky-sidebar">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie lt-ie9 fluid top-full sticky-top sidebar sidebar-full sticky-sidebar">
+<![endif]-->
+<!--[if gt IE 8]>
+<html class="ie gt-ie8 fluid top-full sticky-top sidebar sidebar-full sticky-sidebar">
+<![endif]-->
+<!--[if!IE]><!-->
+<html>
+<!--<![endif]-->
+
+<head>
+<script type="text/javascript" src="/bitStyle/js/jquery.js">
+</script>
+<script type="text/javascript" src="/bitStyle/js/bootstrap.min.js">
+</script>
+<script type="text/javascript" src="/bitStyle/js/modernizr.js">
+</script>
+<script type="text/javascript" src="/bitStyle/js/selectivizr.js">
+</script>
+<script type="text/javascript" src="/bitStyle//js/jquery.cookie.js">
+</script>
+<script type="text/javascript" src="/bitStyle/js/scripts.js">
+</script>
+<script type="text/javascript" src="/bitStyle/js/remaining.js">
+</script>
+<script type="text/javascript" src="/bitStyle/js/fn_number_format.js">
+</script>
+<script type="text/javascript" src="/bitStyle/js/9acba5c0d35076a1ccd574dfc21b8b2b.js">
+</script>
+<script type="text/javascript" src="/bitStyle/js/layer.js"></script>
+<script src="/cssmmm/jquery.countdown.js"></script>
+<script type="text/javascript">
+
+  var _gNow = new Date();
+
+  jQuery(document).ready(function($) {
+    var gdBtn = $('#gdBtn');
+    var pdBtn = $('#pdBtn');
+    pdBtn.click(function() {
+      $(this).toggleClass('active');
+      gdBtn.removeClass('active');
+      $('#pdWrap').stop(true, false).slideToggle('fast');
+      $('#gdWrap').stop(true, false).slideUp('fast').removeClass('open');
+      return false
+    });
+    gdBtn.click(function() {
+      $(this).toggleClass('active');
+      pdBtn.removeClass('active');
+      $('#gdWrap').stop(true, false).slideToggle('fast');
+      $('#pdWrap').stop(true, false).slideUp('fast').removeClass('open');
+      return false
+    });
+    $('.tip').tooltip({
+      placement: 'top'
+    });
+    $('.tipr').tooltip({
+      placement: 'right'
+    });
+    $('.tipb').tooltip({
+      placement: 'bottom'
+    });
+    $('.tipl').tooltip({
+      placement: 'left'
+    });
+    $("a[href='#top']").click(function() {
+      $("html, body").animate({
+        scrollTop: 0
+      },
+      "slow");
+      return false
+    });
+    var _server_time = new Date(),
+        _server_time2 = new Date(),
+        _local_time = new Date(),
+        _local_time2 = new Date();
+        _server_time2 = new Date(),
+        _local_time = new Date(),
+        _local_time2 = new Date();
+    _timer = setInterval(function() {
+      var now = new Date();
+      true_elapsed = Math.round((now.getTime() - _gNow.getTime()) / 1000);
+      second = _local_time.getTime() + 1000;
+      elapsed = Math.round((second - _local_time2.getTime()) / 1000);
+      if (elapsed < true_elapsed) {
+        diff = true_elapsed - elapsed;
+        second += (diff * 1000)
+      }
+      _local_time.setTime(second);
+      second = _server_time.getTime() + 1000;
+      elapsed = Math.round((second - _server_time2.getTime()) / 1000);
+      if (elapsed < true_elapsed) {
+        diff = true_elapsed - elapsed;
+        second += (diff * 1000)
+      }
+      _server_time.setTime(second);
+      date_text = padNumber(_server_time.getHours()) + ':' + padNumber(_server_time.getMinutes()) + ':' + padNumber(_server_time.getSeconds());
+      date_text += ' ' + _server_time.getDate() + '/' + (_server_time.getMonth() + 1) + '/' + _server_time.getFullYear();
+      $('#server_time_text').html(date_text);
+      date_text = padNumber(_local_time.getHours()) + ':' + padNumber(_local_time.getMinutes()) + ':' + padNumber(_local_time.getSeconds());
+      date_text += ' ' + _local_time.getDate() + '/' + (_local_time.getMonth() + 1) + '/' + _local_time.getFullYear();
+      $('#local_time_text').html(date_text)
+    },
+    1000);
+    function padNumber(number) {
+      return (number >= 0 && number < 10) ? '0' + number: number
+    }
+  });
+
+     $(function(){
+	        	//用户检查
+			$('#check_user').click(function(){
+			$('#user_text').html('').removeClass();
+			if($('input[name=uid]').val() == ''){
+				$('#user_text').html('请输入用户帐号。').addClass('error');
+			}else{
+				$('#user_text').html('查询中…');
+				$(this).attr('disabled','disabled');
+				var user = $("#username").val();
+				$.ajax({
+					url: '{:U("Myuser/xm")}',
+					data: {'dfzh': user},
+					type: 'post',
+					dataType: 'json',
+					error: function(){
+						$('#user_text').html('核对中…').addClass('red');
+					},
+					success: function(data){
+						//console.log(data);
+						var mesg='';
+						if(data.loggedout == '1'){
+							mesg = '您已经成功退出系统。';
+						}
+						var status = data.sf;
+						$('#user_text').html(data.nr).addClass(status == 1? '' : 'red');
+					},
+					complete: function(){
+						$('#check_user').removeAttr('disabled');
+					}
+				});
+			}
+			
+			return false;
+		});
+	});
+</script>
+<link rel="stylesheet" href="/bitStyle/css/bootstrap.min.css" type="text/css"/>
+<link rel="stylesheet" href="/bitStyle/css/font-awesome.min.css" type="text/css"/>
+<link rel="stylesheet" href="/bitStyle/css/main.v001.css" type="text/css"/>
+<link rel="stylesheet" href="/bitStyle/css/fileupload.css" type="text/css"/>
+<title>蚂蚁社区
+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE"/>
+<!--Favicons-->
+<link rel="shortcut icon" href="/bitStyle/favicon.ico" type="image/x-icon">
+</head>
+<body class="zh-CN ">
+<include file="User/Home/View/default/common_header.html" />
+
+<!-- Main Wrapper -->
+<div id="wrapper">
+<include file="User/Home/View/default/top2.html" />
+<include file="User/Home/View/default/common_main.html" />
+    <div class="row">
+	<div class="col-md-12">
+	    <div class="widget">
+		<form class="form-horizontal margin-none" name="wallet_transfer_form" method="post" action="{:U('Index/paitopai')}">
+		    <fieldset>
+			<div class="widget-head">
+			    <h4 class="heading">排单币转账 &nbsp;&nbsp;<a href="/Home/Myuser/task/" style="color:#ffff00">→点此获取排单币←</a></h4>
+			</div>
+			<div class="widget-body">
+			    <div class="form-group">
+				<label class="col-md-2 control-label" for="firstname">
+					转账至:<span class="ast">*</span>
+				</label>
+				<div class="col-md-8">
+				    <div class="input-group">											
+					<input name="user" type="text" id="username" placeholder="用户名" class="targetinput form-control form-control-group"><font id="alert_pemail"></font>												
+					<span class="input-group-btn">
+					    <input type="button" value="检查" name="Submit2" id="check_user" class="btn btn-info btn-sm">
+					</span>
+				    </div>
+				    <p class="help-block" id="user_text"></p>
+				</div>
+			    </div>
+			    <div class="form-group">
+				<label class="col-md-2 control-label" for="firstname">
+					转账数额<strong class="green">(余额<if condition="$paidan_zs">{$paidan_zs}<else/>0</if>)</strong>:<span class="ast">*</span>
+				</label>
+				<div class="col-md-10">
+				    <input name="sh" type="number" id="sh" class="form-control "  >
+				   
+				</div>
+			    </div>
+			    <div class="form-group">
+				<label class="col-md-2 control-label" for="firstname">
+					二级密码:<span class="ast">*</span>
+				</label>
+				<div class="col-md-10">
+				    <input name="ejmm" type="password" id="ejmm" class="form-control">
+				</div>
+			    </div>
+			</div>
+			<div class="data-footer innerAll half text-right clearfix">
+			    <input type="submit" name="Submit" value="确认" class="btn btn-success btn-sm">
+			</div>
+		    </fieldset>
+		</form>
+	    </div>
+	</div>
+	<div class="col-md-12">
+	    <div class="widget">
+		<div class="widget-head clearfix">
+		    <h4 class="heading">排单币一览表</h4>
+		</div>
+		<div class="widget-body innerAll overthrow padding">
+		    <p>当前可用排单币数量: {$paidan_zs} &nbsp;&nbsp;<a href="/Home/Myuser/task/" style="color:#FF0000">→点此获取排单币←</a></p>
+		    <table class="table table-bordered table-primary">
+			<thead>
+			    <tr class="tac">
+				<th>编号</th>
+				<th>用户</th>
+				<th>排单币</th>
+				<th>状态</th>
+				<th>生成时间</th>
+				<th>使用用户</th>
+				<th>使用时间</th>
+				<th> 操作</th>
+			    </tr>
+			</thead>
+			<tbody>
+			    <foreach name='list' item='v'>             
+			     <tr role="row" class="odd">
+			      <td class="sorting_1">{$v.id}</td>
+			      <td>{$v.user}</td>
+			      <td>{$v.paidan}</td>
+			      <td>
+			      <if condition="$v.zt eq '0'" >未使用</if>
+			      <if condition="$v.zt eq '1'" >已使用</if>
+			      </td>
+			      <td>{$v.sc_date}</td>
+			      <td>{$v.sy_user}</td>
+			      <td>{$v.sy_date}</td>
+			      <td></td>
+			    </tr>
+			     </foreach>
+
+			</tbody>
+		    </table>
+		    <div class="dataTables_paginate paging_simple_numbers" id="example_paginate">{$page1}</div>
+		</div>
+	    </div>
+	</div>
+    </div>
+</div>
+
+</body></html>

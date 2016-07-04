@@ -1,0 +1,1 @@
+<?php	return array ( 'hot_add_way' => '1', 'hot_lixi' => '10', 'submit' => '提交', );?>
