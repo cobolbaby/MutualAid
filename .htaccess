@@ -1,0 +1,13 @@
+<IfModule mod_rewrite.c>
+
+	RewriteEngine on
+
+	# %{REQUEST_FILENAME} 请求的文件名
+	# !-f 不是文件或不存在
+	# !-d 不是目录或不存在
+	# [L] 这是最后一个匹配项，不再往下匹配
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+ 	RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
+
+</IfModule>
