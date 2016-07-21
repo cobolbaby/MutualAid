@@ -3,11 +3,15 @@
 	RewriteEngine on
 
 	# %{REQUEST_FILENAME} 请求的文件名
-	# !-f 不是文件或不存在
 	# !-d 不是目录或不存在
+	# !-f 不是文件或不存在
 	# [L] 这是最后一个匹配项，不再往下匹配
+	RewriteBase /
+	RewriteCond %{SERVER_PORT} !^443$
+	# 必须加[R=301,L]
+	RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteCond %{REQUEST_FILENAME} !-f
- 	RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
+	RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
 
 </IfModule>
