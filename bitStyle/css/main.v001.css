@@ -284,12 +284,17 @@ float: right;
 /* HEADER ================================================== */
 header[role="header"]{
 	background-color: #fff;
-    border-top:8px solid #003D74;
+    /*border-top:8px solid #003D74;*/
 	border-bottom: 1px solid #ccc;
 	margin-bottom: 0;
 }
 
-#wrapper {;background: url('../images/ybibx.png') repeat center top;background-color: #f1f8ff}
+#wrapper {
+	background: url('../images/bg.jpg') no-repeat center #45403D;
+	background-attachment: fixed;
+	min-height: 1000px;
+}
+
 /* Navbar Brand - Logo ============== */
 .navbar-brand{
 	padding: 10px;

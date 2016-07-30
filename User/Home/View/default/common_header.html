@@ -1,194 +1,161 @@
-
-<header class="navbar navbar-static-top" id="top" role="header" >
+<header class="navbar navbar-static-top" id="top" role="header">
     <div class="container">
-	<div class="row">
-	    <div class="col-lg-4">
-		<div class="navbar-header">
-		    <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse" style="font-size: 16px;">菜单 <i class="fa fa-bars" style="color:#003d74;font-size: 20px;"></i></button>
-		  <a href="{:U('Index/index')}" class="navbar-brand">
-		    <img src="/bitStyle/images/logo_white.png" alt="">
-		  </a>
-		</div>
-	    </div>
-	    <div class="col-lg-8">
-		<div class="row">
-		    <div class="col-lg-12">
-			<nav class="collapse navbar-collapse" id="head-navbar-collapse" role="main-navigation">
-			    <ul class="nav navbar-nav">
-				<li <if condition="$home">class="active"</if>>
-				  <a href="/" class="glyphicons home" ><i></i>首页</a>
-				</li>
-				<li class="dropdown">
-				    <a href="#" class="dropdown-toggle" data-toggle="dropdown" >用户中心<span class="caret"></span></a>
-				    <ul class="dropdown-menu" role="menu">
-					<li><a href="{:U('Info/index')}"><i></i>个人资料</a></li>
-					<li><a href="{:U('Info/pin')}"><i></i>激活码</a></li>
-				    <li><a href="{:U('Info/pai')}"><i></i>排单币</a></li>
-					<li><a href="{:U('Myuser/index')}"><i></i>我的团队</a></li>
-					<li><a href="{:U('Myuser/xzzh')}"><i></i>团队记录</a></li>
-				    </ul>
-				</li>
-				<li>
-				    <a href="#" class="dropdown-toggle" data-toggle="dropdown" >财务中心<span class="caret"></span></a>
-				    <ul class="dropdown-menu" role="menu">
-					<li><a href="{:U('Info/rwhistory')}">我的互助钱包</a></li>
-					<li><a href="{:U('Index/pdList')}">提供帮助记录</a></li>
-					<li><a href="{:U('Index/gdList')}">接受帮助记录</a></li>
-					<li><a href="{:U('Info/cwhistory')}">奖金钱包记录</a></li>
-					<li><a href="{:U('Info/nwhistory')}">总账记录</a></li>
-				    </ul>
-				</li>
-				<!--<li ><a href="{:U('Myuser/xzzh')}">提供与得到记录</a></li>-->
-			  <li <if condition="$reg">class="active"</if>>
-			    <a href="{:U('Index/news')}" class="glyphicons home" ><i></i>新闻公告<if condition="$news_count"><span class="badge">{$news_count}</span></if></a>
-			  </li>
-
-      
-
-			  <li    <if condition="$reg">class="active"</if>>
-			    <a href="{:U('Index/reg')}" class="glyphicons home" ><i></i>注册新会员<span class="badge"></span></a>
-			  </li>
-				   <li><a  href="{:U('Myuser/task')}" class="title">获得排单币</a></li>
-
-  
-
-			  </ul>
-			</nav>
-		    </div>
-		    <div class="col-lg-12">
-			<ul class="nav navbar-nav navbar-right" role="sub-navigation">
-        <li class="dropdown" id="lang_nav">
-          <a href="/" class="" data-toggle="dropdown">
-            <span class="language-sel-zh-CN fa-lang">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="navbar-header">
+                    <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse" style="font-size: 16px;">菜单 <i class="fa fa-bars" style="color:#003d74;font-size: 20px;"></i></button>
+                    <a href="{:U('Index/index')}" class="navbar-brand">
+                        <img src="/bitStyle/images/logo.png" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <nav class="collapse navbar-collapse" id="head-navbar-collapse" role="main-navigation">
+                            <ul class="nav navbar-nav">
+                                <li <if condition="$home">class="active"</if>>
+                                    <a href="/" class="glyphicons home"><i></i>首页</a>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">用户中心<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="{:U('Info/index')}"><i></i>个人资料</a></li>
+                                        <li><a href="{:U('Info/pin')}"><i></i>激活码</a></li>
+                                        <li><a href="{:U('Info/pai')}"><i></i>排单币</a></li>
+                                        <li><a href="{:U('Myuser/index')}"><i></i>我的团队</a></li>
+                                        <li><a href="{:U('Myuser/xzzh')}"><i></i>团队记录</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">财务中心<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="{:U('Info/rwhistory')}">我的互助钱包</a></li>
+                                        <li><a href="{:U('Index/pdList')}">提供帮助记录</a></li>
+                                        <li><a href="{:U('Index/gdList')}">接受帮助记录</a></li>
+                                        <li><a href="{:U('Info/cwhistory')}">奖金钱包记录</a></li>
+                                        <li><a href="{:U('Info/nwhistory')}">总账记录</a></li>
+                                    </ul>
+                                </li>
+                                <!--<li ><a href="{:U('Myuser/xzzh')}">提供与得到记录</a></li>-->
+                                <li <if condition="$reg">class="active"</if>>
+                                    <a href="{:U('Index/news')}" class="glyphicons home"><i></i>新闻公告<if condition="$news_count"><span class="badge">{$news_count}</span></if></a>
+                                </li>
+                                <li <if condition="$reg">class="active"</if>>
+                                    <a href="{:U('Index/reg')}" class="glyphicons home"><i></i>注册新会员<span class="badge"></span></a>
+                                </li>
+                                <!-- <li><a href="" class="title">获得排单币</a></li> -->
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="col-lg-12">
+                        <ul class="nav navbar-nav navbar-right" role="sub-navigation">
+                            <li class="dropdown" id="wallet_nav">
+                                <a href="#" class="" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-usd">
             </span>
-            <span class="language-text hidden-xs">
-              简体中文
-            </span>
-          </a>
-          <ul class="dropdown-menu language-box allbox-shadow" role="languageMenu">
-              <li>
-              <a href="{:U('Index/index')}">
-                <span class="language-sel-zh-CN">
-                </span>
-                简体中文
-              </a>
-            </li>
-             <li>
-              <a href="#">
-                <span class="language-sel-en">
-                </span>
-                English
-              </a>
-            </li>  
-             <li>
-              <a href="#">
-                <span class="language-sel-ko-KR">
-                </span>
-                 한국어
-              </a>
-            </li>           
-          </ul>
-        </li>
-        <li class="dropdown" id="wallet_nav">
-          <a href="#" class="" data-toggle="dropdown">
-            <span class="glyphicon glyphicon-usd">
-            </span>
-            <span class="hidden-xs">
+                                    <span class="hidden-xs">
               我的钱包
             </span>
-          </a>
-          <ul class="walletNav dropdown-menu allbox-shadow clearfix">
-            <li class="clearfix"><a href="{:U('Info/rwhistory')}" >
-              <img src="/bitStyle/images/e-wallet.png" alt="" class="img">
-              <span class="wallet2">
+                                </a>
+                                <ul class="walletNav dropdown-menu allbox-shadow clearfix">
+                                    <li class="clearfix">
+                                        <a href="{:U('Info/rwhistory')}">
+                                            <img src="/bitStyle/images/e-wallet.png" alt="" class="img">
+                                            <span class="wallet2">
                 <span class="tilte-w">
                   互助钱包
                 </span>
-                <strong class="wallet-color">
+                                            <strong class="wallet-color">
                   {$userData.ue_money}RMB
                 </strong>
-              </span></a>
-            </li>
-            <li class="clearfix"><a href="{:U('Info/cwhistory')}">
-              <img src="/bitStyle/images/r-wallet.png" alt="" class="img">
-              <span class="wallet2">
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="clearfix">
+                                        <a href="{:U('Info/cwhistory')}">
+                                            <img src="/bitStyle/images/r-wallet.png" alt="" class="img">
+                                            <span class="wallet2">
                 直推奖钱包
                 <br>
                 <strong class="wallet-color">
                   {$userData.jl_he}RMB
                 </strong>
               </span></a>
-            </li>
-            <li class="clearfix"><a href="{:U('Info/cwhistory')}">
-              <img src="/bitStyle/images/n-wallet.png" alt="" class="img">
-              <span class="wallet2">
+                                    </li>
+                                    <li class="clearfix">
+                                        <a href="{:U('Info/cwhistory')}">
+                                            <img src="/bitStyle/images/n-wallet.png" alt="" class="img">
+                                            <span class="wallet2">
                 推荐奖钱包
                 <br>
                 <strong class="wallet-color">
                   {$userData.tj_he}RMB
                 </strong>
               </span></a>
-            </li>
-            <li class="clearfix"><a href="{:U('Info/pin')}">
-              <img src="/bitStyle/images/i-wallet.png" alt="" class="img">
-              <span class="wallet2">
+                                    </li>
+                                    <li class="clearfix">
+                                        <a href="{:U('Info/pin')}">
+                                            <img src="/bitStyle/images/i-wallet.png" alt="" class="img">
+                                            <span class="wallet2">
                激活码数量
                 <br>
                 <strong class="wallet-color">
                  <if condition="$pin_zs"> {$pin_zs}<else/>0</if>
                 </strong>
               </span></a>
-            </li>
-	    <li class="clearfix"><a href="{:U('Info/pai')}">
-              <img src="/bitStyle/images/i-wallet.png" alt="" class="img">
-              <span class="wallet2">
+                                    </li>
+                                    <li class="clearfix">
+                                        <a href="{:U('Info/pai')}">
+                                            <img src="/bitStyle/images/i-wallet.png" alt="" class="img">
+                                            <span class="wallet2">
                排单币数量
                 <br>
                 <strong class="wallet-color">
                  <if condition="$paidan_num"> {$paidan_num}<else/>0</if>
                 </strong>
               </span></a>
-            </li>
-          </ul>
-        </li>
-        <li class="dropdown" id="profile_nav">
-          <a href="" class="top-button" data-toggle="dropdown">
-            <span class="glyphicon glyphicon-user top-button">
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown" id="profile_nav">
+                                <a href="" class="top-button" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-user top-button">
             </span>
-            <span class="hidden-xs">
+                                    <span class="hidden-xs">
               我的档案
             </span>
-          </a>
-          <ul class="dropdown-menu allbox-shadow pull-right" id="user-details">
-            <li class="clearfix">
-              <span class="details" style="color:#FFFFFF">
+                                </a>
+                                <ul class="dropdown-menu allbox-shadow pull-right" id="user-details">
+                                    <li class="clearfix">
+                                        <span class="details" style="color:#FFFFFF">
                 编号
               </span>
-              <span class="count" style="color:#FFFF00">
+                                        <span class="count" style="color:#FFFF00">
                 {$userData['ue_id']|md5=###|substr=###,0,10}
               </span>
-            </li>
-            <li class="clearfix">
-              <span class="details"  style="color:#FFFFFF">
+                                    </li>
+                                    <li class="clearfix">
+                                        <span class="details" style="color:#FFFFFF">
                 账号
               </span>
-              <span class="count" style="color:#FFFF00">
+                                        <span class="count" style="color:#FFFF00">
                 {$userData['ue_account']}
               </span>
-            </li>
-            <li class="clearfix">
-              <span class="details" style="color:#FFFFFF">
+                                    </li>
+                                    <li class="clearfix">
+                                        <span class="details" style="color:#FFFFFF">
                 手机号
               </span>
-              <span class="count" style="color:#FFFF00">
+                                        <span class="count" style="color:#FFFF00">
                {$userData['ue_phone']}
               </span>
-            </li>
-            <li class="clearfix">
-              <span class="details" style="color:#FFFFFF">
+                                    </li>
+                                    <li class="clearfix">
+                                        <span class="details" style="color:#FFFFFF">
                 钱包
               </span>
-              <span class="count" style="color:#FFFF00">
+                                        <span class="count" style="color:#FFFF00">
                 
                   {$userData['ue_money']}
                
@@ -223,49 +190,44 @@
                   
                 </script>
               </span>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="{:U('Myuser/lxwm')}">
-            <span class="glyphicon glyphicon-envelope">
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="{:U('Myuser/lxwm')}">
+                                    <span class="glyphicon glyphicon-envelope">
             </span>
-            <span class="hidden-xs">
+                                    <span class="hidden-xs">
               提交问题
             </span>
-            <if condition="$msg_count"><span class="badge">{$msg_count}</span></if>
-          </a>
-        </li>
-        <li>
-          <a href="{:U('Reg/logout')}">
-            <span class="hidden-xs">
+                                    <if condition="$msg_count"><span class="badge">{$msg_count}</span></if>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{:U('Reg/logout')}">
+                                    <span class="hidden-xs">
               退出
             </span>
-            <span class="glyphicon glyphicon-share-alt">
+                                    <span class="glyphicon glyphicon-share-alt">
             </span>
-          </a>
-        </li>
-      </ul>
-		    </div>
-		</div>
-	    </div>
-	</div>
-      
-	
-
-	<!--<div id="tuiguang-link" style="height: 45px;">
-	  <div class="row">
-	      <div class="col-md-12">
-		  <div class="input-group">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div id="tuiguang-link" style="height: 45px;">
+    <div class="row">
+        <div class="col-md-12">
+      <div class="input-group">
   <span class="input-group-addon">推广</span>
   <input type="text" class="form-control" id="copy-num" value="{$tgurl}">
   <span class="input-group-addon" onclick="jsCopy()">复制</span>
 </div>
-	      </div>
-	  </div>
-      </div>-->
-      
-      
+        </div>
     </div>
-  </header>
-  <script src="/cssmmm/jquery.countdown.js"></script>
+      </div>-->
+    </div>
+</header>
+<script src="/cssmmm/jquery.countdown.js"></script>

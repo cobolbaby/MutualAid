@@ -11,24 +11,6 @@ class LoginController extends Controller
         $this->display('login');
     }
 
-
-//     elseif($user['ue_check'] == 0){
-
-//     	//$this->ajaxReturn('當前賬戶未激活，暫不能登陸!');
-
-//     	//$this->ajaxReturn( array('nr'=>'當前賬戶未激活，暫不能登陸!','sf'=>0) );
-
-//     	die("<script>alert('當前賬戶未激活，暫不能登陸！');history.back(-1);</script>");
-
-//     }
-
-
-
-    public function english(){
-        $this->display('login_en');
-    }
-
-
     public function logincl() {
 
     	if (IS_POST) {
@@ -145,20 +127,11 @@ class LoginController extends Controller
 
     }
 
-    
-
-    
-
-    public function logout(){
-
-    //	cookie(null);
-
+    public function logout()
+    {
     	session_unset();
-
     	session_destroy();
-
     	$this->redirect('Login/index');
-
     }
 
     //驗證碼模塊
@@ -167,8 +140,6 @@ class LoginController extends Controller
     	$verify = new \Think\Verify();
     	return $verify->check($code);
     }
-
-
 
     public function verify()
     {
@@ -182,7 +153,8 @@ class LoginController extends Controller
     	$Verify->entry();
     }
 
-    function mmzh(){
+    public function mmzh()
+    {
 
     	$this->display ( 'mmzh' );
 
