@@ -9,7 +9,7 @@ define('APP_DEBUG',true);
 define('APP_PATH','./Myadmin/');
 
 // 定义运行时目录
-define('RUNTIME_PATH', './Runtime/');
+define('RUNTIME_PATH', './Runtime-Myadmin/');
 
 // 引入ThinkPHP入口文件
 require './ThinkPHP/ThinkPHP.php';
