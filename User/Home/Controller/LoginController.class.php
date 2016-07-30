@@ -67,7 +67,7 @@ class LoginController extends Controller {
 
 			$user=M('user')->where(array('UE_account'=>$username))->find();
 
- 			// TODO::加密算法需要调整一下，防止被暴库
+ 			
 
 			if(!$user || $user['ue_password']!=md5($pwd)){ 
 
@@ -278,9 +278,6 @@ class LoginController extends Controller {
 
     }
 
-    /**
-     * 密码找回
-     */
     public function mmzh2() {
 
     	header("Content-Type:text/html; charset=utf-8");
