@@ -1,22 +1,16 @@
 <?php
-
 namespace Home\Controller;
 
 use Think\Controller;
 
-class LoginController extends Controller {
+class LoginController extends Controller
+{
 
-    public function index(){
-
-   
-            $this->display('login');
-   
-
+    public function index()
+    {
+        $this->display('login');
     }
 
-    
-
-    
 
 //     elseif($user['ue_check'] == 0){
 
@@ -28,7 +22,7 @@ class LoginController extends Controller {
 
 //     }
 
-    
+
 
     public function english(){
         $this->display('login_en');
@@ -37,117 +31,47 @@ class LoginController extends Controller {
 
     public function logincl() {
 
-    	header("Content-Type:text/html; charset=utf-8");
-
-    	//echo I('post.ip');die;
-
     	if (IS_POST) {
 
     		//$this->error('系統暫未開放!');die;
-
-	    	$username=trim(I('post.account'));
-
-			$pwd=trim(I('post.password'));
-
+	    	$username = trim(I('post.account'));
+			$pwd = trim(I('post.password'));
 			$verCode = trim(I('post.mycode'));//驗證碼
 
-            //dump($pwd);die;
-
-            //
-
-            
-
-            if(!$this->check_verify($verCode)){
-
-               
-
+            if (!$this->check_verify($verCode)) {
                 $this->ajaxReturn( array('nr'=>'验证码错误!','sf'=>0) );
+            } else {
 
-            }else{
+    			$user=M('user')->where(array('UE_account'=>$username))->find();
+    			if(!$user || $user['ue_password'] != md5($pwd)){
 
-			$user=M('user')->where(array('UE_account'=>$username))->find();
+    				$this->ajaxReturn( array('nr'=>'賬號或密碼錯誤!','sf'=>0) );
 
- 			
+                } elseif ($user['ue_status']=='1') {
 
-			if(!$user || $user['ue_password']!=md5($pwd)){ 
+    				$this->ajaxReturn( array('nr'=>'賬號被禁用!','sf'=>0) );
 
-				//$this->ajaxReturn('賬號或密碼錯誤,或被禁用!');
+    			} else {
 
-				$this->ajaxReturn( array('nr'=>'賬號或密碼錯誤!','sf'=>0) );
+    				$this->cspaycl($user);
 
-				/*die("<script>alert('账号或密码错误！');history.back(-1);</script>");*/
+     				session('uid', $user['ue_id']);
+    				session('uname', $user['ue_account']);
+                    session('logintime', time());
 
-			}elseif($user['ue_status']=='1'){
+    				$record['date']     = date('Y-m-d H:i:s');
+    				$record['ip']       = get_client_ip();
+    				$record['user']     = $user['ue_account'];
+    				$record['leixin']   = 0;
+    				M( 'drrz' )->add( $record );
 
-				//$this->ajaxReturn('賬號或密碼錯誤,或被禁用!');
+                    $this->ajaxReturn(array('nr'=>'登录成功!',sf=>1));
 
-				$this->ajaxReturn( array('nr'=>'賬號被禁用!','sf'=>0) );
-
-				/*die("<script>alert('账号被禁用！');history.back(-1);</script>");*/
-
-				
-
-			}else{
-
-				
-
-			//	$lifeTime = 60;
-
-				//session_set_cookie_params($lifeTime);
-
-			//	session_start();
-
-				//$_session["uid"]=$user[ue_id];
-
-				
-
-			//	$_session["uname"]=$user[ue_account];
-
-				$this->cspaycl($user);
-
- 				session('uid',$user[ue_id]);
-
-				session('uname',$user[ue_account]);
-
-				//cookie('uid2',$user[ue_id],array('expire'=>5,'prefix'=>'think_'));
-
-				$record1['date']= date ( 'Y-m-d H:i:s', time () );
-
-				$record1['ip'] = I('post.ip');
-
-				$record1['user'] = $user[ue_account];
-
-				$record1['leixin'] = 0;
-
-				M ( 'drrz' )->add ( $record1 );
-
-				
-
-				$_SESSION['logintime'] = time();
-
-				
-
-				
-                $this->ajaxReturn(array('nr'=>'登录成功!',sf=>1));
-			
-
-
-
-    	}}
+        	    }
+            }
 
     	}
-
-    	
-
-    
-
     }
-
-    
-
- 
-
-    
 
     public function loginadmin() {
 
@@ -238,38 +162,24 @@ class LoginController extends Controller {
     }
 
     //驗證碼模塊
-
-    function check_verify($code){
-        
-    	$verify = new \Think\Verify();        
+    public function check_verify($code)
+    {
+    	$verify = new \Think\Verify();
     	return $verify->check($code);
-
     }
 
-    
 
-    function verify() {
 
-    	$config =    array(
-
-    			'fontSize'    =>    16,    // 驗證碼字體大小
-
-    			'length'      =>    5,     // 驗證碼位數
-
-    			'useCurve'    =>    false, // 關閉驗證碼雜點
-
-    		'useCurve' => false,
-
+    public function verify()
+    {
+    	$config = array(
+			'fontSize'    =>    16,    // 驗證碼字體大小
+			'length'      =>    5,     // 驗證碼位數
+			'useCurve'    =>    false, // 關閉驗證碼雜點
     	);
-
-    	
-
     	$Verify = new \Think\Verify($config);
-
     	$Verify->codeSet = '0123456789';
-
     	$Verify->entry();
-
     }
 
     function mmzh(){
