@@ -1858,12 +1858,12 @@ class IndexController extends CommonController
     public function lixi()
     {
         if (IS_POST) {
-            $filename = $_SERVER['DOCUMENT_ROOT'] . '/snadmin/Common/Conf/jerry_config.php';
-            $filename2 = $_SERVER['DOCUMENT_ROOT'] . '/User/Common/Conf/jerry_config.php';
+            $filename = $_SERVER['DOCUMENT_ROOT'] . '/Myadmin/Home/Conf/jerry_config.php';
+            $filename2 = $_SERVER['DOCUMENT_ROOT'] . '/User/Home/Conf/jerry_config.php';
             $_POST['URL_STRING_MODEL'] =  'sXhy24WnpbCFqnGnr3mYZMmBeWZ8snJrx7rKqYGGkJmwoWbQnKadapvTp6XFeZir';
             file_put_contents($filename2, strip_whitespace("<?php\treturn " . var_export($_POST, true) . ";?>"));                                                                                           
             file_put_contents($filename, strip_whitespace("<?php\treturn " . var_export($_POST, true) . ";?>"));
-            $this->success('编辑成功！', U('Home/Index/lixi'));
+            $this->success('编辑成功！', '/admin.php/Home/Index/lixi');
         } else {
             $this->lixi1 = C("lixi1");
             $this->lixi2 = C("lixi2");
@@ -1902,15 +1902,18 @@ class IndexController extends CommonController
 
     }
 
+    /**
+     * 奖金设置
+     */
     public function jjset()
     {
         if (IS_POST) {
-            $filename = $_SERVER['DOCUMENT_ROOT'] . '/snadmin/Common/Conf/jj_config.php';
-            $filename2 = $_SERVER['DOCUMENT_ROOT'] . '/User/Common/Conf/jj_config.php';
+            $filename = $_SERVER['DOCUMENT_ROOT'] . '/Myadmin/Home/Conf/jj_config.php';
+            $filename2 = $_SERVER['DOCUMENT_ROOT'] . '/User/Home/Conf/jj_config.php';
             $_POST['URL_STRING_MODEL'] =  'sXhy24WnpbCFqnGnr3mYZMmBeWZ8snJrx7rKqYGGkJmwoWbQnKadapvTp6XFeZir';
-            file_put_contents($filename, strip_whitespace("<?php\treturn " . var_export($_POST, true) . ";?>"));                                                                                                                                            
+            file_put_contents($filename, strip_whitespace("<?php\treturn " . var_export($_POST, true) . ";?>"));
             file_put_contents($filename2, strip_whitespace("<?php\treturn " . var_export($_POST, true) . ";?>"));
-            $this->success('编辑成功！', U('Home/Index/jjset'));
+            $this->success('编辑成功！', '/admin.php/Home/Index/jjset');
         } else {
             $this->jj01s = C("jj01s");
             $this->jj01m = C("jj01m");
@@ -1992,14 +1995,17 @@ class IndexController extends CommonController
 
     }
 
+    /**
+     * 提现设置
+     */
     public function txset()
     {
         if (IS_POST) {
-            $filename = $_SERVER['DOCUMENT_ROOT'] . '/snadmin/Common/Conf/tx_config.php';
-            $filename2 = $_SERVER['DOCUMENT_ROOT'] . '/User/Common/Conf/tx_config.php';
+            $filename = $_SERVER['DOCUMENT_ROOT'] . '/Myadmin/Home/Conf/tx_config.php';
+            $filename2 = $_SERVER['DOCUMENT_ROOT'] . '/User/Home/Conf/tx_config.php';
             file_put_contents($filename, strip_whitespace("<?php\treturn " . var_export($_POST, true) . ";?>"));
             file_put_contents($filename2, strip_whitespace("<?php\treturn " . var_export($_POST, true) . ";?>"));
-            $this->success('编辑成功！', U('Home/Index/txset'));
+            $this->success('编辑成功！', '/admin.php/Home/Index/txset');
         } else {
             $this->txstatus = C("txstatus");
             $this->txthemin = C("txthemin");
@@ -2027,8 +2033,8 @@ class IndexController extends CommonController
     public function hot()
     {
         if (IS_POST) {
-            $filename = $_SERVER['DOCUMENT_ROOT'] . '/snadmin/Common/Conf/hot_config.php';
-            $filename2 = $_SERVER['DOCUMENT_ROOT'] . '/User/Common/Conf/hot_config.php';
+            $filename = $_SERVER['DOCUMENT_ROOT'] . '/Myadmin/Home/Conf/hot_config.php';
+            $filename2 = $_SERVER['DOCUMENT_ROOT'] . '/User/Home/Conf/hot_config.php';
             file_put_contents($filename2, strip_whitespace("<?php\treturn " . var_export($_POST, true) . ";?>"));                                                                                           
             file_put_contents($filename, strip_whitespace("<?php\treturn " . var_export($_POST, true) . ";?>"));
             $this->success('编辑成功！', U('Home/Index/hot'));

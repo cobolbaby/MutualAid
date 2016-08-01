@@ -15,13 +15,13 @@
 <ifmodule mod_deflate.c>
 
 	# DeflateCompressionLevel 6 #压缩率, 6是建议值.
-	AddOutputFilterByType DEFLATE text/plain
-	AddOutputFilterByType DEFLATE text/html
-	AddOutputFilterByType DEFLATE text/css
-	AddOutputFilterByType DEFLATE text/javascript
-	AddOutputFilterByType DEFLATE text/xml
-	AddOutputFilterByType DEFLATE application/javascript
-	AddOutputFilterByType DEFLATE application/x-javascript
+	# AddOutputFilterByType DEFLATE text/plain
+	# AddOutputFilterByType DEFLATE text/html
+	# AddOutputFilterByType DEFLATE text/css
+	# AddOutputFilterByType DEFLATE text/javascript
+	# AddOutputFilterByType DEFLATE text/xml
+	# AddOutputFilterByType DEFLATE application/javascript
+	# AddOutputFilterByType DEFLATE application/x-javascript
 
 </ifmodule>
 

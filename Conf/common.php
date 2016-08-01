@@ -4,10 +4,10 @@ return array(
     'DB_TYPE'   => 'mysql',     // 数据库类型
     'DB_HOST'   => 'localhost', // 服务器地址
     'DB_PORT'   => '3306',      // 端口
-    'DB_NAME'   => '',  // 数据库名
-    'DB_USER'   => '',      // 用户名
+    'DB_NAME'   => 'antdomain',  // 数据库名
+    'DB_USER'   => 'root',      // 用户名
     'DB_PWD'    => '',          // 密码
-    'DB_PREFIX' => '',       // 数据库表前缀
+    'DB_PREFIX' => 'ot_',       // 数据库表前缀
     'DB_CHARSET'=> 'utf8',      // 字符集
 
     'URL_MODEL'        => 2,    // URL模式  默认关闭伪静态

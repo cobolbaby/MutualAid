@@ -130,19 +130,18 @@
 </head>
 <body class="zh-CN ">
 <include file="User/Home/View/default/common_header.html" />
-<include file="User/Home/View/default/top2.html" />
 <!-- Main Wrapper -->
 <div id="wrapper">
+<include file="User/Home/View/default/top2.html" />
 <include file="User/Home/View/default/common_main.html" />
 
-<div class="row">
-    <div class="col-md-12">  
+<!-- <div class="row">
+    <div class="col-md-12">
     	<span style="color: #333;" >你的推广链接：<a href="{$tgurl}">{$tgurl}</a> <img src="{:U('Index/qrcode')}" height="20" onmouseover="$('#output').show();" onmouseout="$('#output').hide();" /></span>
       <div id="output" style="display:none;position: absolute;z-index: 2;margin-left: 450px;border: 5px solid #003D74;"></div>
     </div>
 </div>
-<br/>
-
+<br/> -->
 <div class="row">
     <div class="col-md-12">                                                                                             
 	<form class="margin-none" name="register_form" action="{:U('Index/regadd')}" method="post" id="register_form">                 

@@ -1,3 +1,4 @@
 #过滤文件夹Runtime
-Runtime/
-antdomain.sql
+Runtime*
+Conf/common.php
+.htaccess
