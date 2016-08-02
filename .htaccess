@@ -14,14 +14,14 @@
 # compress text, html, javascript, css:
 <ifmodule mod_deflate.c>
 
-	# DeflateCompressionLevel 6 #压缩率, 6是建议值.
-	# AddOutputFilterByType DEFLATE text/plain
-	# AddOutputFilterByType DEFLATE text/html
-	# AddOutputFilterByType DEFLATE text/css
-	# AddOutputFilterByType DEFLATE text/javascript
-	# AddOutputFilterByType DEFLATE text/xml
-	# AddOutputFilterByType DEFLATE application/javascript
-	# AddOutputFilterByType DEFLATE application/x-javascript
+	DeflateCompressionLevel 6 #压缩率, 6是建议值.
+	AddOutputFilterByType DEFLATE text/plain
+	AddOutputFilterByType DEFLATE text/html
+	AddOutputFilterByType DEFLATE text/css
+	AddOutputFilterByType DEFLATE text/javascript
+	AddOutputFilterByType DEFLATE text/xml
+	AddOutputFilterByType DEFLATE application/javascript
+	AddOutputFilterByType DEFLATE application/x-javascript
 
 </ifmodule>
 
@@ -29,26 +29,26 @@
 
   	ExpiresActive on
 
-    	ExpiresByType image/jpg "access plus 60 days"
-    	ExpiresByType image/png "access plus 60 days"
-    	ExpiresByType image/gif "access plus 60 days"
-    	ExpiresByType image/jpeg "access plus 60 days"
+	ExpiresByType image/jpg "access plus 60 days"
+	ExpiresByType image/png "access plus 60 days"
+	ExpiresByType image/gif "access plus 60 days"
+	ExpiresByType image/jpeg "access plus 60 days"
 
-    	ExpiresByType image/x-icon "access plus 1 month"
+	ExpiresByType image/x-icon "access plus 1 month"
 
-    	ExpiresByType text/css "access plus 1 days"
+	ExpiresByType text/css "access plus 1 days"
 
-    	# ExpiresByType application/pdf "access plus 1 month"
-    	# ExpiresByType audio/x-wav "access plus 1 month"
-    	# ExpiresByType audio/mpeg "access plus 1 month"
-    	# ExpiresByType video/mpeg "access plus 1 month"
-    	# ExpiresByType video/mp4 "access plus 1 month"
-    	# ExpiresByType video/quicktime "access plus 1 month"
-    	# ExpiresByType video/x-ms-wmv "access plus 1 month"
-    	# ExpiresByType application/x-shockwave-flash "access 1 month"
+	# ExpiresByType application/pdf "access plus 1 month"
+	# ExpiresByType audio/x-wav "access plus 1 month"
+	# ExpiresByType audio/mpeg "access plus 1 month"
+	# ExpiresByType video/mpeg "access plus 1 month"
+	# ExpiresByType video/mp4 "access plus 1 month"
+	# ExpiresByType video/quicktime "access plus 1 month"
+	# ExpiresByType video/x-ms-wmv "access plus 1 month"
+	# ExpiresByType application/x-shockwave-flash "access 1 month"
 
-    	ExpiresByType text/javascript "access plus 1 week"
-   	    ExpiresByType application/x-javascript "access plus 1 week"
-    	ExpiresByType application/javascript "access plus 1 week"
+	ExpiresByType text/javascript "access plus 1 week"
+	    ExpiresByType application/x-javascript "access plus 1 week"
+	ExpiresByType application/javascript "access plus 1 week"
 
 </IfModule>
