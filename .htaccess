@@ -48,7 +48,7 @@
 	# ExpiresByType application/x-shockwave-flash "access 1 month"
 
 	ExpiresByType text/javascript "access plus 1 week"
-	    ExpiresByType application/x-javascript "access plus 1 week"
+	ExpiresByType application/x-javascript "access plus 1 week"
 	ExpiresByType application/javascript "access plus 1 week"
 
 </IfModule>
