@@ -321,7 +321,9 @@ class MyuserController extends CommonController {
 	
 
 	
-
+	/**
+	 * 团队提供帮助接受帮助记录
+	 */
 	public function xzzh() {
 
 	

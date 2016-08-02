@@ -538,10 +538,9 @@ ul.walletNav li .wallet{
 	background: #fff;
 	margin: 0 auto 15px;
 	position: relative;
-	border: 1px solid #0061b8;
+	/*border: 1px solid #0061b8;*/
 	border-radius: 5px;
 	box-shadow: 0 3px 0 0 #dbdbdb;
-	
 }
 	.widget .widget-head {
 		background-color: #003d74;

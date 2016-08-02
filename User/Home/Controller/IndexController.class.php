@@ -1151,7 +1151,7 @@ public function home() {
 
 
 			
-			//修改------>您还有未完成的订单未处理，不能继续申请 bug   by olnho@qq.com
+				//修改------>您还有未完成的订单未处理，不能继续申请 bug   by olnho@qq.com
 				$paidan_nums = C('paidan_nums');
 	        	if($paidan_nums > 0){
 	        		$ppdd= M('ppdd');
@@ -1167,14 +1167,13 @@ public function home() {
 						die("<script>alert('您还有".$paidan_nums."个未完成的订单未处理，不能继续申请');history.back(-1);</script>");
 					}
 	        	}
-
-                //add   new code by olnho@qq.com
+                //add new code by olnho@qq.com
 	
 
-	        	
-				if($this->paidan_num < 1){
-					$this->error('排单币不足!');
-				}
+				// 暂不验证拍单币
+				// if($this->paidan_num < 1){
+				// 	$this->error('排单币不足!');
+				// }
 
 
 				 $tgbz_data = M('tgbz')->where(array('user'=>$_SESSION['uname']))->find();
@@ -1206,11 +1205,12 @@ public function home() {
 						die("<script>alert('当前投资加当月累计超过".$user['tz_leiji'].'|'.C("month_max").",请在".$startTime."以后在试！');history.back(-1);</script>");
 					}else{
 
-						if(!M('paidan')->where(array('paidan'=>$data_P ['pai']))->save(array('zt'=>'1','sy_user'=>$_SESSION['uname'],'sy_date'=>date ( 'Y-m-d H:i:s', time () )))){
-							$this->error('排单币错误!');
-						}
-						
-						
+						// if(!M('paidan')->where(array('paidan'=>$data_P ['pai']))->save(array('zt'=>'1','sy_user'=>$_SESSION['uname'],'sy_date'=>date ( 'Y-m-d H:i:s', time () ))))
+						// {
+						// 	$this->error('排单币错误!');
+						// }
+
+
 						//如此可以看出他是在排单等待中就添加金额		  tz_leiji-----》投资累计
 						M('user')->where(array(UE_account => $_SESSION ['uname']))->setInc('tz_leiji',$data_P ['amount']);
 						//M('user')->where(array(UE_account => $_SESSION ['uname']))->setInc('tz_leiji',$data_P ['amount']);
@@ -2383,8 +2383,13 @@ public function home() {
 		$this->display('Index/pdList');
 	}
 
+	/**
+	 * get donate
+	 * 获取援助
+	 */
 	public function  gdList(){
 		//////////////////----------
+		// 接受帮助
 		$User = M ( 'jsbz' ); // 实例化User对象
 		
 		$map['user']=$_SESSION['uname'];
