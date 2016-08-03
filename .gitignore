@@ -1,3 +1,4 @@
 #过滤文件夹Runtime
 Runtime*
 Conf/common.php
+deploy.sh
