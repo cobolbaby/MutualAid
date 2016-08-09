@@ -8,15 +8,11 @@ class IndexController extends CommonController
 
     public function main()
     {
-
-
         $this->display('index/main');
     }
 
     public function admin_add()
     {
-
-
         $this->display('index/admin_add');
     }
 
@@ -299,32 +295,25 @@ class IndexController extends CommonController
         $this->display('index/txlist');
     }
 
-    public function userlist()
+    public function userlist($pagesize=20)
     {
+        $User = M('user');
 
-
-        $User = M('user'); // 實例化User對象
+        // 用户搜索
         $data = I('post.user');
-
-
-        //$map ['UG_dataType'] = array('IN',array('mrfh','tjj','kdj','mrldj','glj'));
-
         if ($data <> '') {
             $map['UE_account'] = $data;
         }
-        if (I('get.ip') <> '') {
-            $map['UE_regIP'] = I('get.ip');
-        }
+        // $ip = I('get.ip');
+        // if ($ip <> '') {
+        //     $map['UE_regIP'] = $ip;
+        // }
         $count = $User->where($map)->count(); // 查詢滿足要求的總記錄數
-        //$page = new \Think\Page ( $count, 3 ); // 實例化分頁類 傳入總記錄數和每頁顯示的記錄數(25)
+        $p = getpage($count, $pagesize);
+        $list = $User->where($map)->order('UE_ID desc')->limit($p->firstRow, $p->listRows)->select();
 
-        $p = getpage($count, 20);
-
-        $list = $User->where($map)->order('UE_ID')->limit($p->firstRow, $p->listRows)->select();
         $this->assign('list', $list); // 賦值數據集
         $this->assign('page', $p->show()); // 賦值分頁輸出
-
-
         $this->display('index/userlist');
     }
 
@@ -1072,55 +1061,45 @@ class IndexController extends CommonController
 
     }
 
-
-
-
-
-
+    /**
+     * "提供帮助"信息列表
+     */
     public function tgbz_list()
     {
-
-
         $User = M('tgbz'); // 實例化User對象
-        $data = I('post.user');
-        $start = I('post.start');
-        $end = I('post.end');
         $this->z_jgbz = $User->sum('jb');
         $this->z_jgbz2 = $User->where(array('zt' => '1'))->sum('jb');
         $this->z_jgbz3 = $User->where(array('zt' => array('neq', 1)))->sum('jb');
         //$map ['UG_dataType'] = array('IN',array('mrfh','tjj','kdj','mrldj','glj'));
 
         $map['zt'] = 0;
-
         if (I('get.cz') == 1) {
             $map['zt'] = 1;
         }
+        $data = I('post.user');
         if ($data <> '') {
             $map['user'] = $data;
         }
-        if(!empty($start)&&!empty($end))
+        $start = I('post.start');
+        $end = I('post.end');
+        if(!empty($start) && !empty($end))
         {
-            $map['date'] = array('between',array($start,$end));
+            $map['date'] = array('between', array($start, $end));
         }
         $count = $User->where($map)->count(); // 查詢滿足要求的總記錄數
-        //$page = new \Think\Page ( $count, 3 ); // 實例化分頁類 傳入總記錄數和每頁顯示的記錄數(25)
-
         $p = getpage($count, 20);
+        $list = $User->where($map)->order('date')->limit($p->firstRow, $p->listRows)->select();
 
-        $list = $User->where($map)->order('date ')->limit($p->firstRow, $p->listRows)->select();
-        //dump($list);die;
         $this->assign('list', $list); // 賦值數據集
         $this->assign('page', $p->show()); // 賦值分頁輸出
-
-
         $this->display('index/tgbz_list');
     }
 
-
+    /**
+     * "接受帮助"信息列表
+     */
     public function jsbz_list()
     {
-
-
         $User = M('jsbz'); // 實例化User對象
         $data = I('post.user');
         $start = I('post.start');
