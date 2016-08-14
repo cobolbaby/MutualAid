@@ -71,18 +71,18 @@
 		    <div class="form-group">
 		      <label class="col-sm-3 control-label">我愿意排队的天数</label>
 		      <div class="col-sm-9">
-			  <div class="input-group" style="width: 80px;">
+			  <div class="input-group" style="width: 90px;">
 			    <span class="input-group-btn">
 			      <button class="btn btn-default btn-sm" type="button" id="tsa-sub">-</button>
 			    </span>
-			      <input type="text" class="form-control" readonly name="wait_day" id="tsa" autocomplete="off" required value="0">
+			      <input type="text" class="form-control" name="wait_day" value="0" id="tsa" autocomplete="off" required style="text-align: center;">
 			    <span class="input-group-btn">
 			      <button class="btn btn-default btn-sm" type="button" id="tsa-add">+</button>
 			    </span>
 			  </div>
 			  <p class="help-block">
 			      <input type="checkbox" class="i-checks" name="i-checks" checked="" required style="position: absolute; opacity: 0;">
-     排队期间利息1%/天，排队最多10天，会员自由选择排队天数。警告，我已经完全了解所有风险。我自愿决定参议蚂蚁社区的文化与传统
+     排队期间利息1%/天，排队最多7天，会员自由选择排队天数。警告，我已经完全了解所有风险。我自愿决定参议蚂蚁社区的文化与传统
 			  </p>
 		      </div>
 		    </div>
@@ -200,37 +200,29 @@
 					document.wallet_transfer_form_head.action = "{:U('/Home/Index/jsbzcl')}";
 				    }
 				});
-				
+
 				//排队天数
+				var deadline = 7;
 				$('#tsa-add').on('click', function() {
 				    var tsa_val = $('#tsa').val();
-				    if(isNaN(tsa_val)){tsa_val = 0;}
-
-				    var mat=Math.floor(parseInt(tsa_val)+1);
-				    if(mat<0){mat=0;}else if(mat>10){mat=10;}
+				    if( isNaN(tsa_val) ){tsa_val = 0;}
+				    var mat = Math.floor(parseInt(tsa_val) + 1);
+				    if(mat < 0){mat = 0;}else if(mat > deadline){mat = deadline;}
 				    $("#tsa").val(mat);
-			        });
-			        $('#tsa-sub').on('click', function() {
+			    });
+			    $('#tsa-sub').on('click', function() {
 				    var tsa_val = $('#tsa').val();
 				    if(isNaN(tsa_val)){tsa_val = 0;}
-				    
-				    var mat=Math.floor(parseInt(tsa_val)-1);
-				    if(mat<0){mat=0;}else if(mat>10){mat=10;}
+				    var mat = Math.floor(parseInt(tsa_val)-1);
+				    if(mat < 0){mat = 0;}else if(mat > deadline){mat = deadline;}
 				    $("#tsa").val(mat);
-			        });
-				$("#tsa").bind("change",function(){
-				    if(isNaN($(this).val())){
-					$(this).val(0);
-				    }
-				    var ths=$(this).val();
-				    var mat=Math.floor(ths);
-				    if(mat<0){
-					    mat=0;
-				    }else if(mat>10){
-					    mat=10;
-				    }
-				    //alert(mat);
-				    $("#tsa").val(mat);
+			    });
+				$("#tsa").bind("change", function(){
+				    var ths = $(this).val();
+				    if( isNaN(ths) ){ths = 0;}
+				    var mat = Math.floor(ths);
+				    if(mat < 0){mat = 0;}else if(mat > deadline){mat = deadline;}
+				    $(this).val(mat);
 				});
 			    });
 			</script>

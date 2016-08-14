@@ -29,7 +29,7 @@ class LoginController extends Controller
 
     				$this->ajaxReturn( array('nr'=>'賬號或密碼錯誤!','sf'=>0) );
 
-                } elseif ($user['ue_status']=='1') {
+                } elseif ($user['UE_status'] == 1) {
 
     				$this->ajaxReturn( array('nr'=>'賬號被禁用!','sf'=>0) );
 
@@ -37,13 +37,13 @@ class LoginController extends Controller
 
     				$this->cspaycl($user);
 
-     				session('uid', $user['ue_id']);
-    				session('uname', $user['ue_account']);
+     				session('uid', $user['UE_ID']);
+    				session('uname', $user['UE_account']);
                     session('logintime', time());
 
     				$record['date']     = date('Y-m-d H:i:s');
     				$record['ip']       = get_client_ip();
-    				$record['user']     = $user['ue_account'];
+    				$record['user']     = $user['UE_account'];
     				$record['leixin']   = 0;
     				M( 'drrz' )->add( $record );
 
@@ -639,25 +639,24 @@ class LoginController extends Controller
     	{
     		$this->error('参数错误');
     	}
-    	
-    	if($data['ue_status'] == 2){
+
+    	if( $data['UE_status'] == 2 ){
             return ;
         }
-        
+
     	$uname=$data['ue_account'];
     	$fname=$data['ue_accname'];
-    	$uid=$data['ue_id'];  
-    	
+    	$uid=$data['ue_id'];
+
         $ppdd= M('ppdd');
         $where=array();
         iniverify();
         $where['p_user'] = $uname;
         $where['zt'] =0;
         $rs=$ppdd->where($where)->select();
-        
+
         if ( $rs )
         {
-        	
         	$jjdktime=C("jjdktime");
         	$jjhydjmsg=C("jjhydjmsg");
         	$jjhydjkcsjmoeney=C("jjhydjkcsjmoeney");
@@ -665,18 +664,16 @@ class LoginController extends Controller
         	$cszt=0;
         	foreach( $rs as $v  )
         	{
-        		
+
         		$pdtime = strtotime($v['date']);
         		$cstime=$pdtime+3600 *$jjdktime;
-        	
         		if ( $cstime<$nowtime )
         		{
         			$cszt=1;
         			break;
-        			
         		}
         	}
-        	
+
         	if ( $cszt )
         	{
         		$user= M('user');
@@ -684,19 +681,19 @@ class LoginController extends Controller
         		$data2['UE_ID']=$uid;
         		$data2['UE_status']=1;
         		$user->save($data2);
-        		
+
         		if ( $jjhydjkcsjmoeney && $fname )
         		{
-        		$where=array(); 
+        		$where=array();
         		$where['UE_account'] = $fname;
-        		$user->where($where)->setDec('UE_money',$jjhydjkcsjmoeney); 
-        		
+        		$user->where($where)->setDec('UE_money',$jjhydjkcsjmoeney);
+
         		}
         		die("<script>alert('.$jjhydjmsg.');history.back(-1);</script>");
         	}
-        	
+
         }
-//
+
     }
 
     
