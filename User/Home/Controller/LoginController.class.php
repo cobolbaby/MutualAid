@@ -25,29 +25,26 @@ class LoginController extends Controller
             } else {
 
     			$user=M('user')->where(array('UE_account'=>$username))->find();
+    			// [fix]返回值中字段大小写发生了变换
     			if(!$user || $user['ue_password'] != md5($pwd)){
-
     				$this->ajaxReturn( array('nr'=>'賬號或密碼錯誤!','sf'=>0) );
-
-                } elseif ($user['UE_status'] == 1) {
-
+                } elseif ($user['ue_status'] == 1) {
     				$this->ajaxReturn( array('nr'=>'賬號被禁用!','sf'=>0) );
-
     			} else {
-
+    				// ...
     				$this->cspaycl($user);
 
-     				session('uid', $user['UE_ID']);
-    				session('uname', $user['UE_account']);
+     				session('uid', $user['ue_id']);
+    				session('uname', $user['ue_account']);
                     session('logintime', time());
 
     				$record['date']     = date('Y-m-d H:i:s');
     				$record['ip']       = get_client_ip();
-    				$record['user']     = $user['UE_account'];
+    				$record['user']     = $user['ue_account'];
     				$record['leixin']   = 0;
     				M( 'drrz' )->add( $record );
 
-                    $this->ajaxReturn(array('nr'=>'登录成功!',sf=>1));
+                    $this->ajaxReturn(array('nr'=>'登录成功!','sf'=>1));
 
         	    }
             }
@@ -640,7 +637,7 @@ class LoginController extends Controller
     		$this->error('参数错误');
     	}
 
-    	if( $data['UE_status'] == 2 ){
+    	if($data['ue_status'] == 2){
             return ;
         }
 
@@ -664,7 +661,6 @@ class LoginController extends Controller
         	$cszt=0;
         	foreach( $rs as $v  )
         	{
-
         		$pdtime = strtotime($v['date']);
         		$cstime=$pdtime+3600 *$jjdktime;
         		if ( $cstime<$nowtime )
@@ -695,7 +691,5 @@ class LoginController extends Controller
         }
 
     }
-
-    
 
 }
