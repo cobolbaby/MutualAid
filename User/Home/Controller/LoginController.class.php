@@ -632,22 +632,19 @@ class LoginController extends Controller
 
     public function cspaycl ($data)
     {
-    	if ( !is_array($data) )
-    	{
-    		$this->error('参数错误');
-    	}
-
-    	if($data['ue_status'] == 2){
+        if (!is_array($data)) {
+            $this->error('参数错误');
+        }
+        if($data['ue_status'] == 2){
             return ;
         }
 
-    	$uname=$data['ue_account'];
-    	$fname=$data['ue_accname'];
-    	$uid=$data['ue_id'];
+        $uname=$data['ue_account'];
+        $fname=$data['ue_accname'];
+        $uid=$data['ue_id'];
 
         $ppdd= M('ppdd');
         $where=array();
-        iniverify();
         $where['p_user'] = $uname;
         $where['zt'] =0;
         $rs=$ppdd->where($where)->select();
