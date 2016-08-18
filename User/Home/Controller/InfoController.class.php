@@ -856,7 +856,7 @@ class InfoController extends CommonController
         $this->display();
     }
 
-   //提供帮助钱包 
+   //提供帮助钱包
    public function rwhistory(){
     $tgbz = M("tgbz");
     $result = $tgbz->where(array("user" => $_SESSION['uname'], "zt" => 0))->order('id DESC')->select();

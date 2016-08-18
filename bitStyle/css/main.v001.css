@@ -907,9 +907,9 @@ ul.walletNav li .wallet{
 input[type=radio], input[type=checkbox]{margin-top: 3px;}
 
 .form-control{
-	height: 30px;
-	padding: 3px 3px;
 	font-size: 12px;
+	/*padding: 3px 3px;*/
+	height: 30px;
 	line-height: 1.5;
 	border-radius: 2px;
 }
