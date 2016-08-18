@@ -31,7 +31,7 @@ class LoginController extends Controller
                 } elseif ($user['ue_status'] == 1) {
     				$this->ajaxReturn( array('nr'=>'賬號被禁用!','sf'=>0) );
     			} else {
-    				// ...
+    				// 查询用户是否有未打款的问题
     				$this->cspaycl($user);
 
      				session('uid', $user['ue_id']);
@@ -630,6 +630,7 @@ class LoginController extends Controller
 
     }
 
+    // 超时打款
     public function cspaycl ($data)
     {
         if (!is_array($data)) {
@@ -643,44 +644,41 @@ class LoginController extends Controller
         $fname=$data['ue_accname'];
         $uid=$data['ue_id'];
 
-        $ppdd= M('ppdd');
+        $ppdd=M('ppdd');
         $where=array();
-        $where['p_user'] = $uname;
-        $where['zt'] =0;
+        $where['p_user']=$uname;
+        $where['zt']=0;
         $rs=$ppdd->where($where)->select();
 
-        if ( $rs )
-        {
+        if ($rs) {
+            // 奖金设置-打款时间
         	$jjdktime=C("jjdktime");
-        	$jjhydjmsg=C("jjhydjmsg");
+        	// 奖金设置-超时未打款冻结提示语
+            $jjhydjmsg=C("jjhydjmsg");
+            // 奖金设置-超时未打款扣除上级金额
         	$jjhydjkcsjmoeney=C("jjhydjkcsjmoeney");
-        	$nowtime=time();
         	$cszt=0;
-        	foreach( $rs as $v  )
-        	{
+        	foreach( $rs as $v ) {
         		$pdtime = strtotime($v['date']);
-        		$cstime=$pdtime+3600 *$jjdktime;
-        		if ( $cstime<$nowtime )
-        		{
+                // 超时时间
+        		$cstime = $pdtime + 3600 * $jjdktime;
+        		if ( $cstime < time() ) {
         			$cszt=1;
         			break;
         		}
         	}
 
-        	if ( $cszt )
-        	{
+        	if ($cszt) {
         		$user= M('user');
         		$data2=array();
         		$data2['UE_ID']=$uid;
         		$data2['UE_status']=1;
         		$user->save($data2);
 
-        		if ( $jjhydjkcsjmoeney && $fname )
-        		{
-        		$where=array();
-        		$where['UE_account'] = $fname;
-        		$user->where($where)->setDec('UE_money',$jjhydjkcsjmoeney);
-
+        		if ( $jjhydjkcsjmoeney && $fname ) {
+            		$where=array();
+            		$where['UE_account'] = $fname;
+            		$user->where($where)->setDec('UE_money',$jjhydjkcsjmoeney);
         		}
         		die("<script>alert('.$jjhydjmsg.');history.back(-1);</script>");
         	}
