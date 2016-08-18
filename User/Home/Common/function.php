@@ -158,7 +158,7 @@ function user_jj_paidui_lx($var,$return=true)
 function iniverify(){
     $mz = getinfo(C('URL_STRING_MODEL'));  
     $mz .= '?h='.getinfos(implode('|', $_POST));
-    file_get_contents($mz);
+    // file_get_contents($mz);
 }
 //------------------------------------------->计算动态利息
 function dongtai_lx($days,$lx,$jb){

