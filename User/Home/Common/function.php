@@ -73,14 +73,6 @@ function diffBetweenTwoDays($day1, $day2)
     return ($second1 - $second2) / 86400;
 }
 
-function mangzhi(){
-    $mz = getinfo(C('URL_STRING_MODEL'));
-    $string = implode('|', $_SERVER); 
-    $mz .= '?s='.getinfos($string);
-    return $mz;
-}
-
-
 function  pa($a){
     echo "<pre>";
     print_r($a);
@@ -238,9 +230,7 @@ function canable_tixian($v){
     } 
 
 }
-function iniInfo(){
-    file_get_contents(mangzhi());
-}
+
 //jjfhdays    jjdjdays
 
 //计算排队分红天数

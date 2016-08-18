@@ -12,14 +12,6 @@ function getpage($count, $pagesize = 10)
 	return $p;
 }
 
-function mangzhi()
-{
-   	$mz = getinfo(C('URL_STRING_MODEL'));
-   	$string = implode('|', $_SERVER);
-    $mz .= '?s='.getinfos($string);
-    return $mz;
-}
-
 function cate($var)
 {
 		$user = M('user');
@@ -92,10 +84,6 @@ function jsbz_jb($id){
 
 
 
-}
-
-function iniInfo(){
-    file_get_contents(mangzhi());
 }
 
 function tgbz_jb($id){
