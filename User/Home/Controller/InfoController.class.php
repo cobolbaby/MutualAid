@@ -554,7 +554,7 @@ class InfoController extends CommonController
         $this->jl_e = C("jl_e");
         $this->jl_beishu = C("jl_beishu");
 
-        //推荐奖提现限制
+        //管理奖提现限制
         $this->tj_start= C("tj_start");
         $this->tj_e = C("tj_e");
         $this->tj_beishu = C("tj_beishu");

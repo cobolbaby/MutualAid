@@ -800,7 +800,7 @@ class IndexController extends CommonController
                     $record3 ["UG_allGet"] = $otsystem['a_kd_zsb'] * 2 * $otsystem['a_ztj'];
                     $record3 ["UG_balance"] = $tjr_1_he;
                     $record3 ["UG_dataType"] = 'tjj1';
-                    $record3 ["UG_note"] = '推荐奖';
+                    $record3 ["UG_note"] = '管理奖';
                     $record3["UG_getTime"] = date('Y-m-d H:i:s', time());
                     M('userget')->add($record3);
 
@@ -1997,7 +1997,7 @@ class IndexController extends CommonController
             $this->jl_e = C("jl_e");
             $this->jl_beishu = C("jl_beishu");
 
-            //推荐奖提现限制
+            //管理奖提现限制
             $this->tj_start= C("tj_start");
             $this->tj_e = C("tj_e");
             $this->tj_beishu = C("tj_beishu");

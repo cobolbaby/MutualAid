@@ -633,7 +633,7 @@ function jlj($a, $b, $c)
 }
 
 
-//第一个参数 提供帮助的直接推荐人      推荐奖金额           说明                   第几代          ppdd外键id
+//第一个参数 提供帮助的直接推荐人      管理奖金额           说明                   第几代          ppdd外键id
 
 function jlj2($a, $b, $c, $d, $e)
 {
@@ -655,7 +655,7 @@ function jlj2($a, $b, $c, $d, $e)
 
 
 
-//第一个参数 提供帮助的直接推荐人      推荐奖金额           说明                   1          ppdd外键id
+//第一个参数 提供帮助的直接推荐人      管理奖金额           说明                   1          ppdd外键id
 
 function jlj3($a, $b, $c, $d, $e)
 {
@@ -842,22 +842,22 @@ function accountaddlevel($var){
 
 
 
-//jjtuijianratenew  推荐奖 $vart--->提供帮助的推荐人
+//jjtuijianratenew  管理奖 $vart--->提供帮助的推荐人
 function fftuijianmoney($var,$money,$level){
     $tjratearr = explode(',',C("jjtuijianratenew"));
-    $tjmoney = ($money*$tjratearr[$level-1])/100;  //推荐奖金额
+    $tjmoney = ($money*$tjratearr[$level-1])/100;  //管理奖金额
     $accname_zq=M('user')->where(array('UE_account'=>$var))->find();
     M('user')->where(array('UE_account'=>$var))->setInc('tj_he',$tjmoney); //添加提供帮助的推荐人
     $accname_xz=M('user')->where(array('UE_account'=>$var))->find();  //获取推荐人的详细信息
 
-            $note3 = "推荐奖".$tjratearr[$level-1]."%";
+            $note3 = "管理奖".$tjratearr[$level-1]."%";
             $record3 ["UG_account"] = $var; // 登入转出账户  提供帮助的推荐人
             $record3 ["UG_type"] = 'jb';  //金币
             $record3 ["UG_allGet"] = $accname_zq['tj_he']; // 金币.
             $record3 ["UG_money"] = '+'.$tjmoney; //
             $record3 ["UG_balance"] = $accname_xz['tj_he']; // 当前推荐人的金币馀额
             $record3 ["UG_dataType"] = 'tjj'; // 金币转出
-            $record3 ["UG_note"] = $note3; // 推荐奖说明
+            $record3 ["UG_note"] = $note3; // 管理奖说明
             $record3["UG_getTime"] = date ( 'Y-m-d H:i:s', time () ); //操作时间
             $reg4 = M ( 'userget' )->add ( $record3 );
 

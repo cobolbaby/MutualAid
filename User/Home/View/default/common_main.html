@@ -126,7 +126,7 @@
 			    <select name="wallet_type" id="wallet_type_head">
 				<option value="1" selected>互助钱包 (余额: {$userData.ue_money} RMB)</option>
 				<option value="2">直推奖钱包 (余额: {$userData.jl_he} RMB)</option>
-				<option value="3">推荐奖钱包 (余额: {$userData.tj_he} RMB)</option>
+				<option value="3">管理奖钱包 (余额: {$userData.tj_he} RMB)</option>
 			    </select>←选择钱包
 			</div>
 		      </div>
@@ -187,7 +187,7 @@
 					$("#tx_thebeishu").html('{$jl_beishu}');
 					document.wallet_transfer_form_head.action = "{:U('/Home/Index/jsbzcl1')}";
 				    }else if(wallet_type==3){
-					//推荐奖
+					//管理奖
 					$("#tx_themin").html('{$tj_start}');
 					$("#tx_themax").html('{$tj_e}');
 					$("#tx_thebeishu").html('{$tj_beishu}');

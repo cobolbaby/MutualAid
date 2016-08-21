@@ -890,7 +890,7 @@ public function home() {
 				$record3 ["UG_money"] = '-'.$jbhe; //
 				$record3 ["UG_balance"] = $pin_zs_xz; // 当前推荐人的金币馀额
 				$record3 ["UG_dataType"] = 'jbzc'; // 金币转出
-				$record3 ["UG_note"] = $note3; // 推荐奖说明
+				$record3 ["UG_note"] = $note3; // 管理奖说明
 				$record3["UG_getTime"]		= date ( 'Y-m-d H:i:s', time () ); //操作时间
 				$reg4 = M ( 'userget' )->add ( $record3 );
 				
@@ -901,7 +901,7 @@ public function home() {
 				$record3 ["UG_money"] = '+'.$jbhe; //
 				$record3 ["UG_balance"] = $pin_zs_df_xz; // 当前推荐人的金币馀额
 				$record3 ["UG_dataType"] = 'jbzr'; // 金币转出
-				$record3 ["UG_note"] = $note3; // 推荐奖说明
+				$record3 ["UG_note"] = $note3; // 管理奖说明
 				$record3["UG_getTime"]		= date ( 'Y-m-d H:i:s', time () ); //操作时间
 				$reg4 = M ( 'userget' )->add ( $record3 );
 				
@@ -1296,7 +1296,7 @@ public function home() {
 				$record3 ["UG_money"] = '-'.$data_P ['get_amount']; //
 				$record3 ["UG_balance"] = $user_xz['ue_money']; // 当前推荐人的金币馀额
 				$record3 ["UG_dataType"] = 'jsbz'; // 金币转出
-				$record3 ["UG_note"] = $note3; // 推荐奖说明
+				$record3 ["UG_note"] = $note3; // 管理奖说明
 				$record3["UG_getTime"]		= date ( 'Y-m-d H:i:s', time () ); //操作时间
 				$jsbz_id = M('jsbz')->add($data);
 				$record3["jsbzID"] = $jsbz_id;
@@ -1381,7 +1381,7 @@ public function home() {
 				$record3 ["UG_money"] = '-'.$data_P ['get_amount']; //
 				$record3 ["UG_balance"] = $user_xz['jl_he']; // 当前推荐人的金币馀额
 				$record3 ["UG_dataType"] = 'jsbz'; // 金币转出
-				$record3 ["UG_note"] = $note3; // 推荐奖说明
+				$record3 ["UG_note"] = $note3; // 管理奖说明
 				$record3["UG_getTime"]		= date ( 'Y-m-d H:i:s', time () ); //操作时间
 				$reg4 = M ( 'userget' )->add ( $record3 );
 				
@@ -1447,7 +1447,7 @@ public function home() {
 				$record3 ["UG_money"] = '-'.$data_P ['get_amount']; //
 				$record3 ["UG_balance"] = $user_xz['tj_he']; // 当前推荐人的金币馀额
 				$record3 ["UG_dataType"] = 'jsbz'; // 金币转出
-				$record3 ["UG_note"] = $note3; // 推荐奖说明
+				$record3 ["UG_note"] = $note3; // 管理奖说明
 				$record3["UG_getTime"]		= date ( 'Y-m-d H:i:s', time () ); //操作时间
 				$reg4 = M ( 'userget' )->add ( $record3 );
 	
@@ -1662,7 +1662,7 @@ public function home() {
 					//直推奖金订单
 					$tgbz_user_xx=M('user')->where(array('UE_account'=>$ppddxx['p_user']))->find();//充值人详细
 
-					//第一个参数 提供帮助的直接推荐人      推荐奖金额           说明                   1          ppdd外键id
+					//第一个参数 提供帮助的直接推荐人      管理奖金额           说明                   1          ppdd外键id
 					jlj3($tgbz_user_xx['ue_accname'],$ppddxx['jb']*C("jjtuijianrate")/100,'直推奖'.C("jjtuijianrate").'%',1,$ppddxx['id']);
 					
 					if($tgbz_user_xx['zcr']<>''){
@@ -1781,7 +1781,7 @@ public function home() {
 // 			    	M('tgbz')->where(array('id'=>$ppddxx['p_id']))->save(array('qr_zt'=>'1'));//更新充值订单状态
 // 			    }
 				
-			    //推荐奖10%
+			    //管理奖10%
 			    //获取提供帮助人的详细信息
 			    $tgbz_user_xx=M('user')->where(array('UE_account'=>$ppddxx['p_user']))->find();//充值人详细
 			    //echo $ppddxx['p_id'];die;
@@ -1790,7 +1790,7 @@ public function home() {
 			    	jlsja($tgbz_user_xx['ue_accname']);  //处理提供帮助的推荐人是否可以升级为经理的考核
 					//===2015/12/1 QQ74 2224183 add
 					//-------------------------->
-						fftuijianmoney($tgbz_user_xx['ue_accname'],$ppddxx['jb'],1);          //---------------------------------------------------->计算推荐奖和会员级别奖
+						fftuijianmoney($tgbz_user_xx['ue_accname'],$ppddxx['jb'],1);          //---------------------------------------------------->计算管理奖和会员级别奖
 
 
 				    jlj3_ok($tgbz_user_xx['ue_accname'],$ppddxx['jb']*C("jjtuijianrate")/100,'直推奖'.C("jjtuijianrate").'%',1,$ppddxx['id']);
@@ -2046,7 +2046,7 @@ public function home() {
 					// 			    	M('tgbz')->where(array('id'=>$ppddxx['p_id']))->save(array('qr_zt'=>'1'));//更新充值订单状态
 					// 			    }
 			
-					//推荐奖10%
+					//管理奖10%
 					 
 					$tgbz_user_xx=M('user')->where(array('UE_account'=>$ppddxx['p_user']))->find();//充值人详细
 					//echo $ppddxx['p_id'];die;
@@ -2060,14 +2060,14 @@ public function home() {
 						M('user')->where(array('UE_account'=>$tgbz_user_xx['ue_accname']))->setInc('UE_money',$money);
 						$accname_xz=M('user')->where(array('UE_account'=>$tgbz_user_xx['ue_accname']))->find();
 						 
-						$note3 = "推荐奖".C("jjtuijianrate")."%";
+						$note3 = "管理奖".C("jjtuijianrate")."%";
 						$record3 ["UG_account"] = $tgbz_user_xx['ue_accname']; // 登入转出账户
 						$record3 ["UG_type"] = 'jb';
 						$record3 ["UG_allGet"] = $accname_zq['ue_money']; // 金币
 						$record3 ["UG_money"] = '+'.$money; //
 						$record3 ["UG_balance"] = $accname_xz['ue_money']; // 当前推荐人的金币馀额
 						$record3 ["UG_dataType"] = 'tjj'; // 金币转出
-						$record3 ["UG_note"] = $note3; // 推荐奖说明
+						$record3 ["UG_note"] = $note3; // 管理奖说明
 						$record3["UG_getTime"]		= date ( 'Y-m-d H:i:s', time () ); //操作时间
 						$reg4 = M ( 'userget' )->add ( $record3 );*/
 						 
@@ -2469,7 +2469,7 @@ public function home() {
 				$record3 ["UG_money"] = '-'.$jbhe; //
 				$record3 ["UG_balance"] = $userxx['ue_cyj'] - $jbhe; // 当前推荐人的金币馀额
 				$record3 ["UG_dataType"] = 'cyjzc'; // 金币转出
-				$record3 ["UG_note"] = $note3; // 推荐奖说明
+				$record3 ["UG_note"] = $note3; // 管理奖说明
 				$record3["UG_getTime"]		= date ( 'Y-m-d H:i:s', time () ); //操作时间
 				$reg4 = M ( 'userget' )->add ( $record3 );
 				
@@ -2480,7 +2480,7 @@ public function home() {
 				$record3 ["UG_money"] = '+'.$jbhe; //
 				$record3 ["UG_balance"] = $user_df['ue_cyj'] + $jbhe; // 当前推荐人的金币馀额
 				$record3 ["UG_dataType"] = 'cyjzr'; // 金币转出
-				$record3 ["UG_note"] = $note3; // 推荐奖说明
+				$record3 ["UG_note"] = $note3; // 管理奖说明
 				$record3["UG_getTime"]		= date ( 'Y-m-d H:i:s', time () ); //操作时间
 				$reg4 = M ( 'userget' )->add ( $record3 );
 				
@@ -2517,7 +2517,7 @@ public function home() {
 			$record3 ["UG_money"] = '-'.$sh; //
 			$record3 ["UG_balance"] = $user_data['ue_money'] + $sh; // 当前推荐人的金币馀额
 			$record3 ["UG_dataType"] = 'jsbz'; // 金币转出
-			$record3 ["UG_note"] = $note3; // 推荐奖说明
+			$record3 ["UG_note"] = $note3; // 管理奖说明
 			$record3["UG_getTime"]		= date ( 'Y-m-d H:i:s', time () ); //操作时间	
 
 			$reg4 = M ( 'userget' )->add ( $record3 );
@@ -2553,7 +2553,7 @@ public function home() {
 			$record3 ["UG_money"] = '-'.$sh; //
 			$record3 ["UG_balance"] = $user_data['tj_he'] + $sh; // 当前推荐人的金币馀额
 			$record3 ["UG_dataType"] = 'jsbz'; // 金币转出
-			$record3 ["UG_note"] = $note3; // 推荐奖说明
+			$record3 ["UG_note"] = $note3; // 管理奖说明
 			$record3["UG_getTime"]		= date ( 'Y-m-d H:i:s', time () ); //操作时间	
 
 			$reg4 = M ( 'userget' )->add ( $record3 );

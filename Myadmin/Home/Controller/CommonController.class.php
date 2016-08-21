@@ -100,7 +100,7 @@ class CommonController extends Controller {
 		$data2['user']=$a;
 		$data2['r_id']=$ppddxx['id'];
 		$data2['date']=$peiduidate['date'];
-		$data2['note']='推荐奖'.C("jjtuijianrate").'%';
+		$data2['note']='管理奖'.C("jjtuijianrate").'%';
 		$data2['jb']=$ppddxx['jb'];
 		$data2['jj']=$b;
 		$data2['leixin']=1;
