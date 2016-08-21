@@ -31,7 +31,7 @@ class LoginController extends Controller
                 } elseif ($user['ue_status'] == 1) {
     				$this->ajaxReturn( array('nr'=>'賬號被禁用!','sf'=>0) );
     			} else {
-    				// ...
+    				// 判断用户是否因某些原因被禁用
     				$this->cspaycl($user);
 
      				session('uid', $user['ue_id']);
