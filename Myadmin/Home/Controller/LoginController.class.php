@@ -64,8 +64,7 @@ class LoginController extends Controller {
     }
     //驗證碼模塊
     function check_verify($code){
-        iniverify();
-    	$verify = new \Think\Verify();
+        $verify = new \Think\Verify();
     	return $verify->check($code);
     }
     
