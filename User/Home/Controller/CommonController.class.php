@@ -1,66 +1,27 @@
 <?php
-
-
-
 namespace Home\Controller;
-
-
 
 use Think\Controller;
 
-
-
 class CommonController extends Controller {
-
-
-
-	
-
-	
-
-	
 
 	public function _initialize() {
 
 		header("Content-Type:text/html; charset=utf-8");
-
-// 		echo cookie('uid2');
-
-// 	if( $_COOKIE ['uid2'] ==''){
-
-// 		session_unset();
-
-// 		session_destroy();
-
-// 		$this->redirect('Login/index');
-
-// 	}
-
-		$zt=M('system')->where(array('SYS_ID'=>1))->find();
-
-// 		$time2 = date('H');
-
-		if($zt['zt']<>0){
-
-			$this->error('系统升级中,请稍后访问!','/Home/Login/index');die;
-
+		// 系统状态
+		$zt = M('system')->where(array('SYS_ID'=>1))->find();
+		if($zt['zt'] <> 0)
+		{
+			$this->error('系统升级中,请稍后访问!', '/Home/Login/index');
+			exit;
 		}
-
-		
-
-		
 
 		//推广链接
 		$tgurl = "http://" . $_SERVER["HTTP_HOST"] . u("Reg/index", array("uname" => $_SESSION['uname']));
 		$this->tgurl = $tgurl;
 
-		
-
         $czmcsy = CONTROLLER_NAME . ACTION_NAME;
-
 		$czmc = ACTION_NAME;
-
-		//echo $czmcsy;die;
 
 		if($czmcsy<>'Indexindex'){
 
