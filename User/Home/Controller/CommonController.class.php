@@ -24,21 +24,10 @@ class CommonController extends Controller {
 		$czmc = ACTION_NAME;
 
 		if($czmcsy<>'Indexindex'){
-
-			
-
-		if (! isset ( $_SESSION ['uid'] )) {
-
-			// $this->error('請先登錄!',U('Login/index'));
-
-			
-
-			$this->redirect ( 'Login/index' );
-
-		}
-
-		$this->checkAdminSession();
-
+			if (!isset( $_SESSION ['uid'] )) {
+				$this->redirect ( 'Login/index' );
+			}
+			$this->checkAdminSession();
 		}
 
 		$_SESSION['user_jb'] = 1;
