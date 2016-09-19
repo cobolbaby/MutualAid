@@ -6,14 +6,15 @@
 	    <div class="col-sm-6">
 	      <a class="btn btn-block " id="pdBtn">
 		<span class="p-donation">
-		  申请提供帮助 <b style="color:red">（买入e币)</b>
-		</span>
+		  <!-- 申请提供帮助 <b style="color:red">（买入e币)</b> -->
+		  我要众筹公益		</span>
 	      </a>
 	    </div>
 	    <div class="col-sm-6">
 	      <a class="btn btn-block " id="gdBtn">
 		<span class="g-donation">
-		  申请接受帮助 <b style="color:red">（卖出e币)</b>
+		  <!-- 申请接受帮助 <b style="color:red">（卖出e币)</b> -->
+		  我要获取回报
 		</span>
 	      </a>
 	    </div>
@@ -25,8 +26,8 @@
 		class="form-horizontal margin-none" id="provide_help">
 		  <div class="widget-head widget-head-blue" style="background-color:#003d74;">
 		    <h4 class="heading">
-		      申请提供帮助
-		    </h4>
+		      <!-- 申请提供帮助 -->
+		      我要众筹公益		    </h4>
 		  </div>
 		  <div class="widget-body">
 		    <div class="form-group">
@@ -61,7 +62,8 @@
 		    </div> -->
 		    <div class="form-group">
 		      <label class="col-md-3 control-label">
-			提供帮助金额
+			<!-- 提供帮助金额 -->
+			众筹投资金额
 		      </label>
 		      <div class="col-md-9">
 			<input type="text" class="form-control get_amount" placeholder="输入{$jj01s}-{$jj01m}"
@@ -100,8 +102,8 @@
 		    	<input name="jhwjjc" id="jhwjjc" type="submit" class="btn_next btn-warning btn-sm btn btn-primary " disabled="disabled"
 		    	value="已关闭排单">
 		    <else/>
-		    	<input name="jhwjjc" id="jhwjjc" type="submit" class="btn_next btn-warning btn-sm btn btn-primary "
-		    	value="提供帮助">
+		    	<!-- <input name="jhwjjc" id="jhwjjc" type="submit" class="btn_next btn-warning btn-sm btn btn-primary "	value="提供帮助"> -->
+		    	<input name="jhwjjc" id="jhwjjc" type="submit" class="btn_next btn-warning btn-sm btn btn-primary "	value="我要众筹">
 			</if>
 		    
 		  </footer>
@@ -114,7 +116,8 @@
 		  <fieldset>
 		    <div class="widget-head widget-head-blue" style="background-color:#d20000;">
 		      <h4 class="heading">
-			申请接受帮助
+			<!-- 申请接受帮助 -->
+			我要获取回报
 		      </h4>
 		    </div>
 		    <div class="widget-body">
@@ -124,7 +127,8 @@
 			</label>
 			<div class="col-md-9">
 			    <select name="wallet_type" id="wallet_type_head">
-				<option value="1" selected>互助钱包 (余额: {$userData.ue_money} RMB)</option>
+				<!-- <option value="1" selected>互助钱包 (余额: {$userData.ue_money} RMB)</option> -->
+				<option value="1" selected>众筹钱包 (余额: {$userData.ue_money} RMB)</option>
 				<option value="2">直推奖钱包 (余额: {$userData.jl_he} RMB)</option>
 				<option value="3">管理奖钱包 (余额: {$userData.tj_he} RMB)</option>
 			    </select>←选择钱包
@@ -151,7 +155,8 @@
 		      </div>
 		      <div class="form-group">
 			<label class="col-md-3 control-label">
-			  接受帮助总额:
+			  <!-- 接受帮助总额 -->
+			  获取回报总额
 			  <span class="ast">
 			    *
 			  </span>
@@ -168,12 +173,11 @@
 		      </div>
 		    </div>
 		    <div class="data-footer innerAll half text-right clearfix">
-		   <if condition="$jsbz_open">
-			<input  id="withdraw_btn" type="submit" class="btn btn-primary btn-sm" value=" 接受帮助">		 
-			
-		   <else/>
+		   	<if condition="$jsbz_open">
+				<!-- <input  id="withdraw_btn" type="submit" class="btn btn-primary btn-sm" value="接受帮助"> -->
+				<input  id="withdraw_btn" type="submit" class="btn btn-primary btn-sm" value="获取回报">
+		   	<else/>
 		   		<input value="暂不可接受帮助" id="withdraw_btn" type="submit" class="btn btn-primary btn-sm"  disabled="disabled">
-
 			</if>
 			<script>
 			    $(function () {
