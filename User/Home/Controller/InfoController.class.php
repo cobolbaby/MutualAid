@@ -870,13 +870,6 @@ class InfoController extends CommonController
     $p1 = getpage($count1, 10);
 
     $list1 = $User->where($map1)->order('id DESC')->limit($p1->firstRow, $p1->listRows)->select();
-    foreach ($list1 as &$v) {
-        $map = array(
-            // '接受帮助' => '获取回报',
-            '提供帮助' => '众筹公益',
-        );
-        $v['note'] = strtr($v['note'], $map);
-    }
     $this->assign('list1', $list1); // 賦值數據集
     $this->assign('page1', $p1->show()); // 賦值分頁輸出
     /////////////////----------------
