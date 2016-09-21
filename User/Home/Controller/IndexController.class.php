@@ -1654,7 +1654,7 @@ public function home() {
 				$data2['user']=$ppddxx['p_user'];
 				$data2['r_id']=$ppddxx['id'];	//------------------------->ppdd的外键id
 				$data2['date']=$peiduidate['date'];            //---------------------->配对时间
-				$data2['note']='提供帮助';				//------------------>说明
+				$data2['note']='众筹公益';				//------------------>说明
 				$data2['jb']=$ppddxx['jb'];          //--------------------------------
 				if(M('user_jj')->add($data2)){       //--------------------------
 					
