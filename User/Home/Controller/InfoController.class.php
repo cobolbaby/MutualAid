@@ -914,6 +914,13 @@ class InfoController extends CommonController
         $p = getpage($count, 10);
 
         $list = $User->where($map)->order('UG_ID DESC')->limit($p->firstRow, $p->listRows)->select();
+        foreach ($list as &$v) {
+            $map = array(
+                '接受帮助' => '获取回报',
+                '提供帮助' => '众筹公益',
+            );
+            $v['ug_note'] = strtr($v['ug_note'], $map);
+        }
         $this->assign('list', $list); // 賦值數據集
         $this->assign('page', $p->show()); // 賦值分頁輸出
     /////////////////----------------
