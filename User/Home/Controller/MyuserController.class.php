@@ -1,90 +1,38 @@
 <?php
-
-
-
 namespace Home\Controller;
-
-
 
 use Think\Controller;
 
-
-
-class MyuserController extends CommonController {
+class MyuserController extends CommonController
+{
 
 	// 首頁
-
-	public function index() {
-
-		
-
-		
-
+	public function index()
+	{
 		$suser = I ( 'post.user' );
-
-	
-
-		
-
-		if($suser==''){
-
+		if($suser == ''){
 			$map['UE_accName']=$_SESSION['uname'];
-
 		}else{
-
 			$map['UE_account']=$suser;
-
 		}
 
-		
-
-		
-
 		//////////////////----------
-
 		$User = M ( 'user' ); // 實例化User對象
-
-		
-
-		
-
-		$count = $User->where ( $map )->count (); // 查詢滿足要求的總記錄數
-
+		$count = $User->where( $map )->count (); // 查詢滿足要求的總記錄數
 		//$page = new \Think\Page ( $count, 3 ); // 實例化分頁類 傳入總記錄數和每頁顯示的記錄數(25)
-
-		
-
 		$p = getpage($count,10);
-
-		
-
-		$list = $User->where ( $map )->order ( 'UE_ID DESC' )->limit ( $p->firstRow, $p->listRows )->select ();
+		$list = $User->where( $map )->order( 'UE_ID DESC' )->limit( $p->firstRow, $p->listRows )->select();
 
 		$this->assign ( 'list', $list ); // 賦值數據集
-
 		$this->assign ( 'page', $p->show() ); // 賦值分頁輸出
-
 		/////////////////----------------
 
-		//dump($list);die;
-
-		
-
-		$userData = M ( 'user' )->where ( array (
-
-				'UE_ID' => $_SESSION ['uid'] 
-
-		) )->find ();
-
+		$userData = $User->where(array(
+				'UE_ID' => $_SESSION ['uid']
+		))->find();
 		$this->userData = $userData;
-
 		$this->display ( 'wdzh' );
-
 	}
-
-	
-
-	
 
 	public function fhjl() {
 

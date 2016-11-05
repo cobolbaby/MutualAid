@@ -96,24 +96,14 @@ class IndexController extends CommonController
 
     public function gb()
     {
-
-
         M('system')->where(array('SYS_ID' => 1))->save(array('zt' => 1));
-        //      $time2 = date('H');
         $this->success('关闭成功!');
-
-
     }
 
     public function kq()
     {
-
-
-        M('system')->where(array('SYS_ID' => 1))->save(array('zt' => 0));
-        //      $time2 = date('H');
+       M('system')->where(array('SYS_ID' => 1))->save(array('zt' => 0));
         $this->success('开启成功!');
-
-
     }
 
     public function top()
@@ -302,12 +292,9 @@ class IndexController extends CommonController
         // 用户搜索
         $data = I('post.user');
         if ($data <> '') {
-            $map['UE_account'] = $data;
+            // $map['UE_account'] = $data;
+            $map['UE_account'] = array('like', '%'.$data.'%');
         }
-        // $ip = I('get.ip');
-        // if ($ip <> '') {
-        //     $map['UE_regIP'] = $ip;
-        // }
         $count = $User->where($map)->count(); // 查詢滿足要求的總記錄數
         $p = getpage($count, $pagesize);
         $list = $User->where($map)->order('UE_ID desc')->limit($p->firstRow, $p->listRows)->select();
@@ -347,22 +334,18 @@ class IndexController extends CommonController
 
     public function userdel()
     {
-
-
         $User = M('user'); // 實例化User對象
         $data = I('get.id');
 
-
-        $userxx = M('user')->where(array('UE_ID' => $data))->find();
-
+        $userxx = $User->where(array('UE_ID' => $data))->find();
         if ($data <> '' && $userxx['ue_account'] <> '') {
-            M('user')->where(array('UE_ID' => $data))->delete();
+            // 若查询结果不为空，即存在该账户的话
+            // 物理删除用户数据
+            $User->where(array('UE_ID' => $data))->delete();
             $this->success('删除成功!');
         } else {
             $this->success('公司账号不能删除!');
         }
-
-
     }
 
     public function ppdd_list_del()
@@ -1552,21 +1535,16 @@ class IndexController extends CommonController
         }
     }
 
-
+    /**
+     * 自动匹配
+     */
     public function zdpp_cl()
     {
-
-
         $tgbz_user = M('tgbz')->where(array('zt' => '0'))->select();
         $pipeits = 0;
         foreach ($tgbz_user as $val) {
-
-            //dump();die;
             $jsbz_list = tgbz_zd_cl($val['id']);
             foreach ($jsbz_list as $val1) {
-                //echo $val['jb'].'--<br>';
-                //echo $val1['jb'].'<br>';
-
                 if ($val['jb'] == $val1['jb'] && $val['user'] <> $val1['user']) {//如果匹配成功处理
                     if (ppdd_add($val['id'], $val1['id'])) {
                         $pipeits++;
@@ -1574,13 +1552,9 @@ class IndexController extends CommonController
                         break;
                     }
                 }
-
             }
-
         }
         echo('成功匹配订单' . $pipeits . '条');
-
-
     }
 
     public function zdpp_cl2()
