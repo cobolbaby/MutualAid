@@ -901,7 +901,7 @@ class InfoController extends CommonController
 
     $this->display();
    }
-   //互助钱包
+   //总账记录，当前历史记录
    public function nwhistory(){
     //////////////////----------
         $User = M('userget'); // 實例化User對象

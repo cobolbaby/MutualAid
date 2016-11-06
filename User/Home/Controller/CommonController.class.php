@@ -345,8 +345,8 @@ class CommonController extends Controller {
 		 */
 
 		
-
-		echo json_encode ( array ("status" => 0,"data" => $znote ,'count'=>$this->userData['tj_num']) );
+		// [fix]通过$this->userData['tj_num']获取团队成员的统计数目可能与实际不符
+		echo json_encode( array("status" => 0,"data" => $znote ,'count'=>count($znote)) );
 
 	}
 

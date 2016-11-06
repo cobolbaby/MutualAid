@@ -1245,17 +1245,16 @@ public function home() {
 		if (IS_POST) {
 			
 			$data_P = I ( 'post.' );
-			//dump($data_P);die;
 			$user = M ( 'user' )->where ( array (
 					UE_account => $_SESSION ['uname']
 			) )->find ();
-			$user1 = M ();
+			// $user1 = M ();
 			//! $this->check_verify ( I ( 'post.yzm' ) )
 			//! $user1->autoCheckToken ( $_POST )
 
 			$usermm = M ( 'user' )->where ( array (UE_account => $_SESSION ['uname']) )->find ();
 			if((strtotime($usermm['UE_regTime'])+C("reg_days")*3600*24 )> time()){
-				die("<script>alert('该帐号仍在冻结时间内！冻结时为注册日期".C("reg_days")."天');history.back(-1);</script>");
+				die("<script>alert('该帐号仍在冻结时间内！冻结时为注册日期".C("reg_days")."天内');history.back(-1);</script>");
 			}
 
 			
@@ -1280,34 +1279,25 @@ public function home() {
 				$data['user_nc']=$user['ue_theme']; //昵称
 				$data['user_tjr']=$user['zcr'];  //推荐人
 				$data['date']=date ( 'Y-m-d H:i:s', time () );  //时间
-				$data['zt']=0;  //为匹配
-				$data['qr_zt']=0;  //为确认收款
-				$user_zq=M('user')->where(array('UE_ID'=>$_SESSION['uid']))->find();
+				$data['zt']=0;  //为匹配状态
+				$data['qr_zt']=0;  //为确认收款状态
+				$user_zq=M('user')->where(array('UE_ID'=>$_SESSION['uid']))->find(); // 用户余额修改前
 
-				
-				
 				M('user')->where(array('UE_account' => $_SESSION ['uname']))->setDec('UE_money',$data_P ['get_amount']);
-				
-				$user_xz=M('user')->where(array('UE_ID'=>$_SESSION['uid']))->find();
+
+				$user_xz=M('user')->where(array('UE_ID'=>$_SESSION['uid']))->find(); // 用户余额修改后
 				$note3 = "接受帮助扣款";
-				$record3 ["UG_account"] = $_SESSION['uname']; // 登入转出账户
+				$record3 ["UG_account"] = $_SESSION['uname']; // 转出账户
 				$record3 ["UG_type"] = 'jb';
-				$record3 ["UG_allGet"] = $user_zq['ue_money']; // 金币
-				$record3 ["UG_money"] = '-'.$data_P ['get_amount']; //
-				$record3 ["UG_balance"] = $user_xz['ue_money']; // 当前推荐人的金币馀额
-				$record3 ["UG_dataType"] = 'jsbz'; // 金币转出
+				$record3 ["UG_allGet"] = $user_zq['ue_money']; // 账户余额
+				$record3 ["UG_money"] = '-'.$data_P ['get_amount']; // 当次金额
+				$record3 ["UG_balance"] = $user_xz['ue_money']; // 当前金币馀额
+				$record3 ["UG_dataType"] = 'jsbz'; // 接受帮助金币转出
 				$record3 ["UG_note"] = $note3; // 管理奖说明
-				$record3["UG_getTime"]		= date ( 'Y-m-d H:i:s', time () ); //操作时间
+				$record3 ["UG_getTime"]		= date ( 'Y-m-d H:i:s', time () ); //操作时间
 				$jsbz_id = M('jsbz')->add($data);
 				$record3["jsbzID"] = $jsbz_id;
 				$reg4 = M ( 'userget' )->add ( $record3 );
-
-
-				/*if(M('jsbz')->add($data)){
-					die("<script>alert('提交成功！');window.location.href='/';</script>");
-				}else{
-					die("<script>alert('提交失败！');history.back(-1);</script>");
-				}*/
 
 				if($jsbz_id){
 					die("<script>alert('提交成功！');window.location.href='/';</script>");
@@ -1315,18 +1305,16 @@ public function home() {
 					die("<script>alert('提交失败！');history.back(-1);</script>");
 				}
 			}
-				
 		}
 	}
 	public function jsbzcl1() {
 		if (IS_POST) {
-				
+
 			$data_P = I ( 'post.' );
-			//dump($data_P);die;
 			$user = M ( 'user' )->where ( array (
 					UE_account => $_SESSION ['uname']
 			) )->find ();
-			$user1 = M ();
+			// $user1 = M ();
 			//! $this->check_verify ( I ( 'post.yzm' ) )
 			//! $user1->autoCheckToken ( $_POST )
 			$usermm = M ( 'user' )->where ( array (UE_account => $_SESSION ['uname']) )->find ();
@@ -1350,7 +1338,7 @@ public function home() {
 					M('user')->where(array(UE_account => $_SESSION ['uname']))->save(array('tx_date'=>date('Y-m-d H:i:s',$timea),'tx_leiji'=>'0'));
 					$user = M ( 'user' )->where ( array (UE_account => $_SESSION ['uname']) )->find ();
 				}
-				
+				// 累计提现
 				if($user['tx_leiji']+$data_P ['get_amount']>C("month_max")){
 					die("<script>alert('直推奖金本周提现超过".C("month_max")."RMB,请在".$startTime."以后在试！');history.back(-1);</script>");
 				}else{
