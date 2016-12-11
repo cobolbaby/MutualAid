@@ -11,6 +11,8 @@ class CommonController extends Controller
 			$this->success('請先登錄','/admin.php/Home/Login') && exit;
 		}
 
+		$this->checkLoginWhiteList();
+
 		/*$czmcsy = CONTROLLER_NAME . ACTION_NAME;
 		$czmc = ACTION_NAME;
 		if(session('adminqx') <> '1') {
@@ -21,23 +23,19 @@ class CommonController extends Controller
 			}
 
 		}*/
-		// $this->checkAdminSession();
 	}
 
-	public function checkAdminSession()
+	public function checkLoginWhiteList()
 	{
-		$sesstime = session('logintime');
-		if ((NOW_TIME - $sesstime) > 60 * 20) {
-			//设置超时为20分
-			session_unset();
-	    	session_destroy();
-			$this->error('当前用户登录超时，请重新登录', U('/admin.php/Home/Login/'));
-		} else {
-			session('logintime', NOW_TIME);
-		}
+		// 检查IP地址访问
+		$iplist = C('ADMIN_ALLOW_IP');
+        if ($iplist && !in_array(get_client_ip(), $iplist)) {
+            $this->error('禁止访问');
+        }
 	}
-	
-	function check_verify($code) {
+
+	function check_verify($code)
+	{
 		$verify = new \Think\Verify ();
 		return $verify->check ( $code );
 	}
@@ -56,7 +54,7 @@ class CommonController extends Controller
 
 		if ($r)
 
-			return array (					
+			return array (
 
 					"id" => $r ['ue_account'],
 
