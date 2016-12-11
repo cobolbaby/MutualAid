@@ -584,26 +584,16 @@ class IndexController extends CommonController
         }
     }
 
-
+    // 获取系统金币赠送详情列表
     public function jbzs()
     {
-
-
         $User = M('userget'); // 實例化User對象
-
-
-        $map['UG_dataType'] = 'xtzs';
-
+        $map['UG_dataType'] = 'xtzs'; // xtzs就是系统赠送
         $count = $User->where($map)->count(); // 查詢滿足要求的總記錄數
-        //$page = new \Think\Page ( $count, 3 ); // 實例化分頁類 傳入總記錄數和每頁顯示的記錄數(25)
-
         $p = getpage($count, 20);
-
         $list = $User->where($map)->order('UG_ID DESC')->limit($p->firstRow, $p->listRows)->select();
         $this->assign('list', $list); // 賦值數據集
         $this->assign('page', $p->show()); // 賦值分頁輸出
-
-
         $this->display('index/jbzs');
     }
 
@@ -626,42 +616,39 @@ class IndexController extends CommonController
 
     }
 
-
+    // 系统赠送金币
     public function jbzscl()
     {
-
-
+        $account = I('post.user');
+        $money = I('post.sl');
         $User = M('user'); // 實例化User對象
-        //dump(I('post.UE_ID'));die;
         if (I('post.lx') == 'jb') {
-            if (I('post.sl') <> '' && $User->where(array('UE_account' => I('post.user')))->find() <> 0 && preg_match('/^[0-9-]{1,20}$/', I('post.sl'))) {
-                $user_zq = M('user')->where(array('UE_account' => I('post.user')))->find();
-                if ($User->where(array('UE_account' => I('post.user')))->setInc('UE_money', I('post.sl'))) {
+            $where = array('UE_account' => $account);
+            if ($money <> '' && preg_match('/^[0-9-]{1,20}$/', $money) && $User->where($where)->find()) {
+                $previous_money = $User->where()->getField('UE_money');
+                if ($User->where($where)->setInc('UE_money', $money)) {
 
-
-                    $userxx = M('user')->where(array('UE_account' => I('post.user')))->find();
+                    $current_money = $User->where($where)->getField('UE_money');
                     $note3 = "系统操作";
-                    $record3 ["UG_account"] = I('post.user'); // 登入轉出賬戶
-                    $record3 ["UG_type"] = 'jb';
-                    $record3 ["UG_money"] = I('post.sl'); // 金幣
-                    $record3 ["UG_allGet"] = $user_zq['ue_money']; //
-                    $record3 ["UG_balance"] = $userxx['ue_money']; // 當前推薦人的金幣餘額
+                    $record3 ["UG_account"] = $account; // 登入轉出賬戶
+                    $record3 ["UG_type"] = 'jb'; // 金幣
+                    $record3 ["UG_money"] = $money;
+                    $record3 ["UG_allGet"] = $previous_money;
+                    $record3 ["UG_balance"] = $current_money; // 當前金幣餘額
                     $record3 ["UG_dataType"] = 'xtzs'; // 金幣轉出
                     $record3 ["UG_note"] = $note3; // 推薦獎說明
-                    $record3["UG_getTime"] = date('Y-m-d H:i:s', time()); //操作時間
+                    $record3 ["UG_getTime"] = date('Y-m-d H:i:s'); //操作時間
                     $reg4 = M('userget')->add($record3);
-
 
                     $this->success('金币赠送成功!');
                 } else {
                     $this->success('金币赠送失败!');
                 }
             } else {
-                $this->success('用户 名不存在或填写有误!');
+                $this->success('用户名不存在或填写有误!');
             }
-
-
-        } elseif (I('post.lx') == 'yb') {
+        }
+        /* elseif (I('post.lx') == 'yb') {
             if (I('post.sl') <> '' && $User->where(array('UE_account' => I('post.user')))->find() <> 0 && preg_match('/^[0-9-]{1,20}$/', I('post.sl'))) {
                 if ($User->where(array('UE_account' => I('post.user')))->setInc('ybhe', I('post.sl'))) {
                     $userxx = M('user')->where(array('UE_account' => I('post.user')))->find();
@@ -682,7 +669,7 @@ class IndexController extends CommonController
                     $this->success('银币赠送失败!');
                 }
             } else {
-                $this->success('用户 名不存在或填写有误!');
+                $this->success('用户名不存在或填写有误!');
             }
         } elseif (I('post.lx') == 'zsb') {
             if (I('post.sl') <> '' && $User->where(array('UE_account' => I('post.user')))->find() <> 0 && preg_match('/^[0-9-]{1,20}$/', I('post.sl'))) {
@@ -705,9 +692,9 @@ class IndexController extends CommonController
                     $this->success('钻石币赠送失败!');
                 }
             } else {
-                $this->success('用户 名不存在或填写有误!');
+                $this->success('用户名不存在或填写有误!');
             }
-        }
+        }*/
 
     }
 
@@ -1110,11 +1097,8 @@ class IndexController extends CommonController
         $p = getpage($count, 20);
 
         $list = $User->where($map)->order('date ')->limit($p->firstRow, $p->listRows)->select();
-        //dump($list);die;
         $this->assign('list', $list); // 賦值數據集
         $this->assign('page', $p->show()); // 賦值分頁輸出
-
-
         $this->display('index/jsbz_list');
     }
 
@@ -1538,7 +1522,7 @@ class IndexController extends CommonController
     /**
      * 自动匹配
      */
-    public function zdpp_cl()
+    /*public function zdpp_cl()
     {
         $tgbz_user = M('tgbz')->where(array('zt' => '0'))->select();
         $pipeits = 0;
@@ -1646,8 +1630,7 @@ class IndexController extends CommonController
         }
         echo('成功匹配订单' . $pipeits . '条');
 
-
-    }
+    }*/
 
     public function tgbz_list_cf()
     {
