@@ -3,26 +3,27 @@ namespace Home\Controller;
 
 use Think\Controller;
 
-class CommonController extends Controller {
-	
+class CommonController extends Controller
+{
 	public function _initialize()
 	{
-		$czmcsy = CONTROLLER_NAME . ACTION_NAME;
-		$czmc = ACTION_NAME;	
 		if (!session('?adminuser')) {
-			$this->success('請先登錄','/admin.php/Home/Login');
+			$this->success('請先登錄','/admin.php/Home/Login'); && exit;
 		}
-		/*if(session('adminqx') <> '1') {
-				
+
+		/*$czmcsy = CONTROLLER_NAME . ACTION_NAME;
+		$czmc = ACTION_NAME;
+		if(session('adminqx') <> '1') {
+
 			if($czmc<>'main'&&$czmc<>'df1'&&$czmc<>'top'&&$czmc<>'left'&&$czmc<>'userlist'&&$czmc<>'team'&&$czmc<>'rggl'&&$czmc<>'getTreeso'&&$czmc<>'getTree'&&$czmc<>'get_childs'&&$czmc<>'getTreeInfo'&&$czmc<>'getTreeBaseInfo'&&$czmc<>'userbtc'&&$czmc<>'jbzs'){
 				$this->error('您暂无权限操作!','/admin.php/Home/Index/df1');die;
 				//echo '无权限';
 			}
-				
+
 		}*/
 		// $this->checkAdminSession();
 	}
-	
+
 	public function checkAdminSession()
 	{
 		$sesstime = session('logintime');
@@ -40,8 +41,7 @@ class CommonController extends Controller {
 		$verify = new \Think\Verify ();
 		return $verify->check ( $code );
 	}
-	
-	
+
 	public function getTreeBaseInfo($id) {
 
 		if (! $id)

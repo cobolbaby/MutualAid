@@ -5,6 +5,10 @@ use Think\Controller;
 
 class IndexController extends CommonController
 {
+    public function index()
+    {
+        $this->display('index/main');
+    }
 
     public function main()
     {
