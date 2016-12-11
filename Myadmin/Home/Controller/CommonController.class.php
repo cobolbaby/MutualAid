@@ -1,35 +1,18 @@
 <?php
-
 namespace Home\Controller;
 
 use Think\Controller;
 
 class CommonController extends Controller {
 	
-	public function _initialize() {
-		header("Content-Type:text/html; charset=utf-8");
-        $czmcsy = CONTROLLER_NAME . ACTION_NAME;
-		$czmc = ACTION_NAME;
-
-
-
-
-
-
-
-
-		//echo $czmc;die;
-		
-		
-			
-		if (! isset ( $_SESSION ['adminuser'] )) {
-			// $this->error('請先登錄!',U('Login/index'));
-			
+	public function _initialize()
+	{
+		$czmcsy = CONTROLLER_NAME . ACTION_NAME;
+		$czmc = ACTION_NAME;	
+		if (!session('?adminuser')) {
 			$this->success('請先登錄','/admin.php/Home/Login');
-			die;
 		}
-		
-/*		if($_SESSION ['adminqx']<>'1'){
+		/*if(session('adminqx') <> '1') {
 				
 			if($czmc<>'main'&&$czmc<>'df1'&&$czmc<>'top'&&$czmc<>'left'&&$czmc<>'userlist'&&$czmc<>'team'&&$czmc<>'rggl'&&$czmc<>'getTreeso'&&$czmc<>'getTree'&&$czmc<>'get_childs'&&$czmc<>'getTreeInfo'&&$czmc<>'getTreeBaseInfo'&&$czmc<>'userbtc'&&$czmc<>'jbzs'){
 				$this->error('您暂无权限操作!','/admin.php/Home/Index/df1');die;
@@ -37,25 +20,19 @@ class CommonController extends Controller {
 			}
 				
 		}*/
-		
-		
-		$this->checkAdminSession();
-	
-
-		
-
+		// $this->checkAdminSession();
 	}
 	
-	public function checkAdminSession() {
-		//设置超时为10分
-		$nowtime = time();
-		$s_time = $_SESSION['logintime'];
-		if (($nowtime - $s_time) > 6000000) {
-		session_unset();
-    	session_destroy();
+	public function checkAdminSession()
+	{
+		$sesstime = session('logintime');
+		if ((NOW_TIME - $sesstime) > 60 * 20) {
+			//设置超时为20分
+			session_unset();
+	    	session_destroy();
 			$this->error('当前用户登录超时，请重新登录', U('/admin.php/Home/Login/'));
 		} else {
-			$_SESSION['logintime'] = $nowtime;
+			session('logintime', NOW_TIME);
 		}
 	}
 	
