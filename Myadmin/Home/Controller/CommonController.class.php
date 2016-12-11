@@ -8,7 +8,7 @@ class CommonController extends Controller
 	public function _initialize()
 	{
 		if (!session('?adminuser')) {
-			$this->success('請先登錄','/admin.php/Home/Login'); && exit;
+			$this->success('請先登錄','/admin.php/Home/Login') && exit;
 		}
 
 		/*$czmcsy = CONTROLLER_NAME . ACTION_NAME;
