@@ -254,8 +254,6 @@ class CommonController extends Controller {
 
 		$_SESSION['user_jb']++;
 
-		//echo $_SESSION['user_jb'].'<br>';
-
 		foreach ( $ids as $v ) {
 
 			
@@ -335,9 +333,6 @@ class CommonController extends Controller {
 		$znote [] = $base;
 
 
-
-		// dump($znote);die;
-
 		/*
 
 		 * $znote = array(array("id" => 1, "pId" => 0, "name"=>"1000001"), array("id" => 2, "pId" => 1, "name"=>"1000002"), array("id" => 3, "pId" => 2, "name"=>"1000003"), array("id" => 5, "pId" => 2, "name"=>"1000003"), array("id" => 4, "pId" => 1, "name"=>"1000004") );
@@ -346,7 +341,7 @@ class CommonController extends Controller {
 
 		
 		// [fix]通过$this->userData['tj_num']获取团队成员的统计数目可能与实际不符
-		echo json_encode( array("status" => 0,"data" => $znote ,'count'=>count($znote)) );
+		echo json_encode( array("status" => 0,"data" => $znote ,'count'=>$this->userData['tj_num']) );
 
 	}
 

@@ -6,7 +6,7 @@ function cate($var)
     return $proall;
 }
 
-
+// 是否激活账户
 function sfjhff($r)
 {
     $a = array("未激活", "已激活");
