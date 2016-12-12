@@ -7,13 +7,13 @@ class LoginController extends Controller
     {
         $this->display('index/login');
     }
-    
+
     public function logincl()
     {
     	header("Content-Type:text/html; charset=utf-8");
     	if (IS_POST) {
-    		
-            $this->error('系統暫未開放!');
+
+            // $this->error('系統暫未開放!');
 
 	    	$username = I('post.account', '', 'strip_tags,trim');
 			$pwd = I('post.password', '', 'strip_tags,trim');
@@ -22,7 +22,7 @@ class LoginController extends Controller
 				exit("<script>alert('驗證碼錯誤,請刷新驗證碼！');history.back(-1);</script>");
 			} else {
     			$user=M('member')->where(array('MB_username'=>$username))->find();
-     			if(!$user || $user['mb_userpwd']!=md5($pwd)){ 
+     			if(!$user || $user['mb_userpwd']!=md5($pwd)){
     				exit("<script>alert('賬號或密碼錯誤,或被禁用！');history.back(-1);</script>");
     			}else{
 					// 记录管理员名称以及管理员权限
@@ -39,22 +39,23 @@ class LoginController extends Controller
     				exit("<script>alert('登入成功！');document.location.href='/admin.php/Home/Index/main';</script>");
             	}
             }
-    	
+
     	}
     }
-    
-    public function logout(){
-    //	cookie(null);
-    	session_unset();
-    	session_destroy();
+
+    public function logout()
+    {
+        session('[destroy]'); // 销毁session
     	$this->success('退出成功','/admin.php/Home/Login');
     }
+
     //驗證碼模塊
-    function check_verify($code){
+    function check_verify($code)
+    {
         $verify = new \Think\Verify();
     	return $verify->check($code);
     }
-    
+
     function verify() {
     	$config =    array(
     			'fontSize'    =>    16,    // 驗證碼字體大小
