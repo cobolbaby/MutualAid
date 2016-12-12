@@ -10,7 +10,7 @@ if (is_file($common_config_file)) {
         $iplist = load_config($ipWhitelistFile, 'php');
     }
 
-    $config = array_merge($common_conf, $iplist, array(
+    return array_merge($common_conf, $iplist, array(
         'URL_MODEL' => 1,    // PATHINFO模式
     ));
 }
