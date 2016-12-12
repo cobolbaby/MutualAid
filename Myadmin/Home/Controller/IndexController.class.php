@@ -1138,26 +1138,17 @@ class IndexController extends CommonController
     public function ts1_list()
     {
 
-
         $User = M('ppdd'); // 實例化User對象
         $data = I('post.user');
 
-
         $map['zt'] = array('neq', 2);
         $map['ts_zt'] = array('eq', 1);;
-
-
         $count = $User->where($map)->count(); // 查詢滿足要求的總記錄數
-        //$page = new \Think\Page ( $count, 3 ); // 實例化分頁類 傳入總記錄數和每頁顯示的記錄數(25)
-
         $p = getpage($count, 20);
-
         $list = $User->where($map)->order('id DESC')->limit($p->firstRow, $p->listRows)->select();
-        //dump($list);die;
         $this->assign('list', $list); // 賦值數據集
         $this->assign('page', $p->show()); // 賦值分頁輸出
-
-        $this->assign ( 'jjdktime', C("jjdktime") );
+        $this->assign('jjdktime', C("jjdktime"));
         $this->display('index/ts1_list');
     }
 
