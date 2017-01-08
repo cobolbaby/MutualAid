@@ -30,6 +30,7 @@ class CommonController extends Controller
 		// 检查IP地址访问
 		$iplist = C('ADMIN_ALLOW_IP');
         if ($iplist && !in_array(get_client_ip(), $iplist)) {
+            session('[destroy]'); // 销毁session
             $this->error('禁止访问');
         }
 	}

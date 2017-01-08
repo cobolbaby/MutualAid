@@ -146,25 +146,26 @@ function ppdd_add($p_id,$g_id){
 
 
 }
-function user_sfxt($var){
-	if($var[c]==0){
-	$zctj=0;
-	$zctjuser=M('ppdd')->where(array('p_user'=>$var[a]))->select();
-	
-	foreach($zctjuser as $value){
-		if($value['g_user']==$var['b']){
-			$zctj=1;
-		}
-	}
-	
-	if($zctj==1){
-		return "<span style='color:#FF0000;'>匹配过</span>";
-	}else{
-		return "否";
-	}
-	}elseif($var[c]==1){
+function user_sfxt($var)
+{
+    if($var['c']==0){
+    	$zctj=0;
+    	$zctjuser=M('ppdd')->where(array('p_user'=>$var['a']))->select();
+    	
+    	foreach($zctjuser as $value){
+    		if($value['g_user']==$var['b']){
+    			$zctj=1;
+    		}
+    	}
+    	
+    	if($zctj==1){
+    		return "<span style='color:#FF0000;'>匹配过</span>";
+    	}else{
+    		return "否";
+    	}
+	}elseif($var['c']==1){
 		$zctj=0;
-		$zctjuser=M('ppdd')->where(array('g_user'=>$var[a]))->select();
+		$zctjuser=M('ppdd')->where(array('g_user'=>$var['a']))->select();
 		
 		foreach($zctjuser as $value){
 			if($value['p_user']==$var['b']){
