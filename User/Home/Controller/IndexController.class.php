@@ -1576,15 +1576,11 @@ public function home() {
 		
 	}
 	
-	public function home_ddxx_pcz(){
-		
-	
-	$this->id = I ( 'get.id' );
-	
+	public function home_ddxx_pcz()
+	{
+		$this->id = I ( 'get.id' );
 		$this->display('home_ddxx_pcz');
 	}
-	
-	
 
 	public function home_ddxx_pcz_cl(){
 

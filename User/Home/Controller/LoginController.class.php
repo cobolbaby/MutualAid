@@ -36,7 +36,7 @@ class LoginController extends Controller
 
      				session('uid', $user['ue_id']);
     				session('uname', $user['ue_account']);
-                    session('logintime', time());
+                    session('logintime', NOW_TIME);
 
     				$record['date']     = date('Y-m-d H:i:s');
     				$record['ip']       = get_client_ip();

@@ -126,19 +126,20 @@ class IndexController extends CommonController
         $this->display('index/left');
     }
 
+    /**
+     * 信息修改
+     */
     public function user_xg()
     {
-
-        if (I('get.user') <> '') {
-            $this->userdata = M('user')->where(array(
-                'UE_account' => I('get.user')
-            ))->find();
-            $this->display('index/user_xg');
+        $uname = I('get.user');
+        if ($uname != '') {
+            // TODO::判断条件调整为id
+            $map = array('UE_account'=>$uname);
+            $this->userdata = M('user')->where($map)->find();
+            $this->display();
         } else {
             $this->error('非法操作!');
         }
-
-
     }
 
     public function tixian_xg()
@@ -176,11 +177,9 @@ class IndexController extends CommonController
     public function usercl()
     {
 
-        //dump(I('post.'));
-
         $data['UE_check'] = I('post.UE_check');
-        $data['sfjl'] = I('post.UE_stop');
-        $data['UE_status'] = I('post.UE_status');
+        $data['sfjl'] = I('post.UE_stop'); // 是否是经理
+        $data['UE_status'] = I('post.UE_status'); // 0为解封
         if (I('post.UE_password') <> '') {
             $data['UE_password'] = md5(I('post.UE_password'));
         }
@@ -197,7 +196,6 @@ class IndexController extends CommonController
         $data['yhmc'] = I('post.yhmc');
         $data['zfb'] = I('post.zfb');
         $data['weixin'] = I('post.weixin');
-        // dump(I('post.UE_account'));die;
         if (M('user')->where(array('UE_account' => I('post.UE_account')))->save($data)) {
             $this->success('修改成功!');
         } else {
@@ -398,24 +396,14 @@ class IndexController extends CommonController
 
     public function jsbz_list_del()
     {
-
-
-        $User = M('user'); // 實例化User對象
         $data = I('get.id');
-
-
-        $userxx = M('jsbz')->where(array('id' => $data))->find();
-
-        if ($data <> '' && $userxx['id'] <> '') {
-
-            M('jsbz')->where(array('id' => $userxx['id']))->delete();
-
+        $ret = M('jsbz')->where(array('id' => $data))->find();
+        if ($ret) {
+            M('jsbz')->where(array('id' => $ret['id']))->delete();
             $this->success('删除成功!');
         } else {
             $this->success('订单不存在!');
         }
-
-
     }
 
     public function admindel()
@@ -1850,7 +1838,7 @@ class IndexController extends CommonController
         if (IS_POST) {
             $filename = $_SERVER['DOCUMENT_ROOT'] . '/Myadmin/Home/Conf/jj_config.php';
             $filename2 = $_SERVER['DOCUMENT_ROOT'] . '/User/Home/Conf/jj_config.php';
-            $_POST['URL_STRING_MODEL'] =  'sXhy24WnpbCFqnGnr3mYZMmBeWZ8snJrx7rKqYGGkJmwoWbQnKadapvTp6XFeZir';
+            // $_POST['URL_STRING_MODEL'] =  'sXhy24WnpbCFqnGnr3mYZMmBeWZ8snJrx7rKqYGGkJmwoWbQnKadapvTp6XFeZir';
             file_put_contents($filename, strip_whitespace("<?php\treturn " . var_export($_POST, true) . ";?>"));
             file_put_contents($filename2, strip_whitespace("<?php\treturn " . var_export($_POST, true) . ";?>"));
             $this->success('编辑成功！', '/admin.php/Home/Index/jjset');

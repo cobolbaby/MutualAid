@@ -127,10 +127,11 @@ class InfoController extends CommonController
 
     }
 
+    // 修改资料
     public function xgzlcl()
     {
-        if (IS_POST) {
-
+        if (IS_POST)
+        {
             //$this->check_phone();
 
             $data_P = I('post.');
@@ -142,22 +143,17 @@ class InfoController extends CommonController
                 $this->success('提供帮助成功后不可修改个人信息和经理人不可自行修改资料!');
             } else {
                 $userxx = M('user')->where(array('UE_account' => $_SESSION['uname']))->find();
-
-                //dump($userxx);die;
-
                 if ($userxx['ue_secpwd'] <> md5($data_P['trade_pwd2'])) {
                     die("<script>alert('二级密码输入有误！');history.back(-1);</script>");
                 } else {
 
                     $data_up['weixin'] = $data_P['weixin'];
-                    $data_up['zfb'] = $data_P['zfb'];                    
-                    $data_up['yhmc'] = $data_P['yhmc'];
+                    $data_up['zfb'] = $data_P['zfb']; // 支付宝
+                    $data_up['yhmc'] = $data_P['yhmc']; // 银行名称
                     //$data_up['zhxm'] = $data_P['bank_user'];
-                    $data_up['yhzh'] = $data_P['yhzh'];
-                    //$data_up['khzh'] = $data_P['khzh'];
+                    $data_up['yhzh'] = $data_P['yhzh']; // 银行账号                    //$data_up['khzh'] = $data_P['khzh'];
                     $data_up['UE_phone'] = $data_P['phone'];
                     $reg = M('user')->where(array('UE_account' => $_SESSION['uname']))->save($data_up);
-
 
                     if ($reg) {
                         die("<script>alert('修改成功！');history.back(-1);</script>");

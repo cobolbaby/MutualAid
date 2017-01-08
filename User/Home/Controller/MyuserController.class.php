@@ -1040,181 +1040,66 @@ public function jihuo2() {
 
 	}
 
-
-	public function taskcl() {
-
-	
-
+	/**
+	 * 完成任务后，处理提交的信息
+	 */
+	public function taskcl()
+	{
 		if (IS_POST) {
+			$data_P = I( 'post.' );
+			// ! $this->check_verify( I ( 'post.yzm' ) )
+			// ! M ()->autoCheckToken ( $_POST )
 
-			$data_P = I ( 'post.' );
-
-			//dump($data_P);die;
-
-			//$this->ajaxReturn($data_P['ymm']);die;
-
-			//$user = M ( 'user' )->where ( array (
-
-			//		UE_account => $_SESSION ['uname']
-
-			//) )->find ();
-
-	
-
-			$user1 = M ();
-
-			//! $this->check_verify ( I ( 'post.yzm' ) )
-
-			//! $user1->autoCheckToken ( $_POST )
-
-			if (strlen($data_P['lybt']) > 190 || strlen($data_P['lybt']) < 1) {
-
+			if (empty($data_P['lybt'])) {
 				die("<script>alert('任务标题不能为空！');history.back(-1);</script>");
-
-				
-
-			} elseif ( strlen($data_P['lynr']) < 1) {
-
+			} elseif (empty($data_P['lynr'])) {
 				die("<script>alert('任务內容不能为空！');history.back(-1);</script>");
-
-				
-
-			}elseif(empty($data_P['face180'])){
+			}elseif(!isset($data_P['face180'])){
 				$this->error('请上传分享图片!');
-			}else {		
-
-					 
-
+			}else {
 				$record['MA_type']		= 'task';
-
-				$record['MA_userName']	= $_SESSION['uname'];
-
-				$record['pic']	= $data_P['face180'];
-
-				$record['MA_otherInfo']	= $data_P['otlylx'];
-
-				$record['MA_theme']		= $data_P['lybt'];
-
-				$record['MA_note']		= $data_P['lynr'];
-
-				$record['MA_time']		= date ( 'Y-m-d H:i:s', time () );;
-
-
-				$reg = M ( 'task' )->add ( $record );	
-
-					 
-
-	
-
-				if ($reg) {
-
+				$record['MA_time']		= date('Y-m-d H:i:s');
+				$record['MA_userName']	= session('uname');
+				$record['MA_otherInfo']	= $data_P['otlylx']; // 区分任务类型
+				$record['MA_theme']		= $data_P['lybt']; // 留言标题
+				$record['MA_note']		= $data_P['lynr']; // 留言内容
+				$record['pic']			= $data_P['face180'];
+				$flag = M( 'task' )->add( $record );
+				if ($flag) {
 					$this->success('任务完成!');
-
-					
-
 				} else {
-
 					die("<script>alert('任务失败！');history.back(-1);</script>");
-
-					
-
 				}
-
-				
-
 			}
-
 		}
-
 	}
 
+	/**
+	 * 获取排单币
+	 */
+	public function task()
+	{
 
-	public function task() {
+		$Task = M ( 'task' ); // 實例化User對象
 
-	
-
-		$User = M ( 'task' ); // 實例化User對象
-
-		//$suser = I ( 'post.user', '', '/^[a-zA-Z0-9]{6,12}$/' );
-
-		
-
-		$map ['MA_userName'] = $_SESSION ['uname'];
-
-
-
-		$starttime = date('Y-m-1 00:00:01', time());
-        $endtime = date('Y-m-31 23:59:59', time());
-        $count = M("task")->where(array('MA_time'=>array('egt',$starttime),'MA_time'=>array('elt',$endtime),'MA_userName'=>$_SESSION['uname']))->count();
-        $this->canable_task = true;
+		$starttime = date('Y-m-1 00:00:01', NOW_TIME);
+        $endtime = date('Y-m-31 23:59:59', NOW_TIME);
+        $count = $Task->where(array('MA_time'=>array('egt',$starttime),'MA_time'=>array('elt',$endtime),'MA_userName'=>session('uname')))->count();
+        $this->canable_task = true; //  是否可以做任务
         if ($this->renwu_num - $count <=0) {
         	$this->canable_task = false;
         }
 
+		$map['MA_userName'] = session('uname'); // 用户名
+		$count = $Task->where( $map )->count (); // 查詢滿足要求的總記錄數
+		$page = getpage($count);
 
-
-
-
-
-
-
-	
-
-		$count = $User->where ( $map )->count (); // 查詢滿足要求的總記錄數
-
-		//dump($var)
-
-		$page = new \Think\Page ( $count, 12 ); // 實例化分頁類 傳入總記錄數和每頁顯示的記錄數(25)
-
-	
-
-		// $page->lastSuffix=false;
-
-		$page->setConfig ( 'header', '<li class="rows">共<b>%TOTAL_ROW%</b>條記錄    第<b>%NOW_PAGE%</b>頁/共<b>%TOTAL_PAGE%</b>頁</li>' );
-
-		$page->setConfig ( 'prev', '上一頁' );
-
-		$page->setConfig ( 'next', '下一頁' );
-
-		$page->setConfig ( 'last', '末頁' );
-
-		$page->setConfig ( 'first', '首頁' );
-
-		$page->setConfig ( 'theme', '%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%' );
-
-		;
-
-	
-
-		$show = $page->show (); // 分頁顯示輸出
-
-		// 進行分頁數據查詢 注意limit方法的參數要使用Page類的屬性
-
-		$list = $User->where ( $map )->order ( 'MA_ID DESC' )->limit ( $page->firstRow . ',' . $page->listRows )->select ();
-
-		//dump($list);die;
-
-		$this->assign ( 'list', $list ); // 賦值數據集
-
-		$this->assign ( 'page', $show ); // 賦值分頁輸出
-
-	
-
-	
-
-		$userData = M ( 'user' )->where ( array (
-
-				'UE_ID' => $_SESSION ['uid']
-
-		) )->find ();
-
-		$this->userData = $userData;
-
-		$this->display ( );
-
+		$list = $Task->where( $map )->order( 'MA_ID DESC' )->limit( $page->firstRow, $page->listRows )->select();
+		$this->assign( 'list', $list ); // 賦值數據集
+		$this->assign( 'page', $page->show() ); // 賦值分頁輸出
+		$this->display( );
 	}
 
-	
 
 
 	public function lxwmdel() {

@@ -101,14 +101,15 @@ class CommonController extends Controller {
 		$this->pin_zs = $pin_db->where(array('user'=>$_SESSION['uname'],'zt'=>0))->count()+0;
 
 
-		//会员任务  by扣扣  74 2 24183
-
+		//会员任务
 		$level_array = explode(',', C('jjaccountlevel'));
-		$task_arr = explode(',', C('per_task'));
-		if(!empty($level_array) && !empty($userData['levelname'])){
+		$task_arr = explode(',', C('per_task')); // 每月任务最大数
+		if(count($level_array) && !empty($userData['levelname'])){
+			// TODO::array_key
+			// $k = array_key($arr, $v); $a = isset($b[$k]) ? $b[$k] : 0;
 			foreach ($level_array as $key => $value) {
 				if($userData['levelname'] == $value){
-					$this->renwu_num = $task_arr[$key];
+					$this->renwu_num = isset($task_arr[$key]) ? $task_arr[$key] : 0; // 任务数量
 				}
 			}
 		}
@@ -157,17 +158,11 @@ class CommonController extends Controller {
 
 	
 
-	function check_verify($code) {
-
+	public function check_verify($code)
+	{
 		$verify = new \Think\Verify ();
-
 		return $verify->check ( $code );
-
 	}
-
-	
-
-	
 
 	public function getTreeBaseInfo($id) {
 

@@ -129,9 +129,9 @@
 </head>
 <body class="zh-CN ">
 <include file="User/Home/View/default/common_header.html" />
-<include file="User/Home/View/default/top2.html" />
 <!-- Main Wrapper -->
 <div id="wrapper">
+<include file="User/Home/View/default/top2.html" />
 <include file="User/Home/View/default/common_main.html" />
 <div class="row">
     <div class="col-md-12">
@@ -204,27 +204,20 @@
 		<div class="widget-body">
 		    <div class="form-group">
 			<label class="col-sm-3 control-label">选择任务</label>
-
 			<div class="col-sm-9">
-
 			    <select class="form-control m-b" name="otlylx" id="otlylx">
-				<option value="任务1">任务1</option>
+				<!-- <option value="任务1">任务1</option> -->
 				<option value="任务2">任务2</option>
 				<option value="任务3">任务3</option>
 			    </select>
-
 			</div>
 		    </div>
-
 		    <div class="form-group">
 			<label class="col-sm-3 control-label">执行结果</label>
-
 			<div class="col-sm-9">
 			    <input type="text" required name="lybt" id="lybt" value="我已完成任务" class="form-control">
-
 			</div>
 		    </div>
-
 		    <div class="form-group">
 			<label class="col-sm-3 control-label">详细描述</label>
 			<div class="col-sm-9">
@@ -233,10 +226,7 @@
 		    </div>
 		    <div class="text-center">
 		    <ul id="ul_pics" class="ul_pics clearfix"></ul>
-		    <if condition="$allDone">
-			<p class="text-success">当天已经提交过任务，请明天再来！</p>
-		    <else/>
-			<p>必须上传截图凭证，任务才能通过审核！</p>
+		    <p>必须上传截图凭证，任务才能通过审核！</p>
 			<if condition="$canable_task">
 				<a class="btn btn-info btn-sm" id="btn">上传截图凭证</a> <input name="" class="btn btn-primary btn-sm" type="submit" id="btn" value="提交审核">
 			<else/>
@@ -245,7 +235,6 @@
 			<script type="text/javascript" src="/js/xz/jquery.js"></script>
 			<script type="text/javascript" src="/plupload/plupload.full.min.js"></script>
 			<script type="text/javascript" src="/js/xz/sucaihuo.js"></script>
-		    </if>
 		    </div>
 		</div>
 	    </form>

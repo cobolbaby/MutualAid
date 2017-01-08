@@ -27,7 +27,7 @@
                         }
                     },
                     UploadProgress: function(up, file) { //上传中，显示进度条
-                 var percent = file.percent;
+                        var percent = file.percent;
                         $("#" + file.id).find('.bar').css({"width": percent + "%"});
                         $("#" + file.id).find(".percent").text(percent + "%");
                     },

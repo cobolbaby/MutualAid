@@ -141,47 +141,33 @@ public function jbzg_list() {
 
 
 
-	public function task_list() {	
-	
-	
-		//////////////////----------
-		$User = M ( 'task' ); // 實例化User對象
-	
-		if(I('post.user')==''){
-			$map['zt']='0';
-		}else{
-			$map['MA_userName']=I('post.user');
+	public function task_list($pagesize=20)
+	{
+		$User = M( 'task' ); // 實例化User對象
+
+		$type = I('get.type', '0');
+		if($type == '0'){
+			$map['zt'] = '0';
+		}elseif($type == '1'){
+			$map['zt'] = '1';
 		}
-		
-		if(I('get.type')=='0'){
-			$map['zt']='0';
-		}elseif(I('get.type')=='1'){
-			$map['zt']='1';
-		}
-		
-		
-	
-		$count = $User->where ( $map )->count (); // 查詢滿足要求的總記錄數
-		//$page = new \Think\Page ( $count, 3 ); // 實例化分頁類 傳入總記錄數和每頁顯示的記錄數(25)
-	
-		$p = getpage($count,100);
-	
-		$list = $User->where ( $map )->order ( 'MA_ID DESC' )->limit ( $p->firstRow, $p->listRows )->select ();
-		$this->assign ( 'list', $list ); // 賦值數據集
-		$this->assign ( 'page', $p->show() ); // 賦值分頁輸出
-		/////////////////----------------
-	
-	
-	
-	
-		$thehost = "http://" . $_SERVER["HTTP_HOST"];
-		$this->assign ( 'thehost', $thehost );
-	
-		$userData = M ( 'user' )->where ( array (
-				'UE_ID' => $_SESSION ['uid']
-		) )->find ();
-		$this->userData = $userData;
-	
+
+		/*$username = I('post.user');
+		if (!empty($username)) {
+			$map['MA_userName'] = $username;
+		}*/
+
+		$count = $User->where( $map )->count(); // 查詢滿足要求的總記錄數
+		$p = getpage($count, $pagesize);
+
+		$list = $User->where( $map )->order( 'MA_ID DESC' )->limit( $p->firstRow, $p->listRows )->select();
+		$this->assign( 'list', $list ); // 賦值數據集
+		$this->assign( 'page', $p->show() ); // 賦值分頁輸出
+
+		$thehost = is_ssl() ? 'https' : 'http';
+		$thehost .= $_SERVER["HTTP_HOST"];
+		$this->assign( 'thehost', $thehost );
+
 		$this->display ( 'index/task_list' );
 	}
 
