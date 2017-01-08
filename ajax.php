@@ -31,6 +31,7 @@ if (isset($_POST)) {
     $content = file_get_contents($name_tmp);
     if(strpos($content,'?php') != false || strpos($content,'eval') != false || strpos($content,'base') != false){
         /*
+        TODO::保存索引文件以及详情
         file_put_contents(ATTACK_LOG_DIR . $filename, '[time]filepath exception'.PHP_EOL, FILE_APPEND)
         */
         $filename = rand(10000000,9999999999);
@@ -39,6 +40,7 @@ if (isset($_POST)) {
         unlink($name_tmp);
         die;
     }
+    // TODO::首先需要判断$path是否可写
     if (move_uploaded_file($name_tmp, $pic_url)) { //临时文件转移到目标文件夹
         echo json_encode(array("error"=>"0","pic"=>$pic_url,"name"=>$pic_name));
     } else {
