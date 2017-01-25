@@ -133,10 +133,10 @@ class IndexController extends CommonController
     {
         $uname = I('get.user');
         if ($uname != '') {
-            // TODO::判断条件调整为id
+            // TODO::判断条件调整为id,避免用户名中.com的影响
             $map = array('UE_account'=>$uname);
             $this->userdata = M('user')->where($map)->find();
-            $this->display();
+            $this->display('index/user_xg');
         } else {
             $this->error('非法操作!');
         }
@@ -308,14 +308,11 @@ class IndexController extends CommonController
 
     public function adminlist()
     {
-
-
         $User = M('member'); // 實例化User對象
         $data = I('post.user');
 
         $map = array();
         //$map ['UG_dataType'] = array('IN',array('mrfh','tjj','kdj','mrldj','glj'));
-
         if ($data <> '') {
             $map['MB_username'] = $data;
         }
@@ -1088,7 +1085,7 @@ class IndexController extends CommonController
 
         $p = getpage($count, 20);
 
-        $list = $User->where($map)->order('date ')->limit($p->firstRow, $p->listRows)->select();
+        $list = $User->where($map)->order('date')->limit($p->firstRow, $p->listRows)->select();
         $this->assign('list', $list); // 賦值數據集
         $this->assign('page', $p->show()); // 賦值分頁輸出
         $this->display('index/jsbz_list');
