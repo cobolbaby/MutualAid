@@ -313,7 +313,7 @@ class IndexController extends CommonController
         $User = M('member'); // 實例化User對象
         $data = I('post.user');
 
-
+        $map = array();
         //$map ['UG_dataType'] = array('IN',array('mrfh','tjj','kdj','mrldj','glj'));
 
         if ($data <> '') {

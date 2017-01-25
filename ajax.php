@@ -1,12 +1,7 @@
 <?php
 $typeArr = array("jpg", "png", "gif");//允许上传文件格式
 $path = "Uploads/";//上传路径
-
 define('ATTACK_LOG_DIR', '');
-function saveLog()
-{
-
-}
 
 if (isset($_POST)) {
     $name = $_FILES['file']['name'];
