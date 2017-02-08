@@ -876,27 +876,30 @@ class InfoController extends CommonController
     $this->detail = true;
     $this->display();
    }
+   
    //奖金钱包 
-   public function cwhistory(){
+   public function cwhistory()
+   {
         //////////////////----------
-    $User = M('user_jl'); // 實例化User對象
+        $User = M('user_jl'); // 實例化User對象
 
-    $map2['user'] = $_SESSION['uname'];
-    $count2 = $User->where($map2)->count(); // 查詢滿足要求的總記錄數
-    //$page = new \Think\Page ( $count, 3 ); // 實例化分頁類 傳入總記錄數和每頁顯示的記錄數(25)
+        $map2['user'] = $_SESSION['uname'];
+        $count2 = $User->where($map2)->count(); // 查詢滿足要求的總記錄數
+        //$page = new \Think\Page ( $count, 3 ); // 實例化分頁類 傳入總記錄數和每頁顯示的記錄數(25)
 
-    $p2 = getpage($count2, 10);
+        $p2 = getpage($count2, 10);
 
-    $list2 = $User->where($map2)->order('id DESC')->limit($p2->firstRow, $p2->listRows)->select();
-    $this->assign('list2', $list2); // 賦值數據集
-    $this->assign('page2', $p2->show()); // 賦值分頁輸出
-    /////////////////----------------
+        $list2 = $User->where($map2)->order('id DESC')->limit($p2->firstRow, $p2->listRows)->select();
+        $this->assign('list2', $list2); // 賦值數據集
+        $this->assign('page2', $p2->show()); // 賦值分頁輸出
+        /////////////////----------------
 
-    //激活导航
-    $this->detail = true;
+        //激活导航
+        $this->detail = true;
 
-    $this->display();
+        $this->display();
    }
+
    //总账记录，当前历史记录
    public function nwhistory(){
     //////////////////----------

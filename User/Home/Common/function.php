@@ -614,7 +614,7 @@ function jlj($a, $b, $c)
     //提供帮助的推荐人资料
     $tgbz_user_xx = M('user')->where(array('UE_account' => $a))->find();
     //echo $ppddxx['p_id'];die;
-    if ($tgbz_user_xx['sfjl'] == 1) {
+    if (($tgbz_user_xx['sfjl'] == 1)  && ($b != 0)) {
         $money = $b;
         $accname_zq = M('user')->where(array('UE_account' => $tgbz_user_xx['ue_account']))->find();
         M('user')->where(array('UE_account' => $tgbz_user_xx['ue_account']))->setInc('jl_he', $money);
@@ -663,7 +663,7 @@ function jlj2($a, $b, $c, $d, $e)
 function jlj3($a, $b, $c, $d, $e)
 {
 
-    if(!empty($a)){
+    if(!empty($a) && ($b!=0)){
         $tgbz_user_xx = M('user')->where(array('UE_account' => $a))->find();          //获取推荐资料
         $ppddxx = M('ppdd')->where(array('id' => $e))->find();      //获取提供帮助者的配对
         $peiduidate = M('tgbz')->where(array('id' => $ppddxx['p_id'], 'user' => $ppddxx['p_user']))->find();        //获取tgbz表中的信息
@@ -683,8 +683,8 @@ function jlj3_ok($a, $b, $c, $d, $e)
 {
     if(!empty($a)){
  
-        $ppddxx = M('ppdd')->where(array('id' => $e))->find();      //获取提供帮助者的配对
-        $peiduidate = M('tgbz')->where(array('id' => $ppddxx['p_id'], 'user' => $ppddxx['p_user']))->find();       //获取tgbz表中的信息
+        // $ppddxx = M('ppdd')->where(array('id' => $e))->find();      //获取提供帮助者的配对
+        // $peiduidate = M('tgbz')->where(array('id' => $ppddxx['p_id'], 'user' => $ppddxx['p_user']))->find();       //获取tgbz表中的信息
 
         M('user')->where(array('UE_account' => $a))->setInc('jl_he', $b);
   
@@ -865,7 +865,7 @@ function fftuijianmoney($var,$money,$level){
             $reg4 = M ( 'userget' )->add ( $record3 );
 
     jsaccountmoney($var,$money,$accname_xz['levelname']);
-    if($accname_xz['ue_accname']<>'' && isset($tjratearr[$level])){  //---------->添加了个数组大小的判断
+    if($accname_xz['ue_accname']<>'' && isset($tjratearr[$level]) && $level < 4){  //---------->添加了个数组大小的判断
         fftuijianmoney($accname_xz['ue_accname'],$money,$level+1);
     }else{
         return true;
