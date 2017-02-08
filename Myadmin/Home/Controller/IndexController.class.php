@@ -1347,22 +1347,16 @@ class IndexController extends CommonController
     public function tgbz_list_sd_cl()
     {
         $data = I('post.');
-        $arr = explode(',', I('post.arrid')); //-------------------->获取要与之配对的接收帮助的人列表
-        //dump($arr);
-        $p_tgbz = M('tgbz')->where(array('id' => $data['pid']))->find(); //-------------------- 从tgbz帮助的表中获取信息
-        global $p_id2;
-        $p_id2 = $data['pid'];
         if ($data['arrzs'] <> $data['jb']) {
             $this->error('匹配金额不等!');
         } else {
-
+            // 匹配提现
             $pipeits = 0;
 
-
+            $arr = explode(',', trim(I('post.arrid'), ',')); //-------------------->获取要与之配对的接收帮助的人列表
+            $p_tgbz = M('tgbz')->where(array('id' => $data['pid']))->find(); //-------------------- 从tgbz帮助的表中获取信息
             foreach ($arr as $val) {
                 $g_user = M('jsbz')->where(array('id' => $val))->find();      //-------------------- 从jsbz帮助的表中获取信息
-                //echo $g_user['user'].'<br>';
-                //echo $p_user['user'].'<br>';die;
                 //如果是提供帮助和接收帮助的人都是自己
                 if ($g_user['user'] == $p_tgbz['user']) {
                     $sfxd = '1';
@@ -1373,26 +1367,25 @@ class IndexController extends CommonController
             }
 
             if ($sfxd == '0') {
-
+                global $p_id2;
+                $p_id2 = $data['pid'];
                 foreach ($arr as $val) {
-
                     if ($val <> '') {
-                        //$p_id2充值ID ,$val提现ID
-                        //与提供帮助者为参照物
+                        //$p_id2提供帮助ID ,$val提现ID
                         if (ppdd_add($p_id2, $val)) {
                             $pipeits++;
-                            M('tgbz')->where(array('id' => $data['pid']))->setInc('cf_ds', 1);   //------------------------》这个是什么意思还没搞明白 并且最好他们还删除了该条记录
+                            // M('tgbz')->where(array('id' => $data['pid']))->setInc('cf_ds', 1);   //------------------------》这个是什么意思还没搞明白 并且最好他们还删除了该条记录
                         }
                     }
                 }
             } else {
                 $usercf = '用户名重复';
             }
+
             if ($pipeits <> '0') {
                 $p_user1 = M('tgbz')->where(array('id' => $data['pid']))->find();
                 //获取刚匹配的在ppdd添加的数据
                 $tj_ppdd = M('ppdd')->where(array('p_id' => $p_user1['id']))->select();
-
                 foreach ($tj_ppdd as $value) {
 
                     $data2['zffs1'] = $p_user1['zffs1'];
@@ -1400,22 +1393,17 @@ class IndexController extends CommonController
                     $data2['zffs3'] = $p_user1['zffs3'];
                     $data2['user'] = $p_user1['user'];
                     $data2['jb'] = $value['jb'];//-------------------------------------->以实际匹配的金币为准确
-                    $data2['user_nc'] = $p_user1['user_nc'];
-                    $data2['user_tjr'] = $p_user1['user_tjr'];
+                    $data2['user_nc'] = $p_user1['user_nc']; // 真实姓名
+                    $data2['user_tjr'] = $p_user1['user_tjr']; // 推荐人/上级
                     $data2['date'] = $p_user1['date'];
                     $data2['zt'] = $p_user1['zt'];
                     $data2['qr_zt'] = $p_user1['qr_zt'];
-                    //添加数据了
                     $varid = M('tgbz')->add($data2);
 
                     M('ppdd')->where(array('id' => $value['id']))->save(array('p_id' => $varid));
-
                 }
-
                 M('tgbz')->where(array('id' => $data['pid']))->delete();
-
             }
-
 
             $this->success('匹配成功!拆分成' . $pipeits . '条订单,' . $usercf . '!');
         }

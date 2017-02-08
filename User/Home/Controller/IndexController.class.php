@@ -1582,24 +1582,24 @@ public function home() {
 		$this->display('home_ddxx_pcz');
 	}
 
-	public function home_ddxx_pcz_cl(){
+	public function home_ddxx_pcz_cl()
+	{
 
-		$data_P = I ( 'post.' );
-		//echo strlen(trim($data_P['mesg']));die;
+		$data_P = I( 'post.' );
 		$ppddxx=M('ppdd')->where(array('id'=>$data_P['id'],'zt'=>'0'))->find();
 		
 		//如果不是本人
 		if ($ppddxx['p_user']<>$_SESSION['uname']) {
-		
 			die("<script>alert('非法操作！');history.back(-1);</script>");
 		}elseif($data_P['comfir2']<>'1') {
 		    die("<script>alert('请选择,我完成打款！');history.back(-1);</script>");
 		}else {
-			if($data_P['comfir2']=='1'){
+			if(empty($data_P['face180'])){
+				$this->error('请先上传付款截图!');
+				exit;
+			}
 
-				if(empty($data_P['face180'])){
-					$this->error('请先上传付款截图!');
-				}
+			if($data_P['comfir2']=='1'){
 				M('ppdd')->where(array('id'=>$data_P['id'],'zt'=>'0'))->save(array('pic'=>$data_P['face180'],'zt'=>'1','qr_zt'=>1,'date_hk'=>date ( 'Y-m-d H:i:s', time () )));
 				M('tgbz')->where(array('id'=>$ppddxx['p_id']))->save(array('is_dakuan'=>1,'date_hk'=>date ( 'Y-m-d H:i:s', time ())));
 			}
@@ -1619,11 +1619,10 @@ public function home() {
 				$reg = M ( 'ppdd_ly' )->add ( $record );
 			}
 			if(M('user_jj')->where(array('r_id'=>$ppddxx['id']))->find()){
-				$get_user=M('user')->where(array('UE_account'=>$ppddxx['g_user']))->find();
-				//if($get_user['ue_phone']) sendSMS($get_user['ue_phone'],"亲爱的YBI家人，您申请接受帮助的资金: ".$ppddxx['jb']."元，已匹配成功，对方已确认打米。请您及时确认收米！平台提醒您：传播正能量，做诚信玩家。【YBI青创】");
+				// $get_user=M('user')->where(array('UE_account'=>$ppddxx['g_user']))->find();
+				// if($get_user['ue_phone']) sendSMS($get_user['ue_phone'],"亲爱的YBI家人，您申请接受帮助的资金: ".$ppddxx['jb']."元，已匹配成功，对方已确认打米。请您及时确认收米！平台提醒您：传播正能量，做诚信玩家。【YBI青创】");
 				die("<script>alert('提交成功,请联系对方！');parent.location.reload();</script>");
 			}else{
-				
 				
 				$peiduidate=M('tgbz')->where(array('id'=>$ppddxx['p_id'],'user'=>$ppddxx['p_user']))->find();
 				$data2['user']=$ppddxx['p_user'];

@@ -1013,14 +1013,13 @@ $mobile  = '';  //号码，以英文逗号隔开
 $mobileids   = '';  //号码唯一编号
 $content = '内容';        //内容
 
-function sendSMS($mobile,$content,$mobileids='',$http='http://api.sms.cn/mtutf8/'){
-
+function sendSMS($mobile,$content,$mobileids='',$http='http://api.sms.cn/mtutf8/')
+{
     return true;
 
     $uid = 'xx1885';
     $pwd = 'xx1886';
     return send($http,$uid,$pwd,$mobile,$content,$mobileids);
-
 }
 
 function send($http,$uid,$pwd,$mobile,$content,$mobileids,$time='',$mid='')
