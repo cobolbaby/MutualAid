@@ -101,51 +101,42 @@ function tgbz_jb($id){
 
 }
 
-                //充值,提现
-function ppdd_add($p_id,$g_id){
-
-	
-	 $g_user1 = M('jsbz')->where(array('id'=>$g_id,'zt'=>'0'))->find();
-	 $p_user1=M('tgbz')->where(array('id'=>$p_id))->find();
+//充值,提现
+function ppdd_add($p_id,$g_id)
+{
+	$g_user1=M('jsbz')->where(array('id'=>$g_id,'zt'=>'0'))->find();
+	$p_user1=M('tgbz')->where(array('id'=>$p_id))->find();
 	 
+	M('user')->where(array('UE_account'=>$p_user1['user']))->save(array('pp_user'=>$g_user1['user']));
+	M('user')->where(array('UE_account'=>$g_user1['user']))->save(array('pp_user'=>$p_user1['user']));
 	 
-	 
-	 M('user')->where(array('UE_account'=>$p_user1['user']))->save(array('pp_user'=>$g_user1['user']));
-	 M('user')->where(array('UE_account'=>$g_user1['user']))->save(array('pp_user'=>$p_user1['user']));
-	 
-	 
-	 
-	 
-	 
-    	      // echo $g_user['id'].'<br>';
-    		    $data_add['p_id']=$p_user1['id'];
-    		    $data_add['g_id']=$g_user1['id'];
-    		    $data_add['jb']=$g_user1['jb'];
-    		    $data_add['p_user']=$p_user1['user'];
-    		    $data_add['g_user']=$g_user1['user'];
-    		    $data_add['date']=date ( 'Y-m-d H:i:s', time () );
-    		    $data_add['zt']='0';
-    		    $data_add['pic']='0';
-    		    $data_add['zffs1']=$p_user1['zffs1'];
-    		    $data_add['zffs2']=$p_user1['zffs2'];
-    		    $data_add['zffs3']=$p_user1['zffs3'];
-    		    M('tgbz')->where(array('id'=>$p_id,'zt'=>'0'))->save(array('zt'=>'1'));
-    		    M('jsbz')->where(array('id'=>$g_id,'zt'=>'0'))->save(array('zt'=>'1'));
-    		   // echo $p_user1['user'].'<br>';
-    		    if(M('ppdd')->add($data_add)){
-					//查询接受方用户信息
-					$get_user=M('user')->where(array('UE_account'=>$g_user1['user']))->find();
-					if($get_user['ue_phone']) sendSMS($get_user['ue_phone'],"【财发现】尊敬的会员您好：您接受帮助的资金:".$g_user1['jb']."元，已匹配成功，请登录网站查看匹配信息！");
-					//查询接受方用户信息
-					$get_user=M('user')->where(array('UE_account'=>$p_user1['user']))->find();
-					if($get_user['ue_phone']) sendSMS($get_user['ue_phone'],"【财发现】尊敬的会员您好：您申请帮助的资金:".$p_user1['jb']."元，已匹配成功，请登录网站查看匹配信息！");
-			    	return true;
-    		    }else{
-    		    	return false;
-    		    }
-
+    $data_add['p_id']=$p_user1['id'];
+    $data_add['g_id']=$g_user1['id'];
+    $data_add['jb']=$g_user1['jb'];
+    $data_add['p_user']=$p_user1['user'];
+    $data_add['g_user']=$g_user1['user'];
+    $data_add['date']=date('Y-m-d H:i:s');
+    $data_add['zt']='0';
+    $data_add['pic']='0';
+    $data_add['zffs1']=$p_user1['zffs1']; // 支付方式
+    $data_add['zffs2']=$p_user1['zffs2'];
+    $data_add['zffs3']=$p_user1['zffs3'];
+    M('tgbz')->where(array('id'=>$p_id,'zt'=>'0'))->save(array('zt'=>'1'));
+    M('jsbz')->where(array('id'=>$g_id,'zt'=>'0'))->save(array('zt'=>'1'));
+    if(M('ppdd')->add($data_add)){
+    	//查询接受方用户信息
+    	$get_user=M('user')->where(array('UE_account'=>$g_user1['user']))->find();
+    	if($get_user['ue_phone']) sendSMS($get_user['ue_phone'],"【财发现】尊敬的会员您好：您接受帮助的资金:".$g_user1['jb']."元，已匹配成功，请登录网站查看匹配信息！");
+    	//查询提供方用户信息
+    	$get_user=M('user')->where(array('UE_account'=>$p_user1['user']))->find();
+    	if($get_user['ue_phone']) sendSMS($get_user['ue_phone'],"【财发现】尊敬的会员您好：您申请帮助的资金:".$p_user1['jb']."元，已匹配成功，请登录网站查看匹配信息！");
+    	return true;
+    }else{
+    	return false;
+    }
 
 }
+
 function user_sfxt($var)
 {
     if($var['c']==0){
@@ -216,12 +207,12 @@ function inival(){
     print_r($fo);
 }
 
-function ppdd_add2($p_id,$g_id){
-
+function ppdd_add2($p_id,$g_id)
+{
 
 	$g_user1 = M('jsbz')->where(array('id'=>$g_id))->find();
 	$p_user1=M('tgbz')->where(array('id'=>$p_id,'zt'=>'0'))->find();
-	// echo $g_user['id'].'<br>';
+	
 	$data_add['p_id']=$p_user1['id'];
 	$data_add['g_id']=$g_user1['id'];
 	$data_add['jb']=$p_user1['jb'];
@@ -235,7 +226,7 @@ function ppdd_add2($p_id,$g_id){
 	$data_add['zffs3']=$p_user1['zffs3'];
 	M('tgbz')->where(array('id'=>$p_id,'zt'=>'0'))->save(array('zt'=>'1'));
 	M('jsbz')->where(array('id'=>$g_id,'zt'=>'0'))->save(array('zt'=>'1'));
-	// echo $p_user1['user'].'<br>';
+
 	if(M('ppdd')->add($data_add)){
 		//查询接受方用户信息
 		$get_user=M('user')->where(array('UE_account'=>$g_user1['user']))->find();

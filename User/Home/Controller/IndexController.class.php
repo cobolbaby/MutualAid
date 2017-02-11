@@ -1582,24 +1582,24 @@ public function home() {
 		$this->display('home_ddxx_pcz');
 	}
 
-	public function home_ddxx_pcz_cl(){
+	public function home_ddxx_pcz_cl()
+	{
 
-		$data_P = I ( 'post.' );
-		//echo strlen(trim($data_P['mesg']));die;
+		$data_P = I( 'post.' );
 		$ppddxx=M('ppdd')->where(array('id'=>$data_P['id'],'zt'=>'0'))->find();
 		
 		//如果不是本人
 		if ($ppddxx['p_user']<>$_SESSION['uname']) {
-		
 			die("<script>alert('非法操作！');history.back(-1);</script>");
 		}elseif($data_P['comfir2']<>'1') {
 		    die("<script>alert('请选择,我完成打款！');history.back(-1);</script>");
 		}else {
-			if($data_P['comfir2']=='1'){
+			if(empty($data_P['face180'])){
+				$this->error('请先上传付款截图!');
+				exit;
+			}
 
-				if(empty($data_P['face180'])){
-					$this->error('请先上传付款截图!');
-				}
+			if($data_P['comfir2']=='1'){
 				M('ppdd')->where(array('id'=>$data_P['id'],'zt'=>'0'))->save(array('pic'=>$data_P['face180'],'zt'=>'1','qr_zt'=>1,'date_hk'=>date ( 'Y-m-d H:i:s', time () )));
 				M('tgbz')->where(array('id'=>$ppddxx['p_id']))->save(array('is_dakuan'=>1,'date_hk'=>date ( 'Y-m-d H:i:s', time ())));
 			}
@@ -1619,11 +1619,10 @@ public function home() {
 				$reg = M ( 'ppdd_ly' )->add ( $record );
 			}
 			if(M('user_jj')->where(array('r_id'=>$ppddxx['id']))->find()){
-				$get_user=M('user')->where(array('UE_account'=>$ppddxx['g_user']))->find();
-				//if($get_user['ue_phone']) sendSMS($get_user['ue_phone'],"亲爱的YBI家人，您申请接受帮助的资金: ".$ppddxx['jb']."元，已匹配成功，对方已确认打米。请您及时确认收米！平台提醒您：传播正能量，做诚信玩家。【YBI青创】");
+				// $get_user=M('user')->where(array('UE_account'=>$ppddxx['g_user']))->find();
+				// if($get_user['ue_phone']) sendSMS($get_user['ue_phone'],"亲爱的YBI家人，您申请接受帮助的资金: ".$ppddxx['jb']."元，已匹配成功，对方已确认打米。请您及时确认收米！平台提醒您：传播正能量，做诚信玩家。【YBI青创】");
 				die("<script>alert('提交成功,请联系对方！');parent.location.reload();</script>");
 			}else{
-				
 				
 				$peiduidate=M('tgbz')->where(array('id'=>$ppddxx['p_id'],'user'=>$ppddxx['p_user']))->find();
 				$data2['user']=$ppddxx['p_user'];
@@ -1639,12 +1638,11 @@ public function home() {
 
 					//第一个参数 提供帮助的直接推荐人      管理奖金额           说明                   1          ppdd外键id
 					jlj3($tgbz_user_xx['ue_accname'],$ppddxx['jb']*C("jjtuijianrate")/100,'直推奖'.C("jjtuijianrate").'%',1,$ppddxx['id']);
-					
+					/*
 					if($tgbz_user_xx['zcr']<>''){
 						$zcr2=jlj2($tgbz_user_xx['zcr'],$ppddxx['jb']*((float)$mmtemparr[0])/100,'直推奖'.$mmtemparr[0].'%',1,$ppddxx['id']);
 						if($zcr2<>''){
 							$zcr3=jlj2($zcr2,$ppddxx['jb']*((float)$mmtemparr[1])/100,'直推奖'.$mmtemparr[1].'%',2,$ppddxx['id']);
-							//echo $ppddxx['p_user'].'sadfsaf';die;
 							if($zcr3<>''){
 								$zcr4=jlj2($zcr3,$ppddxx['jb']*((float)$mmtemparr[2])/100,'直推奖'.$mmtemparr[2].'%',3,$ppddxx['id']);
 								if($zcr4<>''){
@@ -1669,11 +1667,11 @@ public function home() {
 							}
 						}
 					}
-					
+					*/
 
 					
-					$get_user=M('user')->where(array('UE_account'=>$ppddxx['g_user']))->find();
-					//if($get_user['ue_phone']) sendSMS($get_user['ue_phone'],"您好！您申请帮助的资金：".$ppddxx['jb']."元，对方已打款。请查收！如需购买程序,请联系唯一客服QQ:74 222 4183【深圳蒲公英科技】");
+					// $get_user=M('user')->where(array('UE_account'=>$ppddxx['g_user']))->find();
+					// if($get_user['ue_phone']) sendSMS($get_user['ue_phone'],"您好！您申请帮助的资金：".$ppddxx['jb']."元，对方已打款。请查收！如需购买程序,请联系唯一客服QQ:74 222 4183【深圳蒲公英科技】");
 					die("<script>alert('提交成功,请联系对方确认收款！');parent.location.reload();</script>");
 				}else{
 					die("<script>alert('提交失败,请联系管理员！');history.back(-1);</script>");
@@ -1714,9 +1712,7 @@ public function home() {
 		//echo strlen(trim($data_P['mesg']));die;
 		$ppddxx=M('ppdd')->where(array('id'=>$data_P['id'],'zt'=>'1'))->find();   //获取提交的id所对应的并且已经支付的数据
 	
-	
-		if ($ppddxx['g_user']<>$_SESSION['uname']) {
-	
+		if ($ppddxx['g_user']<>$_SESSION['uname']) {	
 			die("<script>alert('非法操作！');history.back(-1);</script>");
 		}elseif($data_P['comfir']<>'1'&&$data_P['comfir']<>'2'&&$data_P['comfir']<>'3') {
 			die("<script>alert('请选择,确认收款或未收到款投诉！');history.back(-1);</script>");
@@ -1725,7 +1721,7 @@ public function home() {
 		}else {
 			if($data_P['comfir']=='1'){
 				//在配对表中写人zt = 2 说明已经交易成功
-				M('ppdd')->where(array('id'=>$data_P['id'],'zt'=>'1'))->save(array('zt'=>'2','qr_zt'=>2,'dk_date'=>date('Y-m-d H:i:s',time ())));//更新此订单状态    
+				M('ppdd')->where(array('id'=>$data_P['id'],'zt'=>'1'))->save(array('zt'=>'2','qr_zt'=>2,'date_qr'=>date('Y-m-d H:i:s',time ())));//更新此订单状态    
 				M('tgbz')->where(array('id'=>$ppddxx['p_id']))->save(array('is_dakuan'=>2));   
 				//获取接收帮助交易的金额
 				$txyqr=M('ppdd')->where(array('g_id'=>$ppddxx['g_id'],'zt'=>'2'))->sum('jb');
@@ -1769,7 +1765,7 @@ public function home() {
 
 
 				    jlj3_ok($tgbz_user_xx['ue_accname'],$ppddxx['jb']*C("jjtuijianrate")/100,'直推奖'.C("jjtuijianrate").'%',1,$ppddxx['id']);
-				    //$money_jlj1=;
+				    /*
 				    //经理代数奖 如  5,3,2,1,1,1,1,1,1  olnho
 				    $mmtemparr = explode(',',C("jjjldsrate"));
 				    //推荐人用户名  zcr 
@@ -1810,7 +1806,7 @@ public function home() {
 					    	}
 						}
 				    }
-				    
+				    */
 				    
 				    // 			    							for($ib=9;$ib>0;$ib++){
 				    // 			    								if($zcr9==''){break;}
