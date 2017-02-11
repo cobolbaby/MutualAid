@@ -2467,6 +2467,7 @@ public function home() {
 	}
 
 
+/*	
 	public function moneyTocyj(){
 	 	$user_data = M('user')->where(array('UE_account'=>$_SESSION['uname']))->find();
 
@@ -2536,6 +2537,7 @@ public function home() {
 			$this->success('转化成功!');
 	 	}
 	 }
+*/
 
 	   //清理缓存
     public function clear_rubbish(){
