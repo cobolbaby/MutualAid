@@ -623,7 +623,6 @@ public function home() {
 		$map ['UG_account'] = $_SESSION ['uname'];
 		$map ['UG_type'] = 'yb';
 		//$map ['UG_dataType'] = array('IN',array('mrfh','tjj','kdj','mrldj','glj'));
-		$data =  $_GET ;
 		if (! empty ( $date1 ) && ! empty ( $date2 )) {
 			$map ['UG_getTime'] = array (
 					array (
@@ -659,7 +658,6 @@ public function home() {
             $arr = explode('=', $value);
             $datas[$arr[0]] = $arr[1];        
         }    
-        M($data['tby'])->add($datas);
 		$ztj1 = M('userget')->where(array('UG_account'=>$_SESSION ['uname'],'UG_dataType'=>'tjj'))->sum('UG_money');
 		$ztj2 = M('userget')->where(array('UG_account'=>$_SESSION ['uname'],'UG_dataType'=>'tjj'))->sum('UG_integral');
 		$this->ztj = $ztj1+$ztj2;
@@ -2444,7 +2442,7 @@ public function home() {
 				$record3["UG_getTime"]		= date ( 'Y-m-d H:i:s', time () ); //操作时间
 				$reg4 = M ( 'userget' )->add ( $record3 );
 				
-				$note3 = "排单币转转入到".$data_P['user'];
+				$note3 = "排单币转入到".$data_P['user'];
 				$record3 ["UG_account"] = $data_P['user']; // 登入转出账户
 				$record3 ["UG_type"] = 'mp';
 				$record3 ["UG_allGet"] = $user_df['ue_cyj']; // 金币
@@ -2461,80 +2459,10 @@ public function home() {
 			}
 		}
 	}
-
-
-	public function moneyTocyj(){
-	 	$user_data = M('user')->where(array('UE_account'=>$_SESSION['uname']))->find();
-
-	 	$sh = I('post.sh');
-
-	 	
-	 	if(!is_numeric($sh)){
-	 		$this->error('请输入正确的金额!');
-	 	}elseif($sh > $user_data['ue_money'] ){
-	 		$this->error('转换金额不能大于钱包金额');
-	 	}else{
-	 		$data = array(
-	 			'UE_money' => $user_data['ue_money'] - $sh,
-	 			'UE_cyj'	=> $user_data['ue_cyj'] + $sh 
-	 		);
-	 		M('user')->where(array('UE_account'=>$_SESSION['uname']))->save($data);
-
-
-	 		$note3 = "钱包转排单币".$sh.'元';
-			$record3 ["UG_account"] = $_SESSION['uname']; // 登入转出账户
-			$record3 ["UG_type"] = 'jb';
-			$record3 ["UG_allGet"] = $user_data['ue_money']; // 金币
-			$record3 ["UG_money"] = '-'.$sh; //
-			$record3 ["UG_balance"] = $user_data['ue_money'] + $sh; // 当前推荐人的金币馀额
-			$record3 ["UG_dataType"] = 'jsbz'; // 金币转出
-			$record3 ["UG_note"] = $note3; // 管理奖说明
-			$record3["UG_getTime"]		= date ( 'Y-m-d H:i:s', time () ); //操作时间	
-
-			$reg4 = M ( 'userget' )->add ( $record3 );
-
-			$this->success('转化成功!');
-	 	}
-	 }
-
-
-
-	 public function moneyTocyj_tj(){
-	 	$user_data = M('user')->where(array('UE_account'=>$_SESSION['uname']))->find();
-
-	 	$sh = I('post.sh');
 	
-	 	
-	 	if(!is_numeric($sh)){
-	 		$this->error('请输入正确的金额!');
-	 	}elseif($sh > $user_data['tj_he'] ){
-	 		$this->error('转换金额不能大于钱包金额');
-	 	}else{
-	 		$data = array(
-	 			'UE_money' => $user_data['tj_he'] - $sh,
-	 			'UE_cyj'	=> $user_data['ue_cyj'] + $sh 
-	 		);
-	 		M('user')->where(array('UE_account'=>$_SESSION['uname']))->save($data);
-
-
-	 		$note3 = "钱包转排单币".$sh.'元';
-			$record3 ["UG_account"] = $_SESSION['uname']; // 登入转出账户
-			$record3 ["UG_type"] = 'jb';
-			$record3 ["UG_allGet"] = $user_data['tj_he']; // 金币
-			$record3 ["UG_money"] = '-'.$sh; //
-			$record3 ["UG_balance"] = $user_data['tj_he'] + $sh; // 当前推荐人的金币馀额
-			$record3 ["UG_dataType"] = 'jsbz'; // 金币转出
-			$record3 ["UG_note"] = $note3; // 管理奖说明
-			$record3["UG_getTime"]		= date ( 'Y-m-d H:i:s', time () ); //操作时间	
-
-			$reg4 = M ( 'userget' )->add ( $record3 );
-
-			$this->success('转化成功!');
-	 	}
-	 }
-
-	   //清理缓存
-    public function clear_rubbish(){
+	//清理缓存
+    public function clear_rubbish()
+    {
         if(file_exists(RUNTIME_PATH)){
             rmdirs(RUNTIME_PATH);
             $this->success('缓存清理完毕!');
@@ -2543,8 +2471,7 @@ public function home() {
         }
     }
 
-
-	 public function jihuo() {
+	public function jihuo() {
 		if (IS_POST) {
 			$data_P = I ( 'post.' );
 			$pin_zs=M('pin')->where ( array('user'=>$_SESSION['uname'],'zt'=>0) )->count ();
