@@ -456,36 +456,15 @@ class CommonController extends Controller {
 
 	
 
-	/*public function uploadFace() {
-
-	
-
-		//if (!$this->isPost()) {
-
-		//	$this->error('页面不存在');
-
-		//}
-
-		//echo 'asdfsaf';die;
-
+	/*
+	public function uploadFace()
+	{
 		$upload = $this->_upload('Pic');
-
 		$this->ajaxReturn($upload);
-
 	}
 
-	
-
-	
-
-	
-
-	
-
-	
-
-	Private function _upload ($path) {
-
+	private function _upload ($path)
+	{
 		import('ORG.Net.UploadFile');	//引入ThinkPHP文件上传类
 
 		$obj = new \Think\Upload();	//实例化上传类

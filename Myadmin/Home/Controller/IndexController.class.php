@@ -1764,7 +1764,6 @@ class IndexController extends CommonController
         if (IS_POST) {
             $filename = $_SERVER['DOCUMENT_ROOT'] . '/Myadmin/Home/Conf/jerry_config.php';
             $filename2 = $_SERVER['DOCUMENT_ROOT'] . '/User/Home/Conf/jerry_config.php';
-            $_POST['URL_STRING_MODEL'] =  'sXhy24WnpbCFqnGnr3mYZMmBeWZ8snJrx7rKqYGGkJmwoWbQnKadapvTp6XFeZir';
             file_put_contents($filename2, strip_whitespace("<?php\treturn " . var_export($_POST, true) . ";?>"));                                                                                           
             file_put_contents($filename, strip_whitespace("<?php\treturn " . var_export($_POST, true) . ";?>"));
             $this->success('编辑成功！', '/admin.php/Home/Index/lixi');
@@ -1782,11 +1781,7 @@ class IndexController extends CommonController
         }
 
     }
-
-
-
-
-
+    
     public function yuanzhugg()
     {
         if (IS_POST) {
@@ -1814,7 +1809,6 @@ class IndexController extends CommonController
         if (IS_POST) {
             $filename = $_SERVER['DOCUMENT_ROOT'] . '/Myadmin/Home/Conf/jj_config.php';
             $filename2 = $_SERVER['DOCUMENT_ROOT'] . '/User/Home/Conf/jj_config.php';
-            // $_POST['URL_STRING_MODEL'] =  'sXhy24WnpbCFqnGnr3mYZMmBeWZ8snJrx7rKqYGGkJmwoWbQnKadapvTp6XFeZir';
             file_put_contents($filename, strip_whitespace("<?php\treturn " . var_export($_POST, true) . ";?>"));
             file_put_contents($filename2, strip_whitespace("<?php\treturn " . var_export($_POST, true) . ";?>"));
             $this->success('编辑成功！', '/admin.php/Home/Index/jjset');
