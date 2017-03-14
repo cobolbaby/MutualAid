@@ -2445,16 +2445,14 @@ public function home() {
 			}
 		}
 	}
-<<<<<<< HEAD
 
-
-/*	
+/*
 	public function moneyTocyj(){
 	 	$user_data = M('user')->where(array('UE_account'=>$_SESSION['uname']))->find();
 
 	 	$sh = I('post.sh');
 
-	 	
+
 	 	if(!is_numeric($sh)){
 	 		$this->error('请输入正确的金额!');
 	 	}elseif($sh > $user_data['ue_money'] ){
@@ -2520,14 +2518,9 @@ public function home() {
 	 }
 */
 
-	   //清理缓存
-    public function clear_rubbish(){
-=======
-	
 	//清理缓存
     public function clear_rubbish()
     {
->>>>>>> dc17f81982f247a0c4b75ea3d50e7f667ef7e92e
         if(file_exists(RUNTIME_PATH)){
             rmdirs(RUNTIME_PATH);
             $this->success('缓存清理完毕!');
