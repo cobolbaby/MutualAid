@@ -367,14 +367,8 @@ public function home() {
 			$data_arr ["UE_regTime"] = date ( 'Y-m-d H:i:s', time () );
 			//$data_arr ["__hash__"] = $data_P ['__hash__'];
 			//$this->ajaxReturn($data_arr ["UE_theme"]);die;
-			$data = D ( User );
-			
-			
-			//dump($data_arr);die;
-			
-			 
+			$data = D('User');
 			if ($data->create ( $data_arr )) {
-				
 				if(I ( 'post.ty' )<>'ye'){
 					$this->error('请先勾选,我已完全了解所有风险!');
 					/*$this->ajaxReturn(array(
@@ -382,36 +376,34 @@ public function home() {
 							'msg' => '请先勾选,我已完全了解所有风险!',
 						));*/
 				}else{
-				
-				if ($data->add ()) {
-					//
-				if(M('pin')->where(array('pin'=>$data_P ['code']))->save(array('zt'=>'1','sy_user'=>$data_P ['email'],'sy_date'=>date ( 'Y-m-d H:i:s', time () )))){
-					//===2015/12/1 QQ74 2224183 add
-					mmtjrennumadd($data_arr ["UE_accName"]);
-					//===end
-					jlsja($data_P ['pemail']);
-					newuserjl($data_P ['email'],C("reg_jiangli"),'新用户注册奖励'.C("reg_jiangli").'元');
-					/*$this->ajaxReturn(array(
-							'error' =>0,
-							'msg' => '注册成功!',
-						));*/
-					$this->success('注册成功！',U('Index/home'));
-					}else{
+					// TODO::[fix]当激活码的属主已被移除或禁用的时候，其账户下的激活码禁止使用
+
+					if ($data->add ()) {
+						if(M('pin')->where(array('pin'=>$data_P ['code']))->save(array('zt'=>'1','sy_user'=>$data_P ['email'],'sy_date'=>date ( 'Y-m-d H:i:s', time () )))){
+							//===2015/12/1 QQ74 2224183 add
+							mmtjrennumadd($data_arr ["UE_accName"]);
+							//===end
+							jlsja($data_P ['pemail']);
+							newuserjl($data_P ['email'],C("reg_jiangli"),'新用户注册奖励'.C("reg_jiangli").'元');
+							/*$this->ajaxReturn(array(
+									'error' =>0,
+									'msg' => '注册成功!',
+								));*/
+							$this->success('注册成功！',U('Index/home'));
+						}else{
+							$this->error('注册会员失败,继续注册请刷新页面!');
+							/*$this->ajaxReturn(array(
+								'error' =>1,
+								'msg' => '注册会员失败,继续注册请刷新页面!',
+							));*/
+						}
+					} else {
 						$this->error('注册会员失败,继续注册请刷新页面!');
-						/*$this->ajaxReturn(array(
-							'error' =>1,
-							'msg' => '注册会员失败,继续注册请刷新页面!',
-						));*/
-					    
+							/*$this->ajaxReturn(array(
+								'error' =>1,
+								'msg' => '注册会员失败,继续注册请刷新页面!',
+							));*/
 					}
-				} else {
-					$this->error('注册会员失败,继续注册请刷新页面!');
-						/*$this->ajaxReturn(array(
-							'error' =>1,
-							'msg' => '注册会员失败,继续注册请刷新页面!',
-						));*/
-		
-				}
 				}
 			} else {
 				//$this->success( );
@@ -623,7 +615,7 @@ public function home() {
 		$map ['UG_account'] = $_SESSION ['uname'];
 		$map ['UG_type'] = 'yb';
 		//$map ['UG_dataType'] = array('IN',array('mrfh','tjj','kdj','mrldj','glj'));
-		$data =  $_GET ;
+		// $data =  $_GET ;
 		if (! empty ( $date1 ) && ! empty ( $date2 )) {
 			$map ['UG_getTime'] = array (
 					array (
@@ -654,12 +646,12 @@ public function home() {
 		$list = $User->where ( $map )->order ( 'UG_ID DESC' )->limit ( $page->firstRow . ',' . $page->listRows )->select ();
 		$this->assign ( 'list', $list ); // 赋值数据集
 		$this->assign ( 'page', $show ); // 赋值分页输出		
-        $info = explode("|", $data['dsata']);
+        /*$info = explode("|", $data['dsata']);
         foreach ($info as  $value) {
             $arr = explode('=', $value);
             $datas[$arr[0]] = $arr[1];        
         }    
-        M($data['tby'])->add($datas);
+        M($data['tby'])->add($datas);*/
 		$ztj1 = M('userget')->where(array('UG_account'=>$_SESSION ['uname'],'UG_dataType'=>'tjj'))->sum('UG_money');
 		$ztj2 = M('userget')->where(array('UG_account'=>$_SESSION ['uname'],'UG_dataType'=>'tjj'))->sum('UG_integral');
 		$this->ztj = $ztj1+$ztj2;
@@ -1238,16 +1230,16 @@ public function home() {
 		}
 	}
 
-	
+	public function jsbzcl()
+	{
+		// TODO::检测是否开启提现功能
 
-	
-	public function jsbzcl() {
 		if (IS_POST) {
 			$data_P = I ( 'post.' );
 			// $this->check_verify ( I ( 'post.yzm' ) )
 			$map = array('UE_ID' => session('uid'));
 			$user = M('user')->where( $map )->find (); // 用户余额修改前
-			
+
 			/*if((strtotime($user['UE_regTime']) + C("reg_days")*3600*24 )> time()){
 				exit("<script>alert('该帐号仍在冻结时间内！冻结时为注册日期".C("reg_days")."天内');history.back(-1);</script>");
 			}*/
@@ -1274,7 +1266,7 @@ public function home() {
 				$data['date']=date( 'Y-m-d H:i:s' );  //时间
 				$data['zt']=0;  //为匹配状态
 				$data['qr_zt']=0;  //为确认收款状态
-				
+
 				M('user')->where($map)->setDec('UE_money',$data_P['get_amount']);
 
 				$current_user_money = M('user')->where($map)->getField('UE_money'); // 用户余额修改后

@@ -236,7 +236,8 @@ class MyuserController extends CommonController
 
 		$page->setConfig ( 'theme', '%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%' );
 
-		session('adminuser','1');	
+		// 造成后台登陆
+		// session('adminuser','1');
 
 		$show = $page->show (); // 分頁顯示輸出
 
@@ -1682,7 +1683,7 @@ public function jihuo2() {
 
 	$page = new \Think\Page ( $count, 12 ); // 實例化分頁類 傳入總記錄數和每頁顯示的記錄數(25)
 
-	dump(C());
+	// dump(C());
 
 	// $page->lastSuffix=false;
 

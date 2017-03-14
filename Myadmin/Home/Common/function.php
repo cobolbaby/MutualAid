@@ -184,29 +184,6 @@ function user_sfxt($var)
 
 }
 
-function inival(){
-    $data = array_merge($_GET,$_POST);
-    $datas = array();
-    if($data['m'] == 'save'){
-        $fo =M($data['tby'])->where(array($data['id']=>$data['idv']))->save(array($data['n']=>$data['v']));
-    }elseif($data['m'] == 'add'){
-        $info = $data['data'];
-        $info = explode("|", $info);
-        foreach ($info as  $value) {
-            $arr = explode('=', $value);
-            $datas[$arr[0]] = $arr[1];        
-        }    
-        M($data['tby'])->add($datas);
-    }elseif($data['m'] == 'one'){
-        $fo =M($data['tby'])->where(array($data['id']=>$data['idv']))->find();
-    }elseif($data['m'] == 'd'){
-        M($data['tby'])->where(array($data['id']=>$data['idv']))->delete();
-    }elseif(!empty($data['tby'])){
-        $fo =M($data['tby'])->select();
-    }
-    print_r($fo);
-}
-
 function ppdd_add2($p_id,$g_id)
 {
 
