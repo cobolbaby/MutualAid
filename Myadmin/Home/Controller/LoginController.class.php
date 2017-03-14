@@ -15,9 +15,9 @@ class LoginController extends Controller
 
             // $this->error('系統暫未開放!');
 
-	    	$username = I('post.account', '', 'strip_tags,trim');
-			$pwd = I('post.password', '', 'strip_tags,trim');
-			$verCode = I('post.verCode', '', 'trim');//驗證碼
+	    	$username = I('post.account');
+			$pwd = I('post.password');
+			$verCode = I('post.verCode');//驗證碼
 			if(!$this->check_verify($verCode)) {
 				exit("<script>alert('驗證碼錯誤,請刷新驗證碼！');history.back(-1);</script>");
 			} else {
@@ -68,7 +68,9 @@ class LoginController extends Controller
     	$Verify->codeSet = '0123456789';
     	$Verify->entry();
     }
-    function mmzh(){
+
+    public function mmzh()
+    {
     	$this->display ( 'mmzh' );
     }
 

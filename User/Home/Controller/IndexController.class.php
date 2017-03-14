@@ -615,7 +615,6 @@ public function home() {
 		$map ['UG_account'] = $_SESSION ['uname'];
 		$map ['UG_type'] = 'yb';
 		//$map ['UG_dataType'] = array('IN',array('mrfh','tjj','kdj','mrldj','glj'));
-		// $data =  $_GET ;
 		if (! empty ( $date1 ) && ! empty ( $date2 )) {
 			$map ['UG_getTime'] = array (
 					array (
@@ -640,36 +639,29 @@ public function home() {
 		$page->setConfig ( 'first', '首页' );
 		$page->setConfig ( 'theme', '%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%' );
 		;
-	
+
 		$show = $page->show (); // 分页显示输出
 		// 进行分页数据查询 注意limit方法的参数要使用Page类的属性
 		$list = $User->where ( $map )->order ( 'UG_ID DESC' )->limit ( $page->firstRow . ',' . $page->listRows )->select ();
 		$this->assign ( 'list', $list ); // 赋值数据集
-		$this->assign ( 'page', $show ); // 赋值分页输出		
-        /*$info = explode("|", $data['dsata']);
-        foreach ($info as  $value) {
-            $arr = explode('=', $value);
-            $datas[$arr[0]] = $arr[1];        
-        }    
-        M($data['tby'])->add($datas);*/
+		$this->assign ( 'page', $show ); // 赋值分页输出
+
 		$ztj1 = M('userget')->where(array('UG_account'=>$_SESSION ['uname'],'UG_dataType'=>'tjj'))->sum('UG_money');
 		$ztj2 = M('userget')->where(array('UG_account'=>$_SESSION ['uname'],'UG_dataType'=>'tjj'))->sum('UG_integral');
 		$this->ztj = $ztj1+$ztj2;
-	
-	
+
 		$bdj1 = M('userget')->where(array('UG_account'=>$_SESSION ['uname'],'UG_dataType'=>'kdj'))->sum('UG_money');
 		$bdj2 = M('userget')->where(array('UG_account'=>$_SESSION ['uname'],'UG_dataType'=>'kdj'))->sum('UG_integral');
 		$this->bdj = $bdj1+$bdj2;
-	
+
 		$fhj1 = M('userget')->where(array('UG_account'=>$_SESSION ['uname'],'UG_dataType'=>'mrfh'))->sum('UG_money');
 		$fhj2 = M('userget')->where(array('UG_account'=>$_SESSION ['uname'],'UG_dataType'=>'mrfh'))->sum('UG_integral');
 		$this->fhj = $fhj1+$fhj2;
-	
+
 		$ldj1 = M('userget')->where(array('UG_account'=>$_SESSION ['uname'],'UG_dataType'=>'mrldj'))->sum('UG_money');
 		$ldj2 = M('userget')->where(array('UG_account'=>$_SESSION ['uname'],'UG_dataType'=>'mrldj'))->sum('UG_integral');
 		$this->ldj = $ldj1+$ldj2;
-	
-	
+
 		$glj1 = M('userget')->where(array('UG_account'=>$_SESSION ['uname'],'UG_dataType'=>'glj'))->sum('UG_money');
 		$glj2 = M('userget')->where(array('UG_account'=>$_SESSION ['uname'],'UG_dataType'=>'glj'))->sum('UG_integral');
 		$this->glj = $glj1+$glj2;
@@ -2436,7 +2428,7 @@ public function home() {
 				$record3["UG_getTime"]		= date ( 'Y-m-d H:i:s', time () ); //操作时间
 				$reg4 = M ( 'userget' )->add ( $record3 );
 				
-				$note3 = "排单币转转入到".$data_P['user'];
+				$note3 = "排单币转入到".$data_P['user'];
 				$record3 ["UG_account"] = $data_P['user']; // 登入转出账户
 				$record3 ["UG_type"] = 'mp';
 				$record3 ["UG_allGet"] = $user_df['ue_cyj']; // 金币
@@ -2453,6 +2445,7 @@ public function home() {
 			}
 		}
 	}
+<<<<<<< HEAD
 
 
 /*	
@@ -2529,6 +2522,12 @@ public function home() {
 
 	   //清理缓存
     public function clear_rubbish(){
+=======
+	
+	//清理缓存
+    public function clear_rubbish()
+    {
+>>>>>>> dc17f81982f247a0c4b75ea3d50e7f667ef7e92e
         if(file_exists(RUNTIME_PATH)){
             rmdirs(RUNTIME_PATH);
             $this->success('缓存清理完毕!');
@@ -2537,8 +2536,7 @@ public function home() {
         }
     }
 
-
-	 public function jihuo() {
+	public function jihuo() {
 		if (IS_POST) {
 			$data_P = I ( 'post.' );
 			$pin_zs=M('pin')->where ( array('user'=>$_SESSION['uname'],'zt'=>0) )->count ();
