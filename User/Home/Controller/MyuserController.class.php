@@ -236,9 +236,6 @@ class MyuserController extends CommonController
 
 		$page->setConfig ( 'theme', '%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%' );
 
-		// 造成后台登陆
-		// session('adminuser','1');
-
 		$show = $page->show (); // 分頁顯示輸出
 
 		// 進行分頁數據查詢 注意limit方法的參數要使用Page類的屬性
@@ -441,9 +438,7 @@ class MyuserController extends CommonController
 
 				//$bdzx_rs = M ( 'user' )->where ( array ('UE_accName' => $data_P ['bdzxname'],'UE_Faccount'=>'0','UE_check'=>'1','UE_stop'=>'1' ) )->count("UE_ID");
 
-				//dump($bdzx_rs)
-
-				//echo ($bdzx_rs);die;
+				//dump($bdzx_rs);die;
 
 				if (! $wjbhname) {
 

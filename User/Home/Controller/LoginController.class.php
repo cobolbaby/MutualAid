@@ -58,69 +58,30 @@ class LoginController extends Controller
 
     	if (IS_GET) {
 
-    		$username=trim(I('get.account'));
-
-    		$pwd=trim(I('get.password'));
-
-    		$pwd2=trim(I('get.secpw'));
-
-    		//dump(I('get.'));die;
-
+    		$username = I('get.account');
+    		$pwd = I('get.password');
+    		$pwd2 = I('get.secpw');
     		//$verCode = trim(I('post.verCode'));//驗證碼
 
-    		//echo $username;
-
-    		//echo $pwd;die;
-
-    		//session_unset();
-
-    		//session_destroy();
-
     		if(false){
-
     			$this->error('验证码错误,请刷新验证码!' );
-
     		}else{
 
-    			if(false){
+				$user=M('user')->where(array('UE_account'=>$username))->find();
 
-    				$this->error('账号或密码错误,或被禁用!');
+				if(!$user || $user['ue_password']!=$pwd){
+					$this->error('账号或密码错误,或被禁用!');
+				}else{
+					session('uid',$user['ue_id']);
+					session('uname',$user['ue_account']);
+                    session('logintime', NOW_TIME);
 
-    			}else{
-
-    				$user=M('user')->where(array('UE_account'=>$username))->find();
-
-    				//dump(md5($pwd));die;
-
-    				if(!$user || $user['ue_password']!=$pwd){
-
-    					//$this->ajaxReturn('账号或密码错误,或被禁用!');
-
-    					$this->error('账号或密码错误,或被禁用!');
-
-    				}else{
-
-    					session('uid',$user[ue_id]);
-
-    					session('snadmin',$user[ue_id]);
-
-    					session('uname',$user[ue_account]);
-
-    					
-
-    					session('ztjj','wtj');
-
-    					$_SESSION['logintime'] = time();
-
-    					$this->redirect('/');
-
-    				}}
+					$this->redirect('/');
+				}
 
     		}
 
     	}
-
-    
 
     }
 

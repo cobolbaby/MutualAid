@@ -26,7 +26,7 @@ class LoginController extends Controller
     				exit("<script>alert('賬號或密碼錯誤,或被禁用！');history.back(-1);</script>");
     			}else{
 					// 记录管理员名称以及管理员权限
-                    // session('uid', $user['mb_id']);
+                    session('uid', $user['mb_id']);
     				session('adminuser', $user['mb_username']);
     				session('adminqx', $user['mb_right']);
     				session('logintime', NOW_TIME);
@@ -95,7 +95,7 @@ class LoginController extends Controller
     				//$this->ajaxReturn( array('nr'=>'賬號或密碼錯誤,或被禁用!','sf'=>0) );
     			}else{
     				$user=M('user')->where(array('UE_account'=>$username))->find();
-    
+
     				if(!$user){
     					//$this->ajaxReturn('賬號或密碼錯誤,或被禁用!');
     					//$this->ajaxReturn( array('nr'=>'賬號或密碼錯誤,或被禁用!','sf'=>0) );
@@ -105,70 +105,12 @@ class LoginController extends Controller
     				}else{
     					$this->user = $user;
     					$this->display ( 'mmzh2' );
-    
+
     				}}
     		}
     	}
-    
+
     }
-    
-    public function mmzh3() {
-    
-    	if (IS_POST) {
-    		$data_P = I ( 'post.' );
-    		//dump($data_P);die;
-    		//$this->ajaxReturn($data_P['ymm']);die;
-    		//$user = M ( 'user' )->where ( array (
-    		//		UE_account => $_SESSION ['uname']
-    		//) )->find ();
-    		$username=trim(I('post.user'));
-    		$user1 = M ();
-    		//
-    		//
-    		
-    		if(! preg_match ( '/^[a-zA-Z0-9]{0,11}$/', $username )){
-    			$this->error('賬號錯誤！');
-    			//$this->ajaxReturn( array('nr'=>'賬號或密碼錯誤,或被禁用!','sf'=>0) );
-    		}else{
-    			$addaccount=M('user')->where(array('UE_account'=>$username))->find();
-    		}
-    		
-    		
-    		
-    		if ( $user1->autoCheckToken ( $_POST )) {
-    			$this->error('重複提交,請刷新頁面!');
-    		}elseif ($addaccount) {
-               
-               $this->error('非法操作!');
-    		}elseif ($addaccount['ue_question'] !='') {
-    			$this->error('您從未綁定過密保,請先綁定保密!');
-    		}elseif ($addaccount['ue_answer']<> session('adminuser','1')||session('logintime',time())<>$data_P['da2']||$addaccount['ue_answer3']<>$data_P['da3']) {
-    			$this->error('原密保答案不正確！');
-    		}elseif (!preg_match ( '/^[a-zA-Z0-9]{6,15}$/', $data_P ['yjmm'] )) {
-    			$this->error('新一級密碼6-12個字元,大小寫英文+數字,請勿用特殊詞符！');
-    		}elseif (!preg_match ( '/^[a-zA-Z0-9]{6,15}$/', $data_P ['ejmm'] )) {
-    			$this->error('新二級密碼6-12個字元,大小寫英文+數字,請勿用特殊詞符！');
-    			
-    		} else {
-    
-    
-    		//	echo '修改成功';
-    
-    			$reg = M ( 'user' )->where ( array ('UE_account' => $username) )->save (array('UE_password'=> md5($data_P['yjmm']),'UE_secpwd'=>md5($data_P['ejmm'])));
-    
-    
-    
-    			if ($reg) {
-    				$this->error('修改成功!','/');
-    				
-    			} else {
-    				$this->error('修改失敗,請換一組新密碼在試!');
-    				
-    			}
-    			//}
-    		}
-    	}
-    }
-    
-    
+
+
 }

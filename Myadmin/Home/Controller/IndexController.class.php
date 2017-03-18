@@ -1785,11 +1785,11 @@ class IndexController extends CommonController
     public function yuanzhugg()
     {
         if (IS_POST) {
-            $filename = $_SERVER['DOCUMENT_ROOT'] . '/snadmin/Common/Conf/mm_config.php';
-            $filename2 = $_SERVER['DOCUMENT_ROOT'] . '/User/Common/Conf/mm_config.php';
+            $filename = $_SERVER['DOCUMENT_ROOT'] . '/Myadmin/Home/Conf/mm_config.php';
+            $filename2 = $_SERVER['DOCUMENT_ROOT'] . '/User/Home/Conf/mm_config.php';
             file_put_contents($filename, strip_whitespace("<?php\treturn " . var_export($_POST, true) . ";?>"));
             file_put_contents($filename2, strip_whitespace("<?php\treturn " . var_export($_POST, true) . ";?>"));
-            $this->success('编辑成功！', U('Home/Index/yuanzhugg'));
+            $this->success('编辑成功！', '/admin.php/Home/Index/yuanzhugg');
         } else {
             $this->mm001 = C("mm001");
             $this->mm002 = C("mm002");
