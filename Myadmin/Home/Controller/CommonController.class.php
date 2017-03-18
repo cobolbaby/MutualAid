@@ -11,7 +11,10 @@ class CommonController extends Controller
 			$this->success('請先登錄','/admin.php/Home/Login') && exit;
 		}
 
-		$this->checkLoginWhiteList();
+		if (!$this->checkLoginWhiteList()) {
+		    session('[destroy]'); // 销毁session
+            $this->error('禁止访问');
+        }
 
 		/*$czmcsy = CONTROLLER_NAME . ACTION_NAME;
 		$czmc = ACTION_NAME;
@@ -25,17 +28,29 @@ class CommonController extends Controller
 		}*/
 	}
 
-	public function checkLoginWhiteList()
+	private function checkLoginWhiteList()
 	{
 		// 检查IP地址访问
 		$iplist = C('ADMIN_ALLOW_IP');
-        if ($iplist && !in_array(get_client_ip(), $iplist)) {
-            session('[destroy]'); // 销毁session
-            $this->error('禁止访问');
+        foreach ($iplist as $v) {
+        	// 100.10.1.*
+        	if (strpos($v, '*') !== false) {
+        		$ipBlock = substr($v, 0, -1);
+        		$clientIp = get_client_ip(1);
+        		if ($clientIp > ip2long($ipBlock.'1') && $clientIp < ip2long($ipBlock.'255')) {
+        			return ture;
+        		}
+        	} else {
+        		$clientIp = get_client_ip();
+        		if ($clientIp == $v) {
+        			return true;
+        		}
+        	}
         }
+        return false;
 	}
 
-	function check_verify($code)
+	public function check_verify($code)
 	{
 		$verify = new \Think\Verify ();
 		return $verify->check ( $code );

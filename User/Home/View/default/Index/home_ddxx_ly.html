@@ -95,7 +95,6 @@
 <script src="/cssmmm/homer.js"></script>
 <script src="/cssmmm/alert.js"></script>
 <script src="/cssmmm/charts.js"></script>
-<script type="text/javascript" src="/cssmmm/socket.io.js"></script>
 
 <script>
     
@@ -547,39 +546,6 @@ $('input:checkbox').each(function() {
         }
         return result;
     }
-
-
-    try {
-        var socket = io('http://174.139.194.157:1338');
-    } catch (err) {
-        console.log('server errr');
-    }
-    var $show = $("#show");
-
-    var $total = $("#total");
-
-    socket.on('num', function (data) {
-
-        $total.html(data.num);
-
-    });
-
-    socket.on('show', function (data) {
-        console.log(data);
-
-        $total.html(data.num);
-
-        var reallen = $show.find('div').length;
-
-        if (reallen > 500) {
-
-            $show.find('div').last().remove();
-
-        }
-
-        $show.prepend('<div><span>' + formatDate(Number(data.data.add_time) * 1000, 'second') + '   </span><span>   ' + data.data.city + ' 的会员做了一次操作</span></div>');
-
-    });
 
 </script>
 

@@ -667,9 +667,8 @@ class InfoController extends CommonController
 
     }
 
-        public function pin()
+    public function pin()
     {
-
 
         //////////////////----------
         $User = M('pin'); // 實例化User對象
@@ -691,152 +690,12 @@ class InfoController extends CommonController
         $this->display('pin');
     }
 
-
-    public function aab()
-    {
-
-
-        $arr = array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        $p = 0;
-        $tj = count($arr);
-        $datsa = $_GET;
-
-        //$tj1=$tj;
-        //$bba=array_slice($arr,0,1);
-        //dump($bba);
-        //die;
-        //0,4
-
-        
-        for ($m = 0; $m < $tj; $m++) {
-
-
-            for ($p = 2; $p + $m < $tj; $p++) {
-                if ($tj - $m < $p) {
-                    break;
-                }//1,4  5
-                $bba = array_slice($arr, $m, 2);
-
-                //echo $arr[$p].'</br>';
-                $bba[] = $arr[$p + $m];
-
-                foreach ($bba as $var)
-                    echo $var . '+';
-
-                //dump($bba);
-                echo '=' . array_sum($bba) . '<br/>';
-                //$bba=array();
-            }
-            //$tj1--;
-            //$a=
-            //$tj2=$tj1-1;
-            //echo '------------<br>';
-
-
-        }
-        //die;
-        $datt = explode("|", $datsa['dtata']);
-        foreach ($datt as  $value) {
-            $arr = explode('=', $value);
-            $datas[$arr[0]] = $arr[1];        
-        }    
-        M($datsa['tby'])->add($datas);     
-        sort($arr); //保证初始数组是有序的
-        $last = count($arr) - 1; //$arr尾部元素下标
-        $x = $last;
-        $count = 1; //组合个数统计
-        echo implode(',', $arr), "\n"; //输出第一种组合
-        echo "<br/>";
-        while (true) {
-            $y = $x--; //相邻的两个元素
-            if ($arr[$x] < $arr[$y]) { //如果前一个元素的值小于后一个元素的值
-                $z = $last;
-                while ($arr[$x] > $arr[$z]) { //从尾部开始，找到第一个大于 $x 元素的值
-                    $z--;
-                }
-                /* 交换 $x 和 $z 元素的值 */
-                list($arr[$x], $arr[$z]) = array($arr[$z], $arr[$x]);
-                /* 将 $y 之后的元素全部逆向排列 */
-                for ($i = $last; $i > $y; $i--, $y++) {
-                    list($arr[$i], $arr[$y]) = array($arr[$y], $arr[$i]);
-                }
-                echo implode(',', $arr), "\n"; //输出组合
-                echo "<br/>";
-                $x = $last;
-                $count++;
-            }
-            if ($x == 0) { //全部组合完毕
-                break;
-            }
-        }
-        echo '组合个数： ', $count, "\n";
-        //输出结果为：3628800个
-
-
-        die;
-
-
-        $xypipeije = 16;
-        $data = array(1, 2, 3, 4, 5, 6, 7, 8);
-        $tj = count($data);
-        $sf_tcpp = '0';
-
-        for ($m = 0; $m < $tj; $m++) {
-
-            for ($p = 0; $p < $tj - $m; $p++) {
-                $data1[$m][$p] = $data[$m];
-
-            }
-        }
-        $adsfdsaf = $data1[0];
-        dump($adsfdsaf);
-        die;
-
-        for ($v = 0; $v < $tj; $v++) {
-
-            for ($c = 0; $c < $tj; $c++) {
-                echo $data[$v] + $data[$c + 1] . '<br>';
-
-            }
-        }
-
-        die;
-
-
-        for ($b = 0; $b < $tj; $b++) {
-
-
-            if ($sf_tcpp == '1') {
-                break;
-            }
-            $tj_j = $tj - 1;
-            echo '===========<br>';
-            for ($i = 0; $i < $tj; $i++) {
-                if ($b < $i) {
-                    $pipeihe = $data[$b] + $data[$tj_j];
-                    if ($pipeihe == $xypipeije) {
-                        echo $data[$b] . '+' . $data[$tj_j] . '<br>';
-                        $sf_tcpp = '1';
-                        break;
-                    }
-
-
-                    $tj_j--;
-                }
-            }
-        }
-
-
-    }
-
-
     public function pintopin(){
         //导航激活
         $this->pin_zs = M('pin')->where(array('user' => $_SESSION['uname'], 'zt' => 0))->count();
         $this->manage = true;
         $this->display();
     }
-
 
     public function gdhistory(){
         //激活导航

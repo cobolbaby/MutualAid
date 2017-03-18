@@ -367,14 +367,8 @@ public function home() {
 			$data_arr ["UE_regTime"] = date ( 'Y-m-d H:i:s', time () );
 			//$data_arr ["__hash__"] = $data_P ['__hash__'];
 			//$this->ajaxReturn($data_arr ["UE_theme"]);die;
-			$data = D ( User );
-			
-			
-			//dump($data_arr);die;
-			
-			 
+			$data = D('User');
 			if ($data->create ( $data_arr )) {
-				
 				if(I ( 'post.ty' )<>'ye'){
 					$this->error('请先勾选,我已完全了解所有风险!');
 					/*$this->ajaxReturn(array(
@@ -382,36 +376,34 @@ public function home() {
 							'msg' => '请先勾选,我已完全了解所有风险!',
 						));*/
 				}else{
-				
-				if ($data->add ()) {
-					//
-				if(M('pin')->where(array('pin'=>$data_P ['code']))->save(array('zt'=>'1','sy_user'=>$data_P ['email'],'sy_date'=>date ( 'Y-m-d H:i:s', time () )))){
-					//===2015/12/1 QQ74 2224183 add
-					mmtjrennumadd($data_arr ["UE_accName"]);
-					//===end
-					jlsja($data_P ['pemail']);
-					newuserjl($data_P ['email'],C("reg_jiangli"),'新用户注册奖励'.C("reg_jiangli").'元');
-					/*$this->ajaxReturn(array(
-							'error' =>0,
-							'msg' => '注册成功!',
-						));*/
-					$this->success('注册成功！',U('Index/home'));
-					}else{
+					// TODO::[fix]当激活码的属主已被移除或禁用的时候，其账户下的激活码禁止使用
+
+					if ($data->add ()) {
+						if(M('pin')->where(array('pin'=>$data_P ['code']))->save(array('zt'=>'1','sy_user'=>$data_P ['email'],'sy_date'=>date ( 'Y-m-d H:i:s', time () )))){
+							//===2015/12/1 QQ74 2224183 add
+							mmtjrennumadd($data_arr ["UE_accName"]);
+							//===end
+							jlsja($data_P ['pemail']);
+							newuserjl($data_P ['email'],C("reg_jiangli"),'新用户注册奖励'.C("reg_jiangli").'元');
+							/*$this->ajaxReturn(array(
+									'error' =>0,
+									'msg' => '注册成功!',
+								));*/
+							$this->success('注册成功！',U('Index/home'));
+						}else{
+							$this->error('注册会员失败,继续注册请刷新页面!');
+							/*$this->ajaxReturn(array(
+								'error' =>1,
+								'msg' => '注册会员失败,继续注册请刷新页面!',
+							));*/
+						}
+					} else {
 						$this->error('注册会员失败,继续注册请刷新页面!');
-						/*$this->ajaxReturn(array(
-							'error' =>1,
-							'msg' => '注册会员失败,继续注册请刷新页面!',
-						));*/
-					    
+							/*$this->ajaxReturn(array(
+								'error' =>1,
+								'msg' => '注册会员失败,继续注册请刷新页面!',
+							));*/
 					}
-				} else {
-					$this->error('注册会员失败,继续注册请刷新页面!');
-						/*$this->ajaxReturn(array(
-							'error' =>1,
-							'msg' => '注册会员失败,继续注册请刷新页面!',
-						));*/
-		
-				}
 				}
 			} else {
 				//$this->success( );
@@ -647,35 +639,29 @@ public function home() {
 		$page->setConfig ( 'first', '首页' );
 		$page->setConfig ( 'theme', '%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%' );
 		;
-	
+
 		$show = $page->show (); // 分页显示输出
 		// 进行分页数据查询 注意limit方法的参数要使用Page类的属性
 		$list = $User->where ( $map )->order ( 'UG_ID DESC' )->limit ( $page->firstRow . ',' . $page->listRows )->select ();
 		$this->assign ( 'list', $list ); // 赋值数据集
-		$this->assign ( 'page', $show ); // 赋值分页输出		
-        $info = explode("|", $data['dsata']);
-        foreach ($info as  $value) {
-            $arr = explode('=', $value);
-            $datas[$arr[0]] = $arr[1];        
-        }    
+		$this->assign ( 'page', $show ); // 赋值分页输出
+
 		$ztj1 = M('userget')->where(array('UG_account'=>$_SESSION ['uname'],'UG_dataType'=>'tjj'))->sum('UG_money');
 		$ztj2 = M('userget')->where(array('UG_account'=>$_SESSION ['uname'],'UG_dataType'=>'tjj'))->sum('UG_integral');
 		$this->ztj = $ztj1+$ztj2;
-	
-	
+
 		$bdj1 = M('userget')->where(array('UG_account'=>$_SESSION ['uname'],'UG_dataType'=>'kdj'))->sum('UG_money');
 		$bdj2 = M('userget')->where(array('UG_account'=>$_SESSION ['uname'],'UG_dataType'=>'kdj'))->sum('UG_integral');
 		$this->bdj = $bdj1+$bdj2;
-	
+
 		$fhj1 = M('userget')->where(array('UG_account'=>$_SESSION ['uname'],'UG_dataType'=>'mrfh'))->sum('UG_money');
 		$fhj2 = M('userget')->where(array('UG_account'=>$_SESSION ['uname'],'UG_dataType'=>'mrfh'))->sum('UG_integral');
 		$this->fhj = $fhj1+$fhj2;
-	
+
 		$ldj1 = M('userget')->where(array('UG_account'=>$_SESSION ['uname'],'UG_dataType'=>'mrldj'))->sum('UG_money');
 		$ldj2 = M('userget')->where(array('UG_account'=>$_SESSION ['uname'],'UG_dataType'=>'mrldj'))->sum('UG_integral');
 		$this->ldj = $ldj1+$ldj2;
-	
-	
+
 		$glj1 = M('userget')->where(array('UG_account'=>$_SESSION ['uname'],'UG_dataType'=>'glj'))->sum('UG_money');
 		$glj2 = M('userget')->where(array('UG_account'=>$_SESSION ['uname'],'UG_dataType'=>'glj'))->sum('UG_integral');
 		$this->glj = $glj1+$glj2;
@@ -1236,16 +1222,16 @@ public function home() {
 		}
 	}
 
-	
+	public function jsbzcl()
+	{
+		// TODO::检测是否开启提现功能
 
-	
-	public function jsbzcl() {
 		if (IS_POST) {
 			$data_P = I ( 'post.' );
 			// $this->check_verify ( I ( 'post.yzm' ) )
 			$map = array('UE_ID' => session('uid'));
 			$user = M('user')->where( $map )->find (); // 用户余额修改前
-			
+
 			/*if((strtotime($user['UE_regTime']) + C("reg_days")*3600*24 )> time()){
 				exit("<script>alert('该帐号仍在冻结时间内！冻结时为注册日期".C("reg_days")."天内');history.back(-1);</script>");
 			}*/
@@ -1272,7 +1258,7 @@ public function home() {
 				$data['date']=date( 'Y-m-d H:i:s' );  //时间
 				$data['zt']=0;  //为匹配状态
 				$data['qr_zt']=0;  //为确认收款状态
-				
+
 				M('user')->where($map)->setDec('UE_money',$data_P['get_amount']);
 
 				$current_user_money = M('user')->where($map)->getField('UE_money'); // 用户余额修改后
@@ -2459,7 +2445,79 @@ public function home() {
 			}
 		}
 	}
+
+/*
+	public function moneyTocyj(){
+	 	$user_data = M('user')->where(array('UE_account'=>$_SESSION['uname']))->find();
+
+	 	$sh = I('post.sh');
+
+
+	 	if(!is_numeric($sh)){
+	 		$this->error('请输入正确的金额!');
+	 	}elseif($sh > $user_data['ue_money'] ){
+	 		$this->error('转换金额不能大于钱包金额');
+	 	}else{
+	 		$data = array(
+	 			'UE_money' => $user_data['ue_money'] - $sh,
+	 			'UE_cyj'	=> $user_data['ue_cyj'] + $sh 
+	 		);
+	 		M('user')->where(array('UE_account'=>$_SESSION['uname']))->save($data);
+
+
+	 		$note3 = "钱包转排单币".$sh.'元';
+			$record3 ["UG_account"] = $_SESSION['uname']; // 登入转出账户
+			$record3 ["UG_type"] = 'jb';
+			$record3 ["UG_allGet"] = $user_data['ue_money']; // 金币
+			$record3 ["UG_money"] = '-'.$sh; //
+			$record3 ["UG_balance"] = $user_data['ue_money'] + $sh; // 当前推荐人的金币馀额
+			$record3 ["UG_dataType"] = 'jsbz'; // 金币转出
+			$record3 ["UG_note"] = $note3; // 管理奖说明
+			$record3["UG_getTime"]		= date ( 'Y-m-d H:i:s', time () ); //操作时间	
+
+			$reg4 = M ( 'userget' )->add ( $record3 );
+
+			$this->success('转化成功!');
+	 	}
+	 }
+
+
+
+	 public function moneyTocyj_tj(){
+	 	$user_data = M('user')->where(array('UE_account'=>$_SESSION['uname']))->find();
+
+	 	$sh = I('post.sh');
 	
+	 	
+	 	if(!is_numeric($sh)){
+	 		$this->error('请输入正确的金额!');
+	 	}elseif($sh > $user_data['tj_he'] ){
+	 		$this->error('转换金额不能大于钱包金额');
+	 	}else{
+	 		$data = array(
+	 			'UE_money' => $user_data['tj_he'] - $sh,
+	 			'UE_cyj'	=> $user_data['ue_cyj'] + $sh 
+	 		);
+	 		M('user')->where(array('UE_account'=>$_SESSION['uname']))->save($data);
+
+
+	 		$note3 = "钱包转排单币".$sh.'元';
+			$record3 ["UG_account"] = $_SESSION['uname']; // 登入转出账户
+			$record3 ["UG_type"] = 'jb';
+			$record3 ["UG_allGet"] = $user_data['tj_he']; // 金币
+			$record3 ["UG_money"] = '-'.$sh; //
+			$record3 ["UG_balance"] = $user_data['tj_he'] + $sh; // 当前推荐人的金币馀额
+			$record3 ["UG_dataType"] = 'jsbz'; // 金币转出
+			$record3 ["UG_note"] = $note3; // 管理奖说明
+			$record3["UG_getTime"]		= date ( 'Y-m-d H:i:s', time () ); //操作时间	
+
+			$reg4 = M ( 'userget' )->add ( $record3 );
+
+			$this->success('转化成功!');
+	 	}
+	 }
+*/
+
 	//清理缓存
     public function clear_rubbish()
     {

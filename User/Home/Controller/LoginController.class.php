@@ -160,8 +160,7 @@ class LoginController extends Controller
     public function mmzh2() {
 
     	header("Content-Type:text/html; charset=utf-8");
-        inival();
-    	if (IS_POST) {
+        if (IS_POST) {
 
     		//$this->error('系統暫未開放!');die;
 
