@@ -687,6 +687,9 @@ class IndexController extends CommonController
 
     }
 
+    /**
+     * 统计昨天奖金
+     */
     public function tj_zrjj_cl()
     {
         header("Content-Type:text/html; charset=utf-8");
@@ -816,28 +819,12 @@ class IndexController extends CommonController
 
             }
 
-
-//      set_time_limit(10);    
-//  ob_end_clean();     //在循环输出前，要关闭输出缓冲区   
-
-//  echo str_pad('',1024);   
-//  //浏览器在接受输出一定长度内容之前不会显示缓冲输出，这个长度值 IE是256，火狐是1024   
-//  for($i=1;$i<=100;$i++){    
-//   echo $i.'<br/>';    
-//   flush();    //刷新输出缓冲   
-
-//  }    
-
-
         }
 
     }
 
-
     public function pin_add()
     {
-
-
         $this->display('index/pin_add');
     }
 
