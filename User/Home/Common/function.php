@@ -76,20 +76,11 @@ function diffBetweenTwoDays($day1, $day2)
     return ($second1 - $second2) / 86400;
 }
 
-/*
-function pa($a)
-{
-    echo "<pre>";
-    print_r($a);
-    echo "</pre>";die;
-}
-*/
-
 //---------------------------------------------------->
 function user_jj_lx($var)
 {
 
-    $proall = M('user_jj')->where(array('id' => $var))->find();//加入查询  获取提供帮助者打款时间  
+    $proall = M('user_jj')->where(array('id' => $var))->find();//加入查询  获取提供帮助者打款时间
 
     $result = M("userget")->where(array("varid" => $var))->find();//提现查询  获取提现时间
     $ppdd = M("ppdd")->where(array("id" => $proall["r_id"]))->find();//配对信息

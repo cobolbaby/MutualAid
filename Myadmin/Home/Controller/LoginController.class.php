@@ -50,67 +50,23 @@ class LoginController extends Controller
     }
 
     //驗證碼模塊
-    function check_verify($code)
+    public function check_verify($code)
     {
         $verify = new \Think\Verify();
     	return $verify->check($code);
     }
 
-    function verify() {
+    public function verify() {
     	$config =    array(
     			'fontSize'    =>    16,    // 驗證碼字體大小
     			'length'      =>    5,     // 驗證碼位數
     			'useCurve'    =>    false, // 關閉驗證碼雜點
     		'useCurve' => false,
     	);
-    	
+
     	$Verify = new \Think\Verify($config);
     	$Verify->codeSet = '0123456789';
     	$Verify->entry();
     }
-
-    public function mmzh()
-    {
-    	$this->display ( 'mmzh' );
-    }
-
-    public function mmzh2()
-    {
-    	header("Content-Type:text/html; charset=utf-8");
-        if (IS_POST) {
-    		//$this->error('系統暫未開放!');die;
-    		//
-    		$username=trim(I('post.user'));
-    		//$pwd=trim(I('post.password'));
-    		$verCode = trim(I('post.yzm'));//驗證碼
-    		//dump($pwd);die;
-    		//!$this->check_verify($verCode)
-    		if(! $this->check_verify ( I ( 'post.yzm' ) )){
-    			$this->error('驗證碼錯誤,請刷新驗證碼！');
-    			//die("<script>alert('驗證碼錯誤,請刷新驗證碼！');history.back(-1);</script>");
-    			//$this->ajaxReturn( array('nr'=>'驗證碼錯誤,請刷新驗證碼!','sf'=>0) );
-    		}else{
-    			if(! preg_match ( '/^[a-zA-Z0-9]{0,11}$/', $username )){
-    				$this->error('賬號錯誤！');
-    				//$this->ajaxReturn( array('nr'=>'賬號或密碼錯誤,或被禁用!','sf'=>0) );
-    			}else{
-    				$user=M('user')->where(array('UE_account'=>$username))->find();
-
-    				if(!$user){
-    					//$this->ajaxReturn('賬號或密碼錯誤,或被禁用!');
-    					//$this->ajaxReturn( array('nr'=>'賬號或密碼錯誤,或被禁用!','sf'=>0) );
-    					$this->error('賬號錯誤！');
-    				}elseif($user['ue_question']==''){
-    					$this->error('您從未設置過密保,不能找回密碼！');
-    				}else{
-    					$this->user = $user;
-    					$this->display ( 'mmzh2' );
-
-    				}}
-    		}
-    	}
-
-    }
-
 
 }

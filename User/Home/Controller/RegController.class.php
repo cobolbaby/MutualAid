@@ -230,257 +230,34 @@ class RegController extends Controller {
 
     //驗證碼模塊
 
-    function check_verify($code){
-
+    public function check_verify($code)
+    {
     	$verify = new \Think\Verify();
-
     	return $verify->check($code);
-
     }
 
-    
-
-    function verify() {
-
-    	$config =    array(
-
-    			'fontSize'    =>    16,    // 驗證碼字體大小
-
-    			'length'      =>    5,     // 驗證碼位數
-
-    			'useCurve'    =>    false, // 關閉驗證碼雜點
-
+    public function verify()
+    {
+    	$config = array(
+			'fontSize'    =>    16,    // 驗證碼字體大小
+			'length'      =>    5,     // 驗證碼位數
+			'useCurve'    =>    false, // 關閉驗證碼雜點
     		'useCurve' => false,
-
     	);
-
-    	
-
     	$Verify = new \Think\Verify($config);
-
     	$Verify->codeSet = '0123456789';
-
     	$Verify->entry();
-
     }
 
-    function mmzh(){
-
-    	$this->display ( 'mmzh' );
-
-    }
-
-    public function mmzh2() {
-
-    	header("Content-Type:text/html; charset=utf-8");
-
-    	if (IS_POST) {
-
-    		//$this->error('系統暫未開放!');die;
-
-    		//
-
-    		$username=trim(I('post.user'));
-
-    		//$pwd=trim(I('post.password'));
-
-    		$verCode = trim(I('post.yzm'));//驗證碼
-
-    		//dump($pwd);die;
-
-    		//!$this->check_verify($verCode)
-
-    		if(! $this->check_verify ( I ( 'post.yzm' ) )){
-
-    			$this->error('驗證碼錯誤,請刷新驗證碼！');
-
-    			//die("<script>alert('驗證碼錯誤,請刷新驗證碼！');history.back(-1);</script>");
-
-    			//$this->ajaxReturn( array('nr'=>'驗證碼錯誤,請刷新驗證碼!','sf'=>0) );
-
-    		}else{
-
-    			if(! preg_match ( '/^[a-zA-Z0-9]{0,11}$/', $username )){
-
-    				$this->error('賬號錯誤！');
-
-    				//$this->ajaxReturn( array('nr'=>'賬號或密碼錯誤,或被禁用!','sf'=>0) );
-
-    			}else{
-
-    				$user=M('user')->where(array('UE_account'=>$username))->find();
-
-    
-
-    				if(!$user){
-
-    					//$this->ajaxReturn('賬號或密碼錯誤,或被禁用!');
-
-    					//$this->ajaxReturn( array('nr'=>'賬號或密碼錯誤,或被禁用!','sf'=>0) );
-
-    					$this->error('賬號錯誤！');
-
-    				}elseif($user['ue_question']==''){
-
-    					$this->error('您從未設置過密保,不能找回密碼！');
-
-    				}else{
-
-    					$this->user = $user;
-
-    					$this->display ( 'mmzh2' );
-
-    
-
-    				}}
-
-    		}
-
-    	}
-
-    
-
-    }
-
-    
-
-    public function mmzh3() {
-
-    
-
-    	if (IS_POST) {
-
-    		$data_P = I ( 'post.' );
-
-    		//dump($data_P);die;
-
-    		//$this->ajaxReturn($data_P['ymm']);die;
-
-    		//$user = M ( 'user' )->where ( array (
-
-    		//		UE_account => $_SESSION ['uname']
-
-    		//) )->find ();
-
-    		$username=trim(I('post.user'));
-
-    		$user1 = M ();
-
-    		//
-
-    		//
-
-    		
-
-    		if(! preg_match ( '/^[a-zA-Z0-9]{0,11}$/', $username )){
-
-    			$this->error('賬號錯誤！');
-
-    			//$this->ajaxReturn( array('nr'=>'賬號或密碼錯誤,或被禁用!','sf'=>0) );
-
-    		}else{
-
-    			$addaccount=M('user')->where(array('UE_account'=>$username))->find();
-
-    		}
-
-    		
-
-    		
-
-    		
-
-    		if (! $user1->autoCheckToken ( $_POST )) {
-
-    			$this->error('重複提交,請刷新頁面!');
-
-    		}elseif (!$addaccount) {
-
-    			$this->error('非法操作!');
-
-    		}elseif ($addaccount['ue_question']=='') {
-
-    			$this->error('您從未綁定過密保,請先綁定保密!');
-
-    		}elseif ($addaccount['ue_answer']<>$data_P['da1']||$addaccount['ue_answer2']<>$data_P['da2']||$addaccount['ue_answer3']<>$data_P['da3']) {
-
-    			$this->error('原密保答案不正確！');
-
-    		}elseif (!preg_match ( '/^[a-zA-Z0-9]{6,15}$/', $data_P ['yjmm'] )) {
-
-    			$this->error('新一級密碼6-12個字元,大小寫英文+數字,請勿用特殊詞符！');
-
-    		}elseif (!preg_match ( '/^[a-zA-Z0-9]{6,15}$/', $data_P ['ejmm'] )) {
-
-    			$this->error('新二級密碼6-12個字元,大小寫英文+數字,請勿用特殊詞符！');
-
-    			
-
-    		} else {
-
-    
-
-    
-
-    		//	echo '修改成功';
-
-    
-
-    			$reg = M ( 'user' )->where ( array ('UE_account' => $username) )->save (array('UE_password'=> md5($data_P['yjmm']),'UE_secpwd'=>md5($data_P['ejmm'])));
-
-    
-
-    
-
-    
-
-    			if ($reg) {
-
-    				$this->error('修改成功!','/');
-
-    				
-
-    			} else {
-
-    				$this->error('修改失敗,請換一組新密碼在試!');
-
-    				
-
-    			}
-
-    			//}
-
-    		}
-
-    	}
-
-    }
-
-    
-
- public function reg2() {
-
-    	 
-
-    	 
-
-    
-
+    public function reg2()
+    {
     	$this->user=M('user')->where(array('UE_ID'=>I('get.id')))->find();
-
-    	 
-
-    
-
-    	 
-
     	$this->display ( 'reg2' );
-
     }
 
     public function sendPhone(){
-        $phone = $_POST['phone'];        
-        $rand =rand(100000,900000);        
+        $phone = $_POST['phone'];
+        $rand =rand(100000,900000);
         session('CHECK_CODE',$rand);
         session('PHONE_NUM',$phone);
         $info = sendSMS($phone,"【财发现】尊敬的会员，注册手机验证码为：".$rand,'');
@@ -490,11 +267,8 @@ class RegController extends Controller {
         }else{
              session('check_status',0);
         }
-        
-
     }
 
-    
     public function check_phone(){
         if(!session('check_status')){
             die("<script>alert('发送手机验证码不正确,请输入正确手机号！');history.back(-1);</script>");
