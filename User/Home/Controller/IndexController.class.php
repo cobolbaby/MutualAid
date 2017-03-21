@@ -112,7 +112,7 @@ public function home() {
 		
 		$p_high = getpage($count2,100);
 		
-		$list_high = $User->where ( $map2 )->order ( 'id DESC' )->limit ( $p2->firstRow, $p2->listRows )->select ();
+		$list_high = $User->where( $map2 )->order( 'id DESC' )->limit( $p2->firstRow, $p2->listRows )->select();
 		$this->assign ( 'list_high', $list_high ); // 赋值数据集
 		$this->assign ( 'page_high', $p_high->show() ); // 赋值分页输出
 		/////////////////----------------

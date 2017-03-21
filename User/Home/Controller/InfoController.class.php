@@ -601,6 +601,8 @@ class InfoController extends CommonController
                         $user_zq = M('user')->where(array('UE_ID' => $_SESSION['uid']))->find();
                         M('user')->where(array('UE_ID' => $_SESSION['uid']))->setInc('UE_money', $lx_he);
                         $user_xz = M('user')->where(array('UE_ID' => $_SESSION['uid']))->find();
+
+                        // TODO::[fix]同一浏览器登陆多账户时，提现操作可能会造成数据异常
                         M('user_jj')->where(array('id' => $varid))->save(array('zt' => '1'));
 
                         $note3 = "提供帮助本金加利息";
