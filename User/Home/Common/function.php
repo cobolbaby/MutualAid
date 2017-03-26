@@ -1,10 +1,10 @@
 <?php
-function cate($var)
+/*function cate($var)
 {
     //dump($var);
     $proall = M('user')->where(array('UE_accName' => $var, 'UE_Faccount' => '0', 'UE_check' => '1', 'UE_stop' => '1'))->count("UE_ID");
     return $proall;
-}
+}*/
 
 // 是否激活账户
 function sfjhff($r)
@@ -12,33 +12,6 @@ function sfjhff($r)
     $a = array("未激活", "已激活");
     return $a[$r];
 }
-
-
-
-
-
-function getRand($proArr)
-{
-    $result = '';
-
-    //概率数组的总概率精度
-    $proSum = array_sum($proArr);
-
-    //概率数组循环
-    foreach ($proArr as $key => $proCur) {
-        $randNum = mt_rand(1, $proSum);
-        if ($randNum <= $proCur) {
-            $result = $key;
-            break;
-        } else {
-            $proSum -= $proCur;
-        }
-    }
-    unset ($proArr);
-
-    return $result;
-}
-
 
 function getpage($count, $pagesize=null)
 {

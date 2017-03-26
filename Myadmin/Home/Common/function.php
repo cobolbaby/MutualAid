@@ -15,7 +15,7 @@ function getpage($count, $pagesize=null)
     return $p;
 }
 
-function cate($var)
+/*function cate($var)
 {
 		$user = M('user');
 		$ztname=$user->where(array('UE_accName'=>$var,'UE_check'=>'1','UE_stop'=>'1'))->getField('ue_account',true);
@@ -35,17 +35,13 @@ function cate($var)
 					$datazs +=count($reg);
 				}
 			}
-			
+
 		}
-		
+
 	//	$this->ajaxReturn();
-		
+
 	return $datazs;
-	
-	
-	
-	
-}
+}*/
 
 
 function sfjhff($r) {
