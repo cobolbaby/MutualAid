@@ -279,50 +279,39 @@ class ShopController extends CommonController
 				$this->success('处理失敗！');
 			}
 			//$this->success('成功！');
-		
+
 	}
 
-	public function task_list_xgcl2() {
-		
-			$task = M('task')->where(array('MA_ID'=>I('post.id')))->find();
-			if(!empty($task) && $task['zt']){
-				$this->error('已经审核!');
-			}
-			$data['MA_reply']=$_POST['content'];
-			$data['MA_replyTime']=date ( 'Y-m-d H:i:s', time () );
-			$data['zt']='1';
-	
-			if(M('task')->where(array('MA_ID'=>I('post.id')))->save($data)){
+	public function task_list_xgcl2()
+	{
+		$task = M('task')->where(array('MA_ID'=>I('post.id')))->find();
+		if(!empty($task) && $task['zt']){
+			$this->error('已经审核!');
+		}
+		$data['MA_reply'] = I('post.content');
+		$data['MA_replyTime'] = date( 'Y-m-d H:i:s' );
+		$data['zt']='1';
+		if(M('task')->where(array('MA_ID'=>I('post.id')))->save($data)){
 
-				$pin = substr(md5(time()),0,10);
+			// 生成排单码
+			$pin = substr(md5(time()),0,10);
 
-                //$pin=0;
-                if (!M('paidan')->where(array('paidan' => $pin))->find()) {
-                    $data['user'] = I('post.account');
-                    $data['paidan'] = $pin;
-                    $data['zt'] = 0;
-                    $data['sc_date'] = date('Y-m-d H:i:s', time());
-                    if (M('paidan')->add($data)) {
-                        $cgsl++;
-                    }
-                }
-
-
-
-				$this->success('处理成功！');
-			}else{
-				$this->success('处理失敗！');
-			}
-			//$this->success('成功！');
-		
+            if (!M('paidan')->where(array('paidan' => $pin))->find()) {
+                $data['user'] = I('post.account');
+                $data['paidan'] = $pin;
+                $data['zt'] = 0;
+                $data['sc_date'] = date('Y-m-d H:i:s'); // 系统创建时间
+                M('paidan')->add($data);
+            }
+			$this->success('处理成功！');
+		}else{
+			$this->success('处理失敗！');
+		}
 	}
-	
-	
-	
-	
-	
-	public function zsbyg_list_xgcl() {
-	
+
+	public function zsbyg_list_xgcl()
+	{
+
 		$data['sjmc']=I('post.sjmc');
 		$data['jyxm']=I('post.jyxm');
 		$data['lxfs']=I('post.lxfs');

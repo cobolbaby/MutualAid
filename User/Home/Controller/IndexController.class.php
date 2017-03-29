@@ -1049,7 +1049,7 @@ public function home() {
 			//$user1 = M ();
 			//! $this->check_verify ( I ( 'post.yzm' ) )
 			//! $user1->autoCheckToken ( $_POST )
-			
+
 			if($user['ue_check'] != 1){
 				$this->error('很遗憾的告诉你，你的账号还未激活，你暂时无法提供帮助!');
 			}
@@ -1062,7 +1062,7 @@ public function home() {
 				$start_info = explode(':', C('paidan_time_start'));
 				$start_unix = 0;
 				if(is_array($start_info)){
-					$start_unix = $start_info[0]*3600 +$start_info[1]*60;					
+					$start_unix = $start_info[0]*3600 +$start_info[1]*60;
 				}
 				//每天排单结束时间
 				$end_info = explode(':', C('paidan_time_end'));
@@ -1121,9 +1121,9 @@ public function home() {
 				$where['p_user'] = $uname;
 				$where['zt'] = array('NEQ',2);
 				$ppdd_num = M('ppdd')->where($where)->count();
-				
+
 				$tgbz_num = M('tgbz')->where(array('user'=>$uname,'zt'=>0))->count();
-				$dealing_num = $tgbz_num + $ppdd_num; 
+				$dealing_num = $tgbz_num + $ppdd_num;
 				if( $dealing_num >= $paidan_nums)
 				{
 					die("<script>alert('您还有".$dealing_num."个未完成的订单未处理，不能继续申请');history.back(-1);</script>");
