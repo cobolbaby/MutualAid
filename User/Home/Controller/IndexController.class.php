@@ -1038,187 +1038,161 @@ public function home() {
 	}
 	
 	
-	public function tgbzcl() {
+	public function tgbzcl()
+	{
 		if (IS_POST) {
+			$data_P = I( 'post.' );
+			$user = M( 'user' )->where( array(
+					'UE_account' => $_SESSION['uname']    //获取用户详细信息
+			) )->find();
+
+			//$user1 = M ();
+			//! $this->check_verify ( I ( 'post.yzm' ) )
+			//! $user1->autoCheckToken ( $_POST )
 			
-				$data_P = I ( 'post.' );
-				//dump($data_P);die;
-				$user = M ( 'user' )->where ( array (
-						UE_account => $_SESSION ['uname']    //获取用户详细信息
-				) )->find ();
-				//$user1 = M ();
-				//! $this->check_verify ( I ( 'post.yzm' ) )
-				//! $user1->autoCheckToken ( $_POST )
-				
-				$usermm = M ( 'user' )->where ( array (UE_account => $_SESSION ['uname']) )->find ();
+			if($user['ue_check'] != 1){
+				$this->error('很遗憾的告诉你，你的账号还未激活，你暂时无法提供帮助!');
+			}
 
-				
-				if($usermm['ue_check'] != 1){
-					$this->error('很遗憾的告诉你，你的账号还未激活，你暂时无法提供帮助!');
+			//是否开启排单时间限制
+			if(C('time_limit')){
+
+				//每天排单开始时间
+				$time_unix = strtotime(date('Ymd'));
+				$start_info = explode(':', C('paidan_time_start'));
+				$start_unix = 0;
+				if(is_array($start_info)){
+					$start_unix = $start_info[0]*3600 +$start_info[1]*60;					
+				}
+				//每天排单结束时间
+				$end_info = explode(':', C('paidan_time_end'));
+				$end_unix = 0;
+				if(is_array($end_info)){
+					$end_unix = $end_info[0]*3600 +$end_info[1]*60;
 				}
 
-
-				//是否开启时间限制
-				if(C('time_limit')){
-
-					//每天排单开始时间
-					$time_unix = strtotime(date('Ymd'));
-					$now_time_unix = time();
-					$start_info = explode(':', C('paidan_time_start'));
-					$start_unix = 0;
-					if(is_array($start_info)){
-						$start_unix = $start_info[0]*3600 +$start_info[1]*60;					
-					}
-					//每天排单结束时间
-					$end_info = explode(':', C('paidan_time_end'));
-					$end_unix = 0;
-					if(is_array($end_info)){
-						$end_unix = $end_info[0]*3600 +$end_info[1]*60;
-					}
-
-					$paidan_time_start = $time_unix+$start_unix;
-					$paidan_time_end = $time_unix + $end_unix;
-					if($now_time_unix<$paidan_time_start){
-						die("<script>alert('不好意思今天排单时间还早哦！每日排单时间为". C('paidan_time_start')."到". C('paidan_time_end')."');history.back(-1);</script>");
-					}elseif($now_time_unix>$paidan_time_end){
-						die("<script>alert('很遗憾你已经错过了排单时间！每日排单时间为". C('paidan_time_start')."到". C('paidan_time_end')."');history.back(-1);</script>");
-					}
+				$now_time_unix = time();
+				$paidan_time_start = $time_unix+$start_unix;
+				$paidan_time_end = $time_unix + $end_unix;
+				if($now_time_unix<$paidan_time_start){
+					die("<script>alert('不好意思今天排单时间还早哦！每日排单时间为". C('paidan_time_start')."到". C('paidan_time_end')."');history.back(-1);</script>");
+				}elseif($now_time_unix>$paidan_time_end){
+					die("<script>alert('很遗憾你已经错过了排单时间！每日排单时间为". C('paidan_time_start')."到". C('paidan_time_end')."');history.back(-1);</script>");
 				}
+			}
 
-				$paidan_num_month = C('paidan_num_month');
-				if($paidan_num_month > 0){
-					$starttime = date('Y-m-1 00:00:01', time());
-	                $endtime = date('Y-m-31 23:59:59', time());
-	                $count2 = M("tgbz")->where("date>='$starttime' and date<='$endtime' and user='$uname'")->count();
-	                if ($count2 >= $paidan_num_month) {
-	                    die("<script>alert('每月提供帮助只允许".$paidan_num_month."次！');history.back(-1);</script>");
-	                }
-				}
+            $uname = $_SESSION['uname'];
+			// 每月排单数量
+			$paidan_num_month = C('paidan_num_month');
+			if($paidan_num_month > 0){
+				$starttime = date('Y-m-1 00:00:01', time());
+                $endtime = date('Y-m-31 23:59:59', time());
+                $count2 = M("tgbz")->where("date>='$starttime' and date<='$endtime' and user='$uname'")->count();
+                if ($count2 >= $paidan_num_month) {
+                    die("<script>alert('每月提供帮助只允许".$paidan_num_month."次！');history.back(-1);</script>");
+                }
+			}
 
-				
-
-
-
-			/*	$tgbztj=M('tgbz')->where("user='".$_SESSION ['uname']."' and (qr_zt=0 or zt =0)")->sum('jb');
-                //$tgbztj=M('tgbz')->where("user='".$_SESSION ['uname']."' and qr_zt=0")->sum('jb');   原来
-                if($tgbztj>0) {
-					die("<script>alert('提交失败,您还有未交易成功的订单！');history.back(-1);</script>");
-				}*/
-				//每天排单数量
-				$paidan_num =   C('paidan_num');
-				if($paidan_num>0){
-					$uname = $_SESSION ['uname'];
-					$starttime = date('Y-m-d 00:00:01', time());
-		            $endtime = date('Y-m-d 23:59:59', time());
-		            $count = M("tgbz")->where("date>='$starttime' and date<='$endtime' and user='$uname'")->count();
-		            if ($count >= $paidan_num) {
-		                die("<script>alert('排单失败，每天只允许排单".$paidan_num."次！');history.back(-1);</script>");
-		            }
-				}
-
-
-			
-
-	            //每天用户个人排单总额度
-	            if($this->tgbz_full){
-	            	die("<script>alert('排单失败，每天只允许总排单".$paidan_jbs."元！');history.back(-1);</script>");
+			// 每天排单数量
+			$paidan_num =   C('paidan_num');
+			if($paidan_num > 0){
+				$starttime = date('Y-m-d 00:00:01', time());
+	            $endtime = date('Y-m-d 23:59:59', time());
+	            $count = M("tgbz")->where("date>='$starttime' and date<='$endtime' and user='$uname'")->count();
+	            if ($count >= $paidan_num) {
+	                die("<script>alert('排单失败，每天只允许排单".$paidan_num."次！');history.back(-1);</script>");
 	            }
+			}
 
+            // 每天用户个人排单总额度
+            if($this->tgbz_full){
+            	die("<script>alert('排单失败，每天只允许总排单".C('paidan_jbs')."元！');history.back(-1);</script>");
+            }
 
+			/*	$tgbztj=M('tgbz')->where("user='".$uname."' and (qr_zt=0 or zt =0)")->sum('jb');
+            if($tgbztj > 0) {
+				die("<script>alert('提交失败,您还有未交易成功的订单！');history.back(-1);</script>");
+			}*/
 
+			//修改------>您还有未完成的订单未处理，不能继续申请
+			$paidan_nums = C('paidan_nums');
+        	if($paidan_nums > 0){
+        		$where = array();
+				$where['p_user'] = $uname;
+				$where['zt'] = array('NEQ',2);
+				$ppdd_num = M('ppdd')->where($where)->count();
+				
+				$tgbz_num = M('tgbz')->where(array('user'=>$uname,'zt'=>0))->count();
+				$dealing_num = $tgbz_num + $ppdd_num; 
+				if( $dealing_num >= $paidan_nums)
+				{
+					die("<script>alert('您还有".$dealing_num."个未完成的订单未处理，不能继续申请');history.back(-1);</script>");
+				}
+        	}
+            //------>end
 
+			// 验证拍单币
+			if($this->paidan_num < 1){
+				$this->error('排单币不足!');
+			}
 
+			// TODO::[fix]复投金额不得低于上次金额百分bi
+			$tgbz_data = M('tgbz')->where(array('user'=>$uname))->find();
+			$percent = C('tgbz_percent');
+			if(!empty($tgbz_data) && $percent > 0 &&  $data_P['amount'] < $tgbz_data['jb']*$percent/100){
+				$this->error('复投金额不得低于上次金额的百分之'.$percent);
+			}
 
+			if ($data_P['zffs1']<>'1' && $data_P['zffs2']<>'1' && $data_P['zffs3']<>'1') {
+				// ...
+				die("<script>alert('至少选择一个收款方式！');history.back(-1);</script>");
+			}  elseif ($data_P['amount']<C("jj01s") || $data_P['amount']>C("jj01m") || $data_P['amount']% C("jj01") > 0) {
+				// 帮助金额500-20000,并且是100的倍数！
+				die("<script>alert('帮助金额".C("jj01s")."-".C("jj01m").",并且是".C("jj01")."的倍数！');history.back(-1);</script>");
+			}else {
 
+				$timea = time();
+				$kssj = strtotime($user['date_leiji'])+86400*30;
+				$startTime = date('Y-m-d H:i:s', $kssj);
+				// 如果还没有超过当月累计或者已经过了一个月  $user['tz_leiji'] ===>每月金额的统计
+				if($user['tz_leiji'] == 0 || $timea >= $kssj){
+					M('user')->where(array('UE_account' => $uname))->save(array('date_leiji'=>date('Y-m-d H:i:s',$timea),'tz_leiji'=>'0'));
+					$user = M('user')->where(array('UE_account' => $uname))->find();
+				}
 
+				if($user['tz_leiji'] + $data_P['amount'] > C("month_max")){
+					die("<script>alert('当前投资加当月累计超过".C("month_max").",请在".$startTime."以后在试！');history.back(-1);</script>");
+				}else{
+					$flag = M('paidan')->where(array('paidan'=>$data_P['pai']))->save(array( 'zt'=>'1','sy_user'=>$uname,'sy_date'=>date('Y-m-d H:i:s') ));
+					if(!$flag) {
+						$this->error('排单币错误!');
+					}
 
-			
-				//修改------>您还有未完成的订单未处理，不能继续申请 bug   by olnho@qq.com
-				$paidan_nums = C('paidan_nums');
-	        	if($paidan_nums > 0){
-	        		$ppdd= M('ppdd');
-					$where=array();
-					$where['p_user'] = $_SESSION ['uname'];
-					$where['zt'] =array('NEQ',2);
-					$ppdd_num=$ppdd->where($where)->count();
+					if($data_P['zffs1']=='1'){$data['zffs1']='1';}else{$data['zffs1']='0';}
+					if($data_P['zffs2']=='1'){$data['zffs2']='1';}else{$data['zffs2']='0';}
+					if($data_P['zffs3']=='1'){$data['zffs3']='1';}else{$data['zffs3']='0';}
+					$data['user']=$user['ue_account'];
+					$data['user_nc']=$user['ue_theme'];//昵称
+					$data['date']=date( 'Y-m-d H:i:s' ); //排单时间
+					$data['jb']=$data_P['amount'];
+					$data['wait_day'] = $data_P['wait_day'];
+					$data['user_tjr']=$user['zcr']; //推荐人
+					$data['zt']=0; //等待匹配
+					$data['qr_zt']=0; //未确认
+
+					if(M('tgbz')->add($data)){
+						
+						// tz_leiji-----》投资累计
+						M('user')->where(array('UE_account' => $uname))->setInc('tz_leiji',$data_P['amount']);
 					
-					$tgbz_num = M('tgbz')->where(array('user'=>$_SESSION['uname'],'zt'=>0))->count();
-					$dealing_num = $tgbz_num + $ppdd_num; 
-					if( $dealing_num >= $paidan_nums)
-					{
-						die("<script>alert('您还有".$paidan_nums."个未完成的订单未处理，不能继续申请');history.back(-1);</script>");
-					}
-	        	}
-                //add new code by olnho@qq.com
-	
-
-				// 暂不验证拍单币
-				// if($this->paidan_num < 1){
-				// 	$this->error('排单币不足!');
-				// }
-
-
-				 $tgbz_data = M('tgbz')->where(array('user'=>$_SESSION['uname']))->find();
-                 $percent = C('tgbz_percent');
-                 if(!empty($tgbz_data) && $percent > 0 &&  $data_P['amount'] < $tgbz_data['jb']*$percent/100){
-                        $this->error('复投金额不得低于上次金额的百分之'.$percent);
-                 }
-
-
-
-				if ($data_P ['zffs1']<>'1'&&$data_P ['zffs2']<>'1'&&$data_P ['zffs3']<>'1') {
-					die("<script>alert('至少选择一个收款方式！');history.back(-1);</script>");
-				}  elseif ($data_P ['amount']<C("jj01s")||$data_P ['amount']>C("jj01m") || $data_P ['amount']% C("jj01") > 0) {
-					//帮助金额500-20000,并且是100的倍数！
-					die("<script>alert('帮助金额".C("jj01s")."-".C("jj01m").",并且是".C("jj01")."的倍数！');history.back(-1);</script>");
-
-				}else {
-					//$data_P ['amount']=$data_P ['amount']*6;
-					$timea=time ();
-					$kssj=strtotime($user['date_leiji'])+86400*30;
-					$startTime = date('Y-m-d H:i:s',$kssj);
-					if($user['tz_leiji']=='0'||$timea>=$kssj){  //如果他还没有超过当月累计或者已经过了一个月  $user['tz_leiji'] ===>每月金额的统计
-						M('user')->where(array(UE_account => $_SESSION ['uname']))->save(array('date_leiji'=>date('Y-m-d H:i:s',$timea),'tz_leiji'=>'0'));
-						//$user = M ( 'user' )->where ( array (UE_account => $_SESSION ['uname']) )->find ();  原来  多此一举 by olnho@qq.com
-					}
-					//
-					if($user['tz_leiji']+$data_P ['amount']>C("month_max")){
-
-						die("<script>alert('当前投资加当月累计超过".$user['tz_leiji'].'|'.C("month_max").",请在".$startTime."以后在试！');history.back(-1);</script>");
+						// jisuanzhituijiang($_SESSION['uname'], $data_P['amount']);   //计算推荐人的直推奖
+						
+						die("<script>alert('提交成功！');window.location.href='/';</script>");
 					}else{
-
-						// if(!M('paidan')->where(array('paidan'=>$data_P ['pai']))->save(array('zt'=>'1','sy_user'=>$_SESSION['uname'],'sy_date'=>date ( 'Y-m-d H:i:s', time () ))))
-						// {
-						// 	$this->error('排单币错误!');
-						// }
-
-
-						//如此可以看出他是在排单等待中就添加金额		  tz_leiji-----》投资累计
-						M('user')->where(array(UE_account => $_SESSION ['uname']))->setInc('tz_leiji',$data_P ['amount']);
-						//M('user')->where(array(UE_account => $_SESSION ['uname']))->setInc('tz_leiji',$data_P ['amount']);
-
-						if($data_P ['zffs1']=='1'){$data['zffs1']='1';}else{$data['zffs1']='0';}
-						if($data_P ['zffs2']=='1'){$data['zffs2']='1';}else{$data['zffs2']='0';}
-						if($data_P ['zffs3']=='1'){$data['zffs3']='1';}else{$data['zffs3']='0';}
-						$data['user']=$user['ue_account'];
-						$data['jb']=$data_P ['amount'];
-						$data['user_nc']=$user['ue_theme'];//昵称
-						$data['user_tjr']=$user['zcr']; //推荐人
-						$data['date']=date ( 'Y-m-d H:i:s', time () ); //排单时间
-						$data['zt']=0; //等待匹配
-						$data['qr_zt']=0; //未确认
-						$data['wait_day'] = $data_P['wait_day'];
-
-						if(M('tgbz')->add($data)){
-							
-						//	lkdsjfsdfj($_SESSION ['uname'],$data_P ['amount']);   //计算推荐人的直推奖
-							
-							die("<script>alert('提交成功！');window.location.href='/';</script>");
-						}else{
-							die("<script>alert('提交失败！');history.back(-1);</script>");
-						}
+						die("<script>alert('提交失败！');history.back(-1);</script>");
 					}
 				}
+			}
 		}
 	}
 
@@ -1440,12 +1414,10 @@ public function home() {
 			$this->success('非法操作,将冻结账号!');
 		}else{
 			$userinfo = M ( 'tgbz' )->where ( array ('id' => I ('get.id'),'zt'=>'0') )->find ();
-			//dump(I ('get.id'));
-			//dump($userinfo['ue_accname']);die;
 			if ($userinfo['user']<>$_SESSION ['uname']) {
 				$this->success('订单当前状态不可取消!');
 			}else{
-				lkdsjfsdfj($userinfo['user'],'-'.$userinfo['jb']);
+				jisuanzhituijiang($userinfo['user'],'-'.$userinfo['jb']);
 				$reg = M ( 'tgbz' )->where(array ('id' => I ('get.id')))->delete();
 				
 				if ($reg) {
@@ -1802,7 +1774,7 @@ public function home() {
 
 			    
 			    ////直推奖金订单
-			   /* lkdsjfsdfj($ppddxx['p_user'],'-'.$ppddxx['jb']);*/              //------------------------------------------------>
+			   /* jisuanzhituijiang($ppddxx['p_user'],'-'.$ppddxx['jb']);*/              //------------------------------------------------>
 			    
 			    
 				die("<script>alert('此次交易成功！');parent.location.reload();</script>");

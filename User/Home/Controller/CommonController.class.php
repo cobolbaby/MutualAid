@@ -3,7 +3,9 @@ namespace Home\Controller;
 
 use Think\Controller;
 
-class CommonController extends Controller {
+class CommonController extends Controller
+{
+	protected $tgbz_full = false;
 
 	public function _initialize() {
 
@@ -78,35 +80,31 @@ class CommonController extends Controller {
 		$this->assign('tj_e',C('tj_e'));
 		$this->assign ( 'tj_beishu', C("tj_beishu") );
 
-
+        $uname = $_SESSION['uname'];
+		// 每天排单金币数
 		$paidan_jbs = C('paidan_jbs');
-        if($paidan_jbs>0){
-        	$uname = $_SESSION ['uname'];
+        if($paidan_jbs > 0){
 			$starttime = date('Y-m-d 00:00:01', time());
             $endtime = date('Y-m-d 23:59:59', time());
-            $count = M("tgbz")->where("date>='$starttime' and date<='$endtime' and user='$uname'")->sum('jb');		     
+            $count = M("tgbz")->where("date>='$starttime' and date<='$endtime' and user='$uname'")->sum('jb');
             if ($count >= $paidan_jbs) {
                	$this->tgbz_full = true;
             }
     	}
 
-
-		//排单币
+		// 排单币
 		$paidan_db = M('paidan');
-		$this->paidan_num  = $paidan_db->where(array('user'=>$_SESSION['uname'],'zt'=>0))->count()+0;
-		$this->paidans = $paidan_db->where(array('user'=>$_SESSION['uname'],'zt'=>0))->find();
+		$this->paidan_num  = $paidan_db->where(array('user'=>$uname,'zt'=>0))->count()+0;
+		$this->paidans = $paidan_db->where(array('user'=>$uname,'zt'=>0))->find();
 
-		//激活码
+		// 激活码
 		$pin_db = M('pin');
-		$this->pin_zs = $pin_db->where(array('user'=>$_SESSION['uname'],'zt'=>0))->count()+0;
+		$this->pin_zs = $pin_db->where(array('user'=>$uname,'zt'=>0))->count()+0;
 
-
-		//会员任务
+		// 会员任务
 		$level_array = explode(',', C('jjaccountlevel'));
 		$task_arr = explode(',', C('per_task')); // 每月任务最大数
 		if(count($level_array) && !empty($userData['levelname'])){
-			// TODO::array_key
-			// $k = array_key($arr, $v); $a = isset($b[$k]) ? $b[$k] : 0;
 			foreach ($level_array as $key => $value) {
 				if($userData['levelname'] == $value){
 					$this->renwu_num = isset($task_arr[$key]) ? $task_arr[$key] : 0; // 任务数量
@@ -114,16 +112,11 @@ class CommonController extends Controller {
 			}
 		}
 
-		$starttime = date('Y-m-1 00:00:01', time());
-        $endtime = date('Y-m-31 23:59:59', time());
-        $this->tasked = M("task")->where(array('MA_time'=>array('egt',$starttime),'MA_time'=>array('elt',$endtime),'MA_userName'=>$_SESSION['uname']))->count();
+		// $starttime = date('Y-m-1 00:00:01', time());
+  		// $endtime = date('Y-m-31 23:59:59', time());
+        // $this->tasked = M("task")->where(array('MA_time'=>array('egt',$starttime),'MA_time'=>array('elt',$endtime),'MA_userName'=>$uname))->count();
 		
-
-
-		
-
 		$this->userData=$userData;
-
 	}
 
 	public function  _empty()

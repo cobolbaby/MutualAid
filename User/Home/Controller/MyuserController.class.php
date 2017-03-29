@@ -769,15 +769,16 @@ class MyuserController extends CommonController
 	 */
 	public function task()
 	{
-
-		$Task = M ( 'task' ); // 實例化User對象
+		$Task = M ( 'task' );
 
 		$starttime = date('Y-m-1 00:00:01', NOW_TIME);
         $endtime = date('Y-m-31 23:59:59', NOW_TIME);
         $count = $Task->where(array('MA_time'=>array('egt',$starttime),'MA_time'=>array('elt',$endtime),'MA_userName'=>session('uname')))->count();
-        $this->canable_task = true; //  是否可以做任务
+        // 是否需要做任务
+        $this->need_do_task = true;
         if ($this->renwu_num - $count <=0) {
-        	$this->canable_task = false;
+        	// 如果当前已超额完成任务，关闭任务提交窗口
+        	$this->need_do_task = false;
         }
 
 		$map['MA_userName'] = session('uname'); // 用户名
@@ -801,10 +802,6 @@ class MyuserController extends CommonController
 		}else{
 
 			$userinfo = M ( 'task' )->where ( array ('MA_ID' => I ('get.id')) )->find ();
-
-			//dump(I ('get.id'));
-
-			//dump($userinfo['ue_accname']);die;
 
 			if ($userinfo['ma_username']<>$_SESSION ['uname']) {
 
