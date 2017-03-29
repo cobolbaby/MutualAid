@@ -855,7 +855,7 @@ function jsaccountmoney($account,$money,$levelname){
 //===end
 //--------------jsj4和jlj5计算的是待定的 先被取消
 // 第一个参数 提供帮助人 第二参数是帮助金额              ----------------------》经分析此函数多次计算直接推荐人的经理代数奖
-function lkdsjfsdfj($p_user, $jb)
+function jisuanzhituijiang($p_user, $jb)
 {
 
     $ppddxx['p_user'] = $p_user; //提供帮助人
