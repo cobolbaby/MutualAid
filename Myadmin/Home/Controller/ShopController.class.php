@@ -1,23 +1,18 @@
 <?php
 namespace Home\Controller;
+
 use Think\Controller;
-class ShopController extends CommonController {
-  
-public function jbzg_list() {
-	
-	
-	
-	
-	
-	
-	
-	
+
+class ShopController extends CommonController
+{
+
+	public function jbzg_list()
+	{
 		$User = M ( 'shopsj' ); // 實例化User對象
 		$count = $User->where ( array (
 				'leixin' => 'jbzgq' 
 		) )->count (); // 查詢滿足要求的總記錄數
 		$page = new \Think\Page ( $count, 60 ); // 實例化分頁類 傳入總記錄數和每頁顯示的記錄數(25)
-			
 		// $page->lastSuffix=false;
 		$page->setConfig ( 'header', '<li class="rows">共<b>%TOTAL_ROW%</b>條記錄    第<b>%NOW_PAGE%</b>頁/共<b>%TOTAL_PAGE%</b>頁</li>' );
 		$page->setConfig ( 'prev', '上一頁' );
@@ -25,44 +20,28 @@ public function jbzg_list() {
 		$page->setConfig ( 'last', '末頁' );
 		$page->setConfig ( 'first', '首頁' );
 		$page->setConfig ( 'theme', '%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%' );
-		;
-	
+
 		$show = $page->show (); // 分頁顯示輸出
 		// 進行分頁數據查詢 注意limit方法的參數要使用Page類的屬性
 		$list = $User->where ( array (
-				'leixin' => 'jbzgq' 
-
+				'leixin' => 'jbzgq'
 		) )->order ( 'id DESC' )->limit ( $page->firstRow . ',' . $page->listRows )->select ();
 		$this->assign ( 'list', $list ); // 賦值數據集
 		$this->assign ( 'page', $show ); // 賦值分頁輸出
-	
-	
-	
-	
-	
-	
-	
+
 		$userData = M ( 'user' )->where ( array (
 				'UE_ID' => $_SESSION ['uid']
 		) )->find ();
 		$this->userData = $userData;
-	
+
 		$this->display ( 'index/jbzg_list' );
 	}
-	
-	
-	public function zsbyg_list() {
-	
-	
-	
-	
-	
-	
-	
-	
+
+	public function zsbyg_list()
+	{
 		//////////////////----------
 		$User = M ( 'info' ); // 實例化User對象
-		
+
 		if(I('get.type')==''){
 			$map['zt']='0';
 		}else{
@@ -152,10 +131,10 @@ public function jbzg_list() {
 			$map['zt'] = '1';
 		}
 
-		/*$username = I('post.user');
+		$username = I('post.user');
 		if (!empty($username)) {
 			$map['MA_userName'] = $username;
-		}*/
+		}
 
 		$count = $User->where( $map )->count(); // 查詢滿足要求的總記錄數
 		$p = getpage($count, $pagesize);
@@ -164,64 +143,39 @@ public function jbzg_list() {
 		$this->assign( 'list', $list ); // 賦值數據集
 		$this->assign( 'page', $p->show() ); // 賦值分頁輸出
 
-		$thehost = is_ssl() ? 'https' : 'http';
+		$thehost = is_ssl() ? 'https://' : 'http://';
 		$thehost .= $_SERVER["HTTP_HOST"];
 		$this->assign( 'thehost', $thehost );
 
 		$this->display ( 'index/task_list' );
 	}
 
-
-
-
-
-
-
-	
-	
-	
-	
-	
-	
-    
-	public function zsbyg_list_xg2() {
-	
-	
-	
+	public function zsbyg_list_xg2()
+	{
 		$caution = M ( 'info' )->where ( array (
 				'IF_ID'=> I('get.id') ,
 		) )->find ();
-	
-	
 		$this->caution=$caution;
 
-	
 		$userData = M ( 'user' )->where ( array (
 				'UE_ID' => $_SESSION ['uid']
 		) )->find ();
 		$this->userData = $userData;
-	
 		$this->display ( 'index/zsbyg_list_xg2' );
 	}
-	
-	
-	public function ly_list_cl() {
-	
-	
-	
+
+	public function ly_list_cl()
+	{
 		$caution = M ( 'message' )->where ( array (
 				'MA_ID'=> I('get.id') ,
 		) )->find ();
-	
-	
 		$this->caution=$caution;
-	
-	
+
 		$userData = M ( 'user' )->where ( array (
 				'UE_ID' => $_SESSION ['uid']
 		) )->find ();
 		$this->userData = $userData;
-	
+
 		$this->display ( 'index/ly_list_cl' );
 	}
 
