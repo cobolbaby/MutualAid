@@ -178,9 +178,10 @@ jQuery(document).ready(function($){
                                                 <td>合计{$v.id|user_jj_zong_lx=###}</td>
                                                 <td>排单日息:{$paidui_lx}%，排队天数:{$v.id|pd_fenhong_day=###}天，排队利息:{$v.id|user_jj_paidui_lx=###}</td>
                                                 <td>
-                                                    <if condition="$v.zt eq '0'"><font color="#FF0000">恭喜你获得1.3%日息</font><br>({$ztrs1|user_jj_zt_z=$aab,###}) <a
-                                                            href="javascript:if(confirm('打款后利息1.3%/天，是您获利最佳的时机！大多数会员都不着急提现，而是等待计息。转出提现后将停止计息,确定要转出吗?'))location='/Home/Info/tgbz_tx_cl/id/{$v.id}/'">点击确认提款</a>
-                                                        <else/>
+                                                    <if condition="$v.zt eq '0'">
+                                                        <font color="#FF0000">恭喜你获得高息期利息</font><br>
+                                                        ({$ztrs1|user_jj_zt_z=$aab,###}) <a href="javascript:if(confirm('高息期是您获利最佳的时机！大多数会员都不着急提现，而是等待计息。转出提现后将停止计息,确定要转出吗?'))location='/Home/Info/tgbz_tx_cl/id/{$v.id}/'">点击确认提款</a>
+                                                    <else/>
                                                         已转出
                                                     </if>
                                                 </td>
