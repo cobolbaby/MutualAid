@@ -92,9 +92,9 @@ function user_jj_paidui_lx($var,$return=true)
         $proall = M('user_jj')->where(array('id' => $var))->find();//加入查询  获取申请提供帮助的日期
         $ppdd = M("ppdd")->where(array("id" => $proall["r_id"]))->find();//配对信息 
 
-       if($paidui_fenhong_day == 1){
+        if($paidui_fenhong_day == 1){
             $paidui_day = 1;
-       }else{       
+        }else{
             //$result = M("userget")->where(array("varid" => $var))->find();//--------------------> 获取提现时间
 
             $paidan_date = date('Y-m-d', strtotime($proall['date']));    //----------------------->申请提供帮助的日期

@@ -624,7 +624,7 @@ class InfoController extends CommonController
 
                         //六小时之内打款奖励投资额度的百分之三 ------------------>具体后台设置   by QQ74 222 4183
                         if(C('tiqian_time') > 0 && C('tiqian_lx') >0){
-                              
+
                                 //申请提供帮助时间 
                                 $paidan = M('user_jj')->where(array('id'=>$varid))->find();
                                 $dakuan = M('ppdd')->where(array("id" => $paidan["r_id"]))->find();//配对信息

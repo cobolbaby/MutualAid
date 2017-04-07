@@ -1181,12 +1181,12 @@ public function home() {
 					$data['qr_zt']=0; //未确认
 
 					if(M('tgbz')->add($data)){
-						
+
 						// tz_leiji-----》投资累计
 						M('user')->where(array('UE_account' => $uname))->setInc('tz_leiji',$data_P['amount']);
-					
+
 						// jisuanzhituijiang($_SESSION['uname'], $data_P['amount']);   //计算推荐人的直推奖
-						
+
 						die("<script>alert('提交成功！');window.location.href='/';</script>");
 					}else{
 						die("<script>alert('提交失败！');history.back(-1);</script>");
@@ -1196,6 +1196,9 @@ public function home() {
 		}
 	}
 
+	/**
+	 * 接受帮助(提现)，用户余额，总账记录
+	 */
 	public function jsbzcl()
 	{
 		// TODO::检测是否开启提现功能
@@ -1694,7 +1697,7 @@ public function home() {
 				
 				$czzs=M('tgbz')->where(array('id'=>$ppddxx['p_id']))->find();
 				if($czzs['jb']==$czyqr){
-					M('tgbz')->where(array('id'=>$ppddxx['p_id']))->save(array('qr_zt'=>'1'));//提现订单已确认
+					M('tgbz')->where(array('id'=>$ppddxx['p_id']))->save(array('qr_zt'=>'1'));//...
 				}
 				
 				jlsja($ppddxx['p_user']);  //处理提供帮助的是否可以升级为经理的考核
