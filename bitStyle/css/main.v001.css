@@ -290,7 +290,7 @@ header[role="header"]{
 }
 
 #wrapper {
-	background: url('../images/bg.jpg') no-repeat center #45403D;
+	background: url('../images/body-bg.jpg') no-repeat center #45403D;
 	background-attachment: fixed;
 	min-height: 1000px;
 }
@@ -1129,11 +1129,6 @@ a:hover .g-donation, #donationWrap .btn#gdBtn.active .g-donation {background: ur
 	text-align: center;
 	text-shadow: 0px 1px 2px #000;
 }
-
-.blue-bg {
-	background: url('../images/ybibx.png') repeat center top;
-}
-
 
 /* Progressbar ============== */
 .progress-custom{

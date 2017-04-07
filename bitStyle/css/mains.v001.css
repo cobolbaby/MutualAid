@@ -1130,17 +1130,11 @@ a:hover .g-donation, #donationWrap .btn#gdBtn.active .g-donation {background: ur
 	height: 20px;
 }
 
-
 .copyright{
 	color: #FFF;
 	text-align: center;
 	text-shadow: 0px 1px 2px #000;
 }
-
-.blue-bg {
-	background: url('../images/body-bg.png') no-repeat center top;
-}
-
 
 /* Progressbar ============== */
 .progress-custom{
