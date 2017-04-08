@@ -272,7 +272,7 @@ class ShopController extends CommonController
 			$data['MA_reply']=$_POST['content'];
 			$data['MA_replyTime']=date ( 'Y-m-d H:i:s', time () );
 			$data['zt']='1';
-	
+
 			if(M('message')->where(array('MA_ID'=>I('post.id')))->save($data)){
 				$this->success('处理成功！');
 			}else{
@@ -282,6 +282,9 @@ class ShopController extends CommonController
 
 	}
 
+	/**
+	 * 审核用户提交的任务(获取排单币)
+	 */
 	public function task_list_xgcl2()
 	{
 		$task = M('task')->where(array('MA_ID'=>I('post.id')))->find();

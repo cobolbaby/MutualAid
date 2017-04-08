@@ -269,21 +269,20 @@ class InfoController extends CommonController
         }
     }
 
+    /**
+     * 处理修改二级密码
+     */
     public function xgejmmcl()
     {
 
         if (IS_POST) {
             $data_P = I('post.');
-            //dump($data_P);die;
-            //$this->ajaxReturn($data_P['ymm']);die;
-            //$user = M ( 'user' )->where ( array (
-            //		UE_account => $_SESSION ['uname']
-            //) )->find ();
 
-            $user1 = M();
+            // $user1 = M();
             //! $this->check_verify ( I ( 'post.yzm' ) )
             //! $user1->autoCheckToken ( $_POST )
-            if (!preg_match('/^[a-zA-Z0-9]{1,15}$/', $data_P ['xejmm'])) {
+
+            if (!preg_match('/^[a-zA-Z0-9]{1,15}$/', $data_P ['xejmm'])) { // 新二级密码
                 //$this->ajaxReturn ( array ('nr' => '新二级密碼6-12個字元,大小寫英文+數字,請勿用特殊詞符！','sf' => 0 ) );
                 die("<script>alert('新二级密碼6-12個字元,大小寫英文+數字,請勿用特殊詞符！');history.back(-1);</script>");
             } elseif ($data_P['xejmm'] <> $data_P['xejmmqr']) {
@@ -293,19 +292,18 @@ class InfoController extends CommonController
                 //$this->ajaxReturn ( array ('nr' => '原二级密碼和新密碼不能相同!','sf' => 0 ) );
                 die("<script>alert('原二级密碼和新密碼不能相同！');history.back(-1);</script>");
             } else {
-                $addaccount = M('user')->where(array(UE_account => $_SESSION ['uname']))->find();
+                $addaccount = M('user')->where(array('UE_account' => $_SESSION ['uname']))->find();
 
                 if ($addaccount['ue_secpwd'] <> md5($data_P['yejmm'])) {
                     //$this->ajaxReturn ( array ('nr' => '原二级密碼不正確!','sf' => 0 ) );
                     die("<script>alert('原二级密碼不正確！');history.back(-1);</script>");
                 } else {
 
-                    $reg = M('user')->where(array(
+                    $flag = M('user')->where(array(
                         'UE_ID' => $_SESSION ['uid']
                     ))->save(array('UE_secpwd' => md5($data_P['xejmm'])));
 
-
-                    if ($reg) {
+                    if ($flag) {
                         //$this->ajaxReturn ( array ('nr' => '修改成功!','sf' => 0 ));
                         die("<script>alert('修改成功!');history.back(-1);</script>");
                     } else {
