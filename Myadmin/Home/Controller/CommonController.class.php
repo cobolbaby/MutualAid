@@ -32,6 +32,10 @@ class CommonController extends Controller
 	{
 		// 检查IP地址访问
 		$iplist = C('ADMIN_ALLOW_IP');
+		if (is_null($iplist) || count($iplist) == 0) {
+			// 如果没有iplist文件或者暂无配置
+			return true;
+		}
         foreach ($iplist as $v) {
         	// 100.10.1.*
         	if (strpos($v, '*') !== false) {

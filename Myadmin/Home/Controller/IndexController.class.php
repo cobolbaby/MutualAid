@@ -1113,17 +1113,15 @@ class IndexController extends CommonController
 
     public function ts1_list()
     {
-
-        $User = M('ppdd'); // 實例化User對象
-        $data = I('post.user');
+        $User = M('ppdd');
 
         $map['zt'] = array('neq', 2);
-        $map['ts_zt'] = array('eq', 1);;
-        $count = $User->where($map)->count(); // 查詢滿足要求的總記錄數
+        $map['ts_zt'] = array('eq', 1); // 提示状态
+        $count = $User->where($map)->count();
         $p = getpage($count, 20);
         $list = $User->where($map)->order('id DESC')->limit($p->firstRow, $p->listRows)->select();
-        $this->assign('list', $list); // 賦值數據集
-        $this->assign('page', $p->show()); // 賦值分頁輸出
+        $this->assign('list', $list);
+        $this->assign('page', $p->show());
         $this->assign('jjdktime', C("jjdktime"));
         $this->display('index/ts1_list');
     }
@@ -1138,7 +1136,7 @@ class IndexController extends CommonController
 
 
         $map['zt'] = array('neq', 2);
-        $map['ts_zt'] = array('eq', 2);;
+        $map['ts_zt'] = array('eq', 2);
 
 
         $count = $User->where($map)->count(); // 查詢滿足要求的總記錄數

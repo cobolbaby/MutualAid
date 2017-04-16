@@ -10,8 +10,8 @@ $typeArr = array("jpg", "png");//允许上传文件格式
 $path = "Uploads/";//上传路径
 
 if (isset($_POST)) {
-    if ($_FILES["file"]["error"] > 0) {
-        error_log('upload exception:' . $_FILES["file"]["error"]);
+    if (!isset($_FILES["file"]) || $_FILES["file"]["error"] > 0) {
+        error_log('upload exception:' . var_export($_FILES， true));
         exit(json_encode(array("error"=>"上传失败，请您重新选择图片进行上传")));
     }
 
