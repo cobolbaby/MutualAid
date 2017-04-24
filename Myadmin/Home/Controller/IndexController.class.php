@@ -1046,32 +1046,30 @@ class IndexController extends CommonController
      */
     public function jsbz_list()
     {
-        $User = M('jsbz'); // 實例化User對象
+        $User = M('jsbz');
+        $this->z_jgbz2 = $User->where(array('zt' => 1))->sum('jb');
+        // zt字段是否还有别的值，以此来判断怎么执行优化
+        $this->z_jgbz3 = $User->where(array('zt' => 0))->sum('jb');
+        // $this->z_jgbz = $User->sum('jb');
+        $this->z_jgbz = $this->z_jgbz2 + $this->z_jgbz3;
+
+        // 方便查询
         $data = I('post.user');
         $start = I('post.start');
         $end = I('post.end');
-        $this->z_jgbz = $User->sum('jb');
-        $this->z_jgbz2 = $User->where(array('zt' => '1'))->sum('jb');
-        $this->z_jgbz3 = $User->where(array('zt' => array('neq', '1')))->sum('jb');
-        //$map ['UG_dataType'] = array('IN',array('mrfh','tjj','kdj','mrldj','glj'));
 
         $map['zt'] = 0;
-
         if (I('get.cz') == 1) {
             $map['zt'] = 1;
         }
         if ($data <> '') {
             $map['user'] = $data;
         }
-        if(!empty($start)&&!empty($end))
-        {
-            $map['date'] = array('between',array($start,$end));
+        if(!empty($start) && !empty($end)) {
+            $map['date'] = array('between', array($start, $end));
         }
         $count = $User->where($map)->count(); // 查詢滿足要求的總記錄數
-        //$page = new \Think\Page ( $count, 3 ); // 實例化分頁類 傳入總記錄數和每頁顯示的記錄數(25)
-
-        $p = getpage($count, 20);
-
+        $p = getpage($count);
         $list = $User->where($map)->order('date')->limit($p->firstRow, $p->listRows)->select();
         $this->assign('list', $list); // 賦值數據集
         $this->assign('page', $p->show()); // 賦值分頁輸出
