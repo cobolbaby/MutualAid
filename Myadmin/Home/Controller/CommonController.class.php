@@ -37,6 +37,9 @@ class CommonController extends Controller
 			return true;
 		}
         foreach ($iplist as $v) {
+
+        	// TODO::[fix]因防火墙的原因造成获取的IP非真实的客户端IP
+
         	// 100.10.1.*
         	if (strpos($v, '*') !== false) {
         		$ipBlock = substr($v, 0, -1);

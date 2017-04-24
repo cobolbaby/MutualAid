@@ -1110,13 +1110,17 @@ class IndexController extends CommonController
         $this->display('index/ppdd_list');
     }
 
-
+    /**
+     *
+     */
     public function ts1_list()
     {
         $User = M('ppdd');
-
         $map['zt'] = array('neq', 2);
-        $map['ts_zt'] = array('eq', 1); // 提示状态
+
+    	// TODO::查询在哪设置投诉状态
+        $map['ts_zt'] = array('eq', 1); // 投诉情况
+
         $count = $User->where($map)->count();
         $p = getpage($count, 20);
         $list = $User->where($map)->order('id DESC')->limit($p->firstRow, $p->listRows)->select();
@@ -1162,7 +1166,7 @@ class IndexController extends CommonController
 
 
         $map['zt'] = array('neq', 2);
-        $map['ts_zt'] = array('eq', 3);;
+        $map['ts_zt'] = array('eq', 3);
 
 
         $count = $User->where($map)->count(); // 查詢滿足要求的總記錄數
