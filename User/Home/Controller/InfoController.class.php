@@ -797,31 +797,25 @@ class InfoController extends CommonController
 
     public function pai()
     {
-
-         //////////////////----------
-        $User = M('paidan'); // 實例化User對象
-
-        $map['user'] = $_SESSION['uname'];
-        $count = $User->where($map)->count(); // 查詢滿足要求的總記錄數
-        //$page = new \Think\Page ( $count, 3 ); // 實例化分頁類 傳入總記錄數和每頁顯示的記錄數(25)
-
-        $p = getpage($count1, 10);
-
+        $User = M('paidan');
+        $username = session('uname');
+        $map['user'] = $username;
+        $count = $User->where($map)->count();
+        $p = getpage($count);
         $list = $User->where($map)->order('id DESC')->limit($p->firstRow, $p->listRows)->select();
         $this->assign('list', $list); // 賦值數據集
         $this->assign('page', $p->show()); // 賦值分頁輸出
-        /////////////////----------------
 
-        $this->paidan_zs = M('paidan')->where(array('user' => $_SESSION['uname'], 'zt' => 0))->count() + 0;  
-
+        // 当前可用排单币数量
+        $this->paidan_zs = M('paidan')->where(array('user'=>$username, 'zt'=>0))->count() + 0;
 
         $this->display('pai');
     }
 
 
     public function sendPhone(){
-        $phone = $_POST['phone'];        
-        $rand =rand(100000,900000);        
+        $phone = $_POST['phone'];
+        $rand =rand(100000,900000);
         session('CHECK_CODE',$rand);
         session('PHONE_NUM',$phone);
         $info = sendSMS($phone,"尊敬的YBI会员，您注册的手机验证码为：$rand,【YBI青创】",'');
