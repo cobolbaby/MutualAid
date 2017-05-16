@@ -806,7 +806,7 @@ class InfoController extends CommonController
         $this->assign('list', $list); // 賦值數據集
         $this->assign('page', $p->show()); // 賦值分頁輸出
 
-        // 当前可用排单币数量
+        // 当前可用排单币数量(总数)
         $this->paidan_zs = M('paidan')->where(array('user'=>$username, 'zt'=>0))->count() + 0;
 
         $this->display('pai');

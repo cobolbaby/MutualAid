@@ -16,13 +16,13 @@ class LoginController extends Controller
     	if (IS_POST) {
 
     		//$this->error('系統暫未開放!');die;
-	    	$username = trim(I('post.account'));
+			$username = trim(I('post.account'));
 			$pwd = trim(I('post.password'));
 			$verCode = trim(I('post.mycode'));//驗證碼
 
-            if (!$this->check_verify($verCode)) {
-                $this->ajaxReturn( array('nr'=>'验证码错误!','sf'=>0) );
-            } else {
+			if (!$this->check_verify($verCode)) {
+				$this->ajaxReturn( array('nr'=>'验证码错误!','sf'=>0) );
+			} else {
 
     			$user=M('user')->where(array('UE_account'=>$username))->find();
     			// [fix]返回值中字段大小写发生了变换
