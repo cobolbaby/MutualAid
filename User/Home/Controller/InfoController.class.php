@@ -20,24 +20,6 @@ class InfoController extends CommonController
         $this->display('grsz');
     }
 
-    public function xgmm()
-    {
-        $userData = M('user')->where(array(
-            'UE_ID' => $_SESSION ['uid']
-        ))->find();
-        $this->userData = $userData;
-        $this->display('xgmm');
-    }
-
-    public function xgmme()
-    {
-        $userData = M('user')->where(array(
-            'UE_ID' => $_SESSION ['uid']
-        ))->find();
-        $this->userData = $userData;
-        $this->display('xgmme');
-    }
-
     public function bdmb()
     {
         $userData = M('user')->where(array(

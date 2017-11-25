@@ -12,13 +12,6 @@ class RegController extends Controller {
         $this->display('reg');
     }
 
-    public function logout()
-    {
-    	session_unset();
-    	session_destroy();
-    	$this->redirect('Login/index');
-    }
-
     //驗證碼模塊
     public function check_verify($code)
     {

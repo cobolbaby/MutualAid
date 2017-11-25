@@ -74,8 +74,8 @@ class LoginController extends Controller
 
     public function logout()
     {
+        session_destroy();
     	session_unset();
-    	session_destroy();
     	$this->redirect('Login/index');
     }
 
