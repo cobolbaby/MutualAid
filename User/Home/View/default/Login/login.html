@@ -8,77 +8,13 @@
 <!-- <![endif]-->
 
 <head>
-    <script type="text/javascript" src="/bitStyle/js/jquery.js">
-    </script>
-    <script type="text/javascript" src="/bitStyle/js/remaining.js">
-    </script>
-    <script type="text/javascript">
-    var _gNow = new Date();
-    </script>
-    <script type="text/javascript">
-    jQuery(document).ready(function($) {
-        var _allsecs = new Array();
-        var _allsecs2 = new Array();
-        var _i18n = {
-            weeks: ['星期', '星期'],
-            days: ['天', '天'],
-            hours: ['小时', '小时'],
-            minutes: ['分', '分'],
-            seconds: ['秒', '秒']
-        };
-        $('.login_remain_time').each(function() {
-            var _rid = $(this).attr('id');
-            var _seconds = parseInt($(this).attr('rel'));
-            if (_seconds > 0) {
-                $(this).html(
-                    remaining.getString(_seconds, _i18n, false)
-                );
-            } else {
-                $(this).html('剩余0天');
-            }
-            _allsecs[_rid] = _seconds;
-            _allsecs2[_rid] = _seconds;
-        });
-        timer = setInterval(function() {
-            var now = new Date(); //by QQ 74222 4183
-            true_elapsed = Math.round((now.getTime() - _gNow.getTime()) / 1000);
-            $('.login_remain_time').each(function() {
-                var _rid = $(this).attr('id');
-                if (typeof _allsecs[_rid] == 'undefined') {
-                    _allsecs[_rid] = parseInt($(this).attr('rel'));
-                }
-                _seconds = _allsecs[_rid];
-                if (typeof _allsecs2[_rid] == 'undefined') {
-                    _allsecs2[_rid] = parseInt($(this).attr('rel'));
-                }
-                //synchronize
-                _diff_sec = _allsecs2[_rid] - _seconds;
-                if (_diff_sec < true_elapsed) {
-                    _seconds = _allsecs2[_rid] - true_elapsed;
-                }
-                if (_seconds > 0) {
-                    $(this).html(
-                        remaining.getString(_seconds, _i18n, false)
-                    );
-                    _allsecs[_rid] = --_seconds;
-                } else {
-                    $("#too_many_user").hide();
-                    $("#login_btn").removeAttr("disabled");
-                    $(this).html('剩余0天');
-                }
-            });
-        }, 1000);
-    });
-    </script>
-    <link rel="stylesheet" href="/bitStyle/css/bootstrap.min.css" type="text/css">
-    <title>
-        会员登录
-    </title>
+    <title>会员登录</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
     <link rel="shortcut icon" href="/bitStyle/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/bitStyle/css/bootstrap.min.css" type="text/css">
     <style type="text/css">
     .login {
         background-color: #342954;
@@ -347,6 +283,8 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript" src="/bitStyle/js/jquery.js">
+    </script>
     <script type="text/javascript" src="/bitStyle/js/modernizr.js">
     </script>
     <script type="text/javascript" src="/bitStyle/js/bootstrap.min.js">
