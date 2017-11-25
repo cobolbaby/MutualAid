@@ -11,7 +11,7 @@ define('APP_DEBUG', false);
 define('APP_PATH', './User/');
 
 // 定义运行时目录
-define('RUNTIME_PATH', '/tmp/mayihelp-user/Runtime/');
+define('RUNTIME_PATH', '/tmp/mutual-aid/Runtime-User/');
 
 // 引入ThinkPHP入口文件
 require './ThinkPHP/ThinkPHP.php';

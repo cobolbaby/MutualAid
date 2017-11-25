@@ -290,9 +290,10 @@ header[role="header"]{
 }
 
 #wrapper {
-	background: url('../images/body-bg.jpg') no-repeat center #45403D;
-	background-attachment: fixed;
+	/*background: url('../images/body-bg.jpg') no-repeat center #342954;
+	background-attachment: fixed;*/
 	min-height: 1000px;
+	background-color: #342954;
 }
 
 /* Navbar Brand - Logo ============== */

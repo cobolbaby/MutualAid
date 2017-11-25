@@ -16,8 +16,8 @@ class BaksqlController extends CommonController
 		header("Content-type: text/html;charset=utf-8");
 		set_time_limit(0);
 		ini_set("memory_limit", "500M");
-		$this->config = array("path" => c("DB_BACKUP"), "isCompress" => 0, "isDownload" => 0);
-		$this->dbName = c("DB_NAME");
+		$this->config = array("path" => C("DB_BACKUP"), "isCompress" => 0, "isDownload" => 0);
+		$this->dbName = C("DB_NAME");
 		$this->model = new \Think\Model();
 	}
 

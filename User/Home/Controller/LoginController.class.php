@@ -11,79 +11,66 @@ class LoginController extends Controller
         $this->display('login');
     }
 
-    public function logincl() {
+    public function logincl()
+    {
+		//$this->error('系統暫未開放!');
+        if (!IS_POST) {
+            exit();
+        }
+        $username = trim(I('post.account'));
+		$pwd = trim(I('post.password'));
+		$verCode = trim(I('post.mycode'));//驗證碼
 
-    	if (IS_POST) {
+		if (!$this->check_verify($verCode)) {
+			$this->ajaxReturn( array('nr'=>'验证码错误!','sf'=>0) );
+		}
 
-    		//$this->error('系統暫未開放!');die;
-			$username = trim(I('post.account'));
-			$pwd = trim(I('post.password'));
-			$verCode = trim(I('post.mycode'));//驗證碼
+		$user=M('user')->where(array('UE_account'=>$username))->find();
+		// [fix]返回值中字段大小写发生了变换
+		if(!$user || $user['ue_password'] != md5($pwd)){
+			$this->ajaxReturn( array('nr'=>'賬號或密碼錯誤!','sf'=>0) );
+        } elseif ($user['ue_status'] == 1) {
+			$this->ajaxReturn( array('nr'=>'賬號被禁用!','sf'=>0) );
+		}
 
-			if (!$this->check_verify($verCode)) {
-				$this->ajaxReturn( array('nr'=>'验证码错误!','sf'=>0) );
-			} else {
+		// 查询用户是否有未打款的问题
+		$this->cspaycl($user);
 
-    			$user=M('user')->where(array('UE_account'=>$username))->find();
-    			// [fix]返回值中字段大小写发生了变换
-    			if(!$user || $user['ue_password'] != md5($pwd)){
-    				$this->ajaxReturn( array('nr'=>'賬號或密碼錯誤!','sf'=>0) );
-                } elseif ($user['ue_status'] == 1) {
-    				$this->ajaxReturn( array('nr'=>'賬號被禁用!','sf'=>0) );
-    			} else {
-    				// 查询用户是否有未打款的问题
-    				$this->cspaycl($user);
+		session('uid', $user['ue_id']);
+		session('uname', $user['ue_account']);
+        session('logintime', NOW_TIME);
 
-     				session('uid', $user['ue_id']);
-    				session('uname', $user['ue_account']);
-                    session('logintime', NOW_TIME);
+		$record['date']     = date('Y-m-d H:i:s');
+		$record['ip']       = get_client_ip();
+		$record['user']     = $user['ue_account'];
+		$record['leixin']   = 0;
+		M( 'drrz' )->add( $record );
 
-    				$record['date']     = date('Y-m-d H:i:s');
-    				$record['ip']       = get_client_ip();
-    				$record['user']     = $user['ue_account'];
-    				$record['leixin']   = 0;
-    				M( 'drrz' )->add( $record );
+        $this->ajaxReturn(array('nr'=>'登录成功!','sf'=>1));
 
-                    $this->ajaxReturn(array('nr'=>'登录成功!','sf'=>1));
-
-        	    }
-            }
-
-    	}
     }
 
-    public function loginadmin() {
-
+    public function adminlogincl()
+    {
+        if (!IS_GET) {
+            exit();
+        }
     	header("Content-Type:text/html; charset=utf-8");
 
-    	if (IS_GET) {
+		$username = I('get.account');
+		$pwd      = I('get.password');
+		$pwd2     = I('get.secpw');
 
-    		$username = I('get.account');
-    		$pwd = I('get.password');
-    		$pwd2 = I('get.secpw');
-    		//$verCode = trim(I('post.verCode'));//驗證碼
+		$user = M('user')->where(array('UE_account'=>$username))->find();
+		if(!$user || $user['ue_password']!=$pwd){
+			$this->error('账号或密码错误,或被禁用!');
+		}
 
-    		if(false){
-    			$this->error('验证码错误,请刷新验证码!' );
-    		}else{
-
-				$user=M('user')->where(array('UE_account'=>$username))->find();
-
-				if(!$user || $user['ue_password']!=$pwd){
-					$this->error('账号或密码错误,或被禁用!');
-				}else{
-					session('uid',$user['ue_id']);
-					session('uname',$user['ue_account']);
-                    session('logintime', NOW_TIME);
-
-					$this->redirect('/');
-				}
-
-    		}
-
-    	}
-
-    }
+    	session('uid',$user['ue_id']);
+		session('uname',$user['ue_account']);
+        session('logintime', NOW_TIME);
+		$this->redirect('/');
+	}
 
     public function logout()
     {

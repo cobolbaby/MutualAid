@@ -5,7 +5,7 @@ if (!isset($_SESSION['uid'])) {
 }
 */
 
-define('ATTACK_LOG_DIR', '/tmp/attack/');
+define('ATTACK_LOG_DIR', '/tmp/mutual-aid/attack/');
 $typeArr = array("jpg", "png");//允许上传文件格式
 $path = "Uploads/";//上传路径
 

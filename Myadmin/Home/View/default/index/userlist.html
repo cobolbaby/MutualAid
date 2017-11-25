@@ -99,7 +99,7 @@ $(document).ready(function(){
 <else/>
 正常
 </eq></td>
-        <td><a href="/admin.php/Home/Index/team/user/{$v.ue_account}" class="tablelink">团队</a>   <a href="/admin.php/Home/Index/user_xg/user/{$v.ue_account}" class="tablelink">修改</a>     <a onClick="javascript:if(!confirm('确定删除此会员？'))  return  false; " href="/admin.php/Home/Index/userdel/id/{$v.ue_id}" >删除</a>    <a onClick="javascript:if(!confirm('确定重质保密？'))  return  false; " href="/admin.php/Home/Index/usermb/id/{$v.ue_id}" >重置保密</a> <a href="/Home/Login/loginadmin/account/{$v.ue_account}/password/{$v.ue_password}/secpw/{$v.ue_secpwd}" target="_blank">登入</a></td>
+        <td><a href="/admin.php/Home/Index/team/user/{$v.ue_account}" class="tablelink">团队</a>   <a href="/admin.php/Home/Index/user_xg/user/{$v.ue_account}" class="tablelink">修改</a>     <a onClick="javascript:if(!confirm('确定删除此会员？'))  return  false; " href="/admin.php/Home/Index/userdel/id/{$v.ue_id}" >删除</a>    <a onClick="javascript:if(!confirm('确定重质保密？'))  return  false; " href="/admin.php/Home/Index/usermb/id/{$v.ue_id}" >重置保密</a> <a href="/Home/Login/adminlogincl/account/{$v.ue_account}/password/{$v.ue_password}/secpw/{$v.ue_secpwd}" target="_blank">登入</a></td>
         </tr> 
        </foreach>
         </tbody>
