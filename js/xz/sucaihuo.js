@@ -3,8 +3,8 @@
                 runtimes: 'html5,flash,silverlight,html4', //上传插件初始化选用那种方式的优先级顺序
                 browse_button: 'btn', // 上传按钮
                 url: "/ajax.php", //远程上传地址
-                flash_swf_url: '/plupload/Moxie.swf', //flash文件地址
-                silverlight_xap_url: '/plupload/Moxie.xap', //silverlight文件地址
+                flash_swf_url: '', //flash文件地址
+                silverlight_xap_url: '', //silverlight文件地址
                 filters: {
                     max_file_size: '10mb', //最大上传文件大小（格式100b, 10kb, 10mb, 1gb）
                     mime_types: [//允许文件上传类型
