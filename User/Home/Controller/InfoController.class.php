@@ -806,7 +806,7 @@ class InfoController extends CommonController
             session('check_status',1);
         }else{
              session('check_status',0);
-        }           
+        }
 
     }
 
