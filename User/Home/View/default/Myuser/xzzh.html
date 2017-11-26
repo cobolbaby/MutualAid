@@ -19,20 +19,6 @@
 <script type="text/javascript" src="/bitStyle/js/9acba5c0d35076a1ccd574dfc21b8b2b.js"></script>
     <script type="text/javascript">
       var _gNow = new Date();
-      
-      setInterval(function(){
-        $.ajax({
-          url: '?aj=1&type=check_login',
-          data: {'uid': 82662186},
-          dataType: 'json',
-          error: function(){},
-          success: function(data){
-            if(data.loggedout == '1'){
-              window.location.href = "/bitStyle/zh-CN/";
-            }
-          }
-        })
-      }, 300000); //5min
     </script>
     
 
