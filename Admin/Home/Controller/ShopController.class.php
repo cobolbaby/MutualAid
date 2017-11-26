@@ -34,7 +34,7 @@ class ShopController extends CommonController
 		) )->find ();
 		$this->userData = $userData;
 
-		$this->display ( 'index/jbzg_list' );
+		$this->display ( 'Index/jbzg_list' );
 	}
 
 	public function zsbyg_list()
@@ -69,7 +69,7 @@ class ShopController extends CommonController
 		) )->find ();
 		$this->userData = $userData;
 	
-		$this->display ( 'index/zsbyg_list' );
+		$this->display ( 'Index/zsbyg_list' );
 	}
 	
 	
@@ -115,7 +115,7 @@ class ShopController extends CommonController
 		) )->find ();
 		$this->userData = $userData;
 	
-		$this->display ( 'index/ly_list' );
+		$this->display ( 'Index/ly_list' );
 	}
 
 
@@ -147,7 +147,7 @@ class ShopController extends CommonController
 		$thehost .= $_SERVER["HTTP_HOST"];
 		$this->assign( 'thehost', $thehost );
 
-		$this->display ( 'index/task_list' );
+		$this->display ( 'Index/task_list' );
 	}
 
 	public function zsbyg_list_xg2()
@@ -161,7 +161,7 @@ class ShopController extends CommonController
 				'UE_ID' => $_SESSION ['uid']
 		) )->find ();
 		$this->userData = $userData;
-		$this->display ( 'index/zsbyg_list_xg2' );
+		$this->display ( 'Index/zsbyg_list_xg2' );
 	}
 
 	public function ly_list_cl()
@@ -176,7 +176,7 @@ class ShopController extends CommonController
 		) )->find ();
 		$this->userData = $userData;
 
-		$this->display ( 'index/ly_list_cl' );
+		$this->display ( 'Index/ly_list_cl' );
 	}
 
 
@@ -197,7 +197,7 @@ class ShopController extends CommonController
 		) )->find ();
 		$this->userData = $userData;
 	
-		$this->display ( 'index/task_list_cl' );
+		$this->display ( 'Index/task_list_cl' );
 	}
 	
 	
@@ -217,7 +217,7 @@ class ShopController extends CommonController
 		) )->find ();
 		$this->userData = $userData;
 	
-		$this->display ( 'index/zsbyg_list_xg' );
+		$this->display ( 'Index/zsbyg_list_xg' );
 	}
 	
 	

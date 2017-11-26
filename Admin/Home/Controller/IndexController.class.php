@@ -7,17 +7,17 @@ class IndexController extends CommonController
 {
     public function index()
     {
-        $this->display('index/main');
+        $this->display('Index/main');
     }
 
     public function main()
     {
-        $this->display('index/main');
+        $this->display('Index/main');
     }
 
     public function admin_add()
     {
-        $this->display('index/admin_add');
+        $this->display('Index/admin_add');
     }
 
     public function df1()
@@ -95,7 +95,7 @@ class IndexController extends CommonController
         $this->zzsb = M('user')->sum('zsbhe');
 
 
-        $this->display('index/index');
+        $this->display('Index/index');
     }
 
     public function gb()
@@ -112,18 +112,18 @@ class IndexController extends CommonController
 
     public function top()
     {
-        $this->display('index/top');
+        $this->display('Index/top');
     }
 
     public function team()
     {
         $this->user = I('get.user', '0');
-        $this->display('index/team');
+        $this->display('Index/team');
     }
 
     public function left()
     {
-        $this->display('index/left');
+        $this->display('Index/left');
     }
 
     /**
@@ -136,7 +136,7 @@ class IndexController extends CommonController
             // TODO::判断条件调整为id,避免用户名中.com的影响
             $map = array('UE_account'=>$uname);
             $this->userdata = M('user')->where($map)->find();
-            $this->display('index/user_xg');
+            $this->display('Index/user_xg');
         } else {
             $this->error('非法操作!');
         }
@@ -149,7 +149,7 @@ class IndexController extends CommonController
             $this->userdata = M('tixian')->where(array(
                 'id' => I('get.id')
             ))->find();
-            $this->display('index/tixian_xg');
+            $this->display('Index/tixian_xg');
         } else {
             $this->error('非法操作!');
         }
@@ -165,7 +165,7 @@ class IndexController extends CommonController
             $this->userdata = M('member')->where(array(
                 'MB_username' => I('get.user')
             ))->find();
-            $this->display('index/admin_xg');
+            $this->display('Index/admin_xg');
         } else {
             $this->error('非法操作!');
         }
@@ -284,7 +284,7 @@ class IndexController extends CommonController
         $this->assign('page', $p->show()); // 賦值分頁輸出
 
 
-        $this->display('index/txlist');
+        $this->display('Index/txlist');
     }
 
     public function userlist($pagesize=20)
@@ -303,7 +303,7 @@ class IndexController extends CommonController
 
         $this->assign('list', $list); // 賦值數據集
         $this->assign('page', $p->show()); // 賦值分頁輸出
-        $this->display('index/userlist');
+        $this->display('Index/userlist');
     }
 
     public function adminlist()
@@ -327,7 +327,7 @@ class IndexController extends CommonController
         $this->assign('page', $p->show()); // 賦值分頁輸出
 
 
-        $this->display('index/adminlist');
+        $this->display('Index/adminlist');
     }
 
 
@@ -471,7 +471,7 @@ class IndexController extends CommonController
         $this->assign('page', $p->show()); // 賦值分頁輸出
 
 
-        $this->display('index/userbtc');
+        $this->display('Index/userbtc');
     }
 
 
@@ -500,7 +500,7 @@ class IndexController extends CommonController
         $this->assign('page', $p->show()); // 賦值分頁輸出
 
 
-        $this->display('index/rggl');
+        $this->display('Index/rggl');
     }
 
     public function rggldel()
@@ -583,7 +583,7 @@ class IndexController extends CommonController
         $list = $User->where($map)->order('UG_ID DESC')->limit($p->firstRow, $p->listRows)->select();
         $this->assign('list', $list); // 賦值數據集
         $this->assign('page', $p->show()); // 賦值分頁輸出
-        $this->display('index/jbzs');
+        $this->display('Index/jbzs');
     }
 
 
@@ -825,7 +825,7 @@ class IndexController extends CommonController
 
     public function pin_add()
     {
-        $this->display('index/pin_add');
+        $this->display('Index/pin_add');
     }
 
 
@@ -893,7 +893,7 @@ class IndexController extends CommonController
         $this->assign('page', $p->show()); // 賦值分頁輸出
 
 
-        $this->display('index/pin_list');
+        $this->display('Index/pin_list');
     }
 
     public function pin_del()
@@ -919,7 +919,7 @@ class IndexController extends CommonController
     {
 
 
-        $this->display('index/paidan_add');
+        $this->display('Index/paidan_add');
     }
 
 
@@ -987,7 +987,7 @@ class IndexController extends CommonController
         $this->assign('page', $p->show()); // 賦值分頁輸出
 
 
-        $this->display('index/paidan_list');
+        $this->display('Index/paidan_list');
     }
 
     public function paidan_del()
@@ -1038,7 +1038,7 @@ class IndexController extends CommonController
 
         $this->assign('list', $list); // 賦值數據集
         $this->assign('page', $p->show()); // 賦值分頁輸出
-        $this->display('index/tgbz_list');
+        $this->display('Index/tgbz_list');
     }
 
     /**
@@ -1073,7 +1073,7 @@ class IndexController extends CommonController
         $list = $User->where($map)->order('date')->limit($p->firstRow, $p->listRows)->select();
         $this->assign('list', $list); // 賦值數據集
         $this->assign('page', $p->show()); // 賦值分頁輸出
-        $this->display('index/jsbz_list');
+        $this->display('Index/jsbz_list');
     }
 
 
@@ -1105,7 +1105,7 @@ class IndexController extends CommonController
         $this->assign('page', $p->show()); // 賦值分頁輸出
 
 
-        $this->display('index/ppdd_list');
+        $this->display('Index/ppdd_list');
     }
 
     /**
@@ -1125,7 +1125,7 @@ class IndexController extends CommonController
         $this->assign('list', $list);
         $this->assign('page', $p->show());
         $this->assign('jjdktime', C("jjdktime"));
-        $this->display('index/ts1_list');
+        $this->display('Index/ts1_list');
     }
 
 
@@ -1152,7 +1152,7 @@ class IndexController extends CommonController
         $this->assign('page', $p->show()); // 賦值分頁輸出
 
 
-        $this->display('index/ts3_list');
+        $this->display('Index/ts3_list');
     }
 
     public function ts2_list()
@@ -1178,7 +1178,7 @@ class IndexController extends CommonController
         $this->assign('page', $p->show()); // 賦值分頁輸出
 
 
-        $this->display('index/ts2_list');
+        $this->display('Index/ts2_list');
     }
 
 
@@ -1260,7 +1260,7 @@ class IndexController extends CommonController
             $this->assign('page', $p->show()); // 賦值分頁輸出
 
 
-            $this->display('index/tgbz_list_sd');
+            $this->display('Index/tgbz_list_sd');
         }
     }
 
@@ -1308,7 +1308,7 @@ class IndexController extends CommonController
             $this->assign('page', $p->show()); // 賦值分頁輸出
 
 
-            $this->display('index/jsbz_list_sd');
+            $this->display('Index/jsbz_list_sd');
         }
     }
 
@@ -1618,7 +1618,7 @@ class IndexController extends CommonController
         $this->assign('page', $p->show()); // 賦值分頁輸出
 
 
-        $this->display('index/tgbz_list_cf');
+        $this->display('Index/tgbz_list_cf');
     }
 
     public function jsbz_list_cf()
@@ -1652,7 +1652,7 @@ class IndexController extends CommonController
         $this->assign('page', $p->show()); // 賦值分頁輸出
 
 
-        $this->display('index/jsbz_list_cf');
+        $this->display('Index/jsbz_list_cf');
     }
 
     public function tgbz_list_cf_cl()
@@ -1764,7 +1764,7 @@ class IndexController extends CommonController
             //提前打款奖励
             $this->tiqian_lx = C('tiqian_lx');
             
-            $this->display('index/lixi');
+            $this->display('Index/lixi');
         }
 
     }
@@ -1783,7 +1783,7 @@ class IndexController extends CommonController
             $this->mm003 = C("mm003");
             $this->mm004 = C("mm004");
             $this->mm005 = C("mm005");
-            $this->display('index/yuanzhugg');
+            $this->display('Index/yuanzhugg');
         }
 
     }
@@ -1875,7 +1875,7 @@ class IndexController extends CommonController
             //手机接口密码
             $this->mobile_password = C('mobile_password');
 
-            $this->display('index/jjset');
+            $this->display('Index/jjset');
         }
 
     }
@@ -1909,7 +1909,7 @@ class IndexController extends CommonController
             $this->tj_beishu = C("tj_beishu");
 
 
-            $this->display('index/txset');
+            $this->display('Index/txset');
         }
 
     }
@@ -1929,7 +1929,7 @@ class IndexController extends CommonController
 
             
             
-            $this->display('index/hot');
+            $this->display('Index/hot');
         }
 
     }
@@ -1980,7 +1980,7 @@ class IndexController extends CommonController
         $this->assign('page', $p->show()); // 賦值分頁輸出
 
 
-        $this->display('index/cyjzs');
+        $this->display('Index/cyjzs');
     }
 
 

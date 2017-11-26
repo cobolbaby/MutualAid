@@ -2087,7 +2087,7 @@ public function home() {
 	
 	
 	
-		$this->display('index/tgbz_list_cf');
+		$this->display('Index/tgbz_list_cf');
 	}
 	
 	
@@ -2123,7 +2123,7 @@ public function home() {
 	
 	
 	
-		$this->display('index/jsbz_list_cf');
+		$this->display('Index/jsbz_list_cf');
 	}
 	
 	public function tgbz_list_cf_cl(){

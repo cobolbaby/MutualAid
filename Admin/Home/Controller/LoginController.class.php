@@ -5,7 +5,7 @@ class LoginController extends Controller
 {
     public function index()
     {
-        $this->display('index/login');
+        $this->display('Index/login');
     }
 
     public function logincl()
