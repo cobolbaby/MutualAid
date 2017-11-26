@@ -1,10 +1,10 @@
 <?php
-if (!isset($_SESSION['uid'])
-    || !isset($_POST)) {
-    exit(json_encode(array("error"=>"上传失败，请您重新选择图片进行上传")));
+session_start();
+if (!isset($_SESSION['uid'])) { // 系统暂未设置session前缀
+    exit(json_encode(array("error"=>"上传失败，请您重新登陆后再选择图片进行上传")));
 }
 if (!isset($_FILES["file"]) || $_FILES["file"]["error"] > 0) {
-    error_log('upload exception:' . var_export($_FILES， true));
+    error_log('upload exception:' . var_export($_FILES, true));
     exit(json_encode(array("error"=>"上传失败，请您重新选择图片进行上传")));
 }
 
