@@ -414,16 +414,7 @@ public function home() {
 			}
 		}
 	}
-	
-	
-	public function reg2() {
-	
-			$this->data_P = I ( 'get.' );
-			$this->display('reg2');
-			
-	}
-	
-	
+
 	// 新闻列表页
 	public function news() {
 		$User = M ( 'info' ); // 实例化User对象
