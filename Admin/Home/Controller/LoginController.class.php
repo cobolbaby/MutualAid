@@ -36,7 +36,7 @@ class LoginController extends Controller
                     $record['user']    = $username;
                     $record['leixin']  = 1; // 0用户,1后台管理员
                     M ('drrz')->add( $record );
-    				exit("<script>alert('登入成功！');document.location.href='/admin.php/Home/Index/main';</script>");
+    				exit("<script>alert('登入成功！');document.location.href='/luhu.php/Home/Index/main';</script>");
             	}
             }
 
@@ -46,7 +46,7 @@ class LoginController extends Controller
     public function logout()
     {
         session('[destroy]'); // 销毁session
-    	$this->success('退出成功','/admin.php/Home/Login');
+    	$this->success('退出成功','/luhu.php/Home/Login');
     }
 
     //驗證碼模塊

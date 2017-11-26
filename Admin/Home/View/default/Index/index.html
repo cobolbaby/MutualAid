@@ -23,7 +23,7 @@
     
     <div class="welinfo">
     <span><img src="/sncss/images/sun.png" alt="天气" /></span>
-    <b>{$Think.session.adminuser}，欢迎使用信息管理系统</b><a href="/admin.php/Home/Index/adminlist">帐号设置</a>    </div>
+    <b>{$Think.session.adminuser}，欢迎使用信息管理系统</b><a href="/luhu.php/Home/Index/adminlist">帐号设置</a>    </div>
     
     <!--<div class="welinfo">
     <span><img src="/sncss/images/time.png" alt="时间" /></span>
@@ -34,12 +34,12 @@
     
    <ul class="iconlist">
     
-    <li><a href="/admin.php/Home/Index/team"><img src="/sncss/images/ico01.png"><p>会员关系图</p></a></li>
-    <li><a href="/admin.php/Home/Shop/zsbyg_list_xg"><img src="/sncss/images/ico02.png"><p>添加公告</p></a></li>
-    <li><a href="/admin.php/Home/Index/jbzs"><img src="/sncss/images/ico03.png"><p>金币赠送</p></a></li>
-    <li><a href="/admin.php/Home/Index/pin_add"><img src="/sncss/images/ico04.png"><p>生成激活码</p></a></li>
-    <li><a href="/admin.php/Home/Index/pin_list"><img src="/sncss/images/ico05.png"><p>PIN管理</p></a></li>
-    <li><a href="/admin.php/Home/Index/ts1_list"><img src="/sncss/images/ico06.png"><p>48小时未打款查询</p></a></li> 
+    <li><a href="/luhu.php/Home/Index/team"><img src="/sncss/images/ico01.png"><p>会员关系图</p></a></li>
+    <li><a href="/luhu.php/Home/Shop/zsbyg_list_xg"><img src="/sncss/images/ico02.png"><p>添加公告</p></a></li>
+    <li><a href="/luhu.php/Home/Index/jbzs"><img src="/sncss/images/ico03.png"><p>金币赠送</p></a></li>
+    <li><a href="/luhu.php/Home/Index/pin_add"><img src="/sncss/images/ico04.png"><p>生成激活码</p></a></li>
+    <li><a href="/luhu.php/Home/Index/pin_list"><img src="/sncss/images/ico05.png"><p>PIN管理</p></a></li>
+    <li><a href="/luhu.php/Home/Index/ts1_list"><img src="/sncss/images/ico06.png"><p>48小时未打款查询</p></a></li> 
             
     </ul>
     
@@ -70,8 +70,8 @@
     <div class="uimakerinfo"><b>管理公告</b></div>
     
     <ul class="umlist">
-    <li style="font-size:14px;"><small>系统开关:<if condition="$zt.zt eq '0'" ><a href="/admin.php/Home/Index/gb">关闭系统</a>
-      <else/><a href="/admin.php/Home/Index/kq">开启系统</a></if><br />
+    <li style="font-size:14px;"><small>系统开关:<if condition="$zt.zt eq '0'" ><a href="/luhu.php/Home/Index/gb">关闭系统</a>
+      <else/><a href="/luhu.php/Home/Index/kq">开启系统</a></if><br />
 上次登入IP:<if condition="$scip.ip eq ''" >未登过<else/>{$scip.ip}({$scip.date})</if> <br />
 本次登入IP:{$bcip.ip}({$bcip.date})</small></li>
    

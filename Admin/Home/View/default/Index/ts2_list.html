@@ -48,12 +48,12 @@ $(document).ready(function(){
     
     	<table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td> <form id="form1" name="form1" method="post" action="/admin.php/Home/Index/ppdd_list">
+    <td> <form id="form1" name="form1" method="post" action="/luhu.php/Home/Index/ppdd_list">
 	 
    <input name="user" type="text" class="dfinput" id="user" />
 	<input name="" type="submit" class="btn" value="确认搜索"/>
       </form></td>
-    <td align="right"><a href="/admin.php/Home/Index/ppdd_list/cz/0/">交易中</a> <a href="/admin.php/Home/Index/ppdd_list/cz/1/">交易成功</a></td>
+    <td align="right"><a href="/luhu.php/Home/Index/ppdd_list/cz/0/">交易中</a> <a href="/luhu.php/Home/Index/ppdd_list/cz/1/">交易成功</a></td>
   </tr>
   <tr>
     <td>请输入订单ID 不需要输入R </td>
@@ -101,7 +101,7 @@ $(document).ready(function(){
 			<if condition="$v.ts_zt eq 2" >未收到款</if></td>
         <td>{$v.date}</td>
         <td>{$v.date_hk}</td>
-        <td><a href="/admin.php/Home/Index/ts2_list_cl/id/{$v.id}/">确认汇款处理</a></td>
+        <td><a href="/luhu.php/Home/Index/ts2_list_cl/id/{$v.id}/">确认汇款处理</a></td>
         </tr> 
        </foreach>
         </tbody>

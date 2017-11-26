@@ -49,14 +49,14 @@ $(document).ready(function(){
     	 
    <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><form id="form1" name="form1" method="post" action="/admin.php/Home/Index/adminlist">
+    <td><form id="form1" name="form1" method="post" action="/luhu.php/Home/Index/adminlist">
 	 
    <input name="user" type="text" class="dfinput" id="user" />
 	<input name="" type="submit" class="btn" value="确认搜索"/>
       </form></td>
     <td>&nbsp; <ul class="toolbar">
        
-        <li><a href="/admin.php/Home/Index/admin_add"><span><img src="/sncss/images/t04.png" /></span>添加管理员</a></li>
+        <li><a href="/luhu.php/Home/Index/admin_add"><span><img src="/sncss/images/t04.png" /></span>添加管理员</a></li>
 		
         </ul></td>
   </tr>
@@ -88,7 +88,7 @@ $(document).ready(function(){
 				  
 				  
 				  </td>
-	      <td> <a href="/admin.php/Home/Index/admin_xg/user/{$v.mb_username}" class="tablelink">查看</a>     <a onClick="javascript:if(!confirm('确定删除此会员？'))  return  false; " href="/admin.php/Home/Index/admindel/id/{$v.mb_id}" >删除</a> </td>
+	      <td> <a href="/luhu.php/Home/Index/admin_xg/user/{$v.mb_username}" class="tablelink">查看</a>     <a onClick="javascript:if(!confirm('确定删除此会员？'))  return  false; " href="/luhu.php/Home/Index/admindel/id/{$v.mb_id}" >删除</a> </td>
         </tr> 
        </foreach>
         </tbody>

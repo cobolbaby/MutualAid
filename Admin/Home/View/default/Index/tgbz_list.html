@@ -48,14 +48,14 @@ $(document).ready(function(){
     
     	<table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td> <form id="form1" name="form1" method="post" action="/admin.php/Home/Index/tgbz_list">
+    <td> <form id="form1" name="form1" method="post" action="/luhu.php/Home/Index/tgbz_list">
 	 
    <input name="user" type="text" class="dfinput" id="user" />
    <input placeholder="请输入开始日期" class="laydate-icon" name="start" onClick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
    <input placeholder="请输入结束日期" class="laydate-icon" name="end" onClick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
 	<input name="" type="submit" class="btn" value="确认搜索"/>
       </form></td>
-    <td align="right"><a href="/admin.php/Home/Index/tgbz_list/cz/0/" style="padding:2px 5px;background:#00CCFF;">未匹配</a> <a href="/admin.php/Home/Index/tgbz_list/cz/1/" style="padding:2px 5px;background:#00CCFF;">已匹配</a></td>
+    <td align="right"><a href="/luhu.php/Home/Index/tgbz_list/cz/0/" style="padding:2px 5px;background:#00CCFF;">未匹配</a> <a href="/luhu.php/Home/Index/tgbz_list/cz/1/" style="padding:2px 5px;background:#00CCFF;">已匹配</a></td>
   </tr>
   <tr>
     <td>总充值:{$z_jgbz} 交易成功:{$z_jgbz2} 交易中:{$z_jgbz3} </td>
@@ -87,7 +87,7 @@ $(document).ready(function(){
 		
 		<foreach name='list' item='v'>
         <tr>
-		 <td>{$v.id} <a onClick="javascript:if(!confirm('确认要删除吗？'))  return  false; " href="/admin.php/Home/Index/tgbz_list_del/id/{$v.id}" >删除</a></td>
+		 <td>{$v.id} <a onClick="javascript:if(!confirm('确认要删除吗？'))  return  false; " href="/luhu.php/Home/Index/tgbz_list_del/id/{$v.id}" >删除</a></td>
 		 <td>{$v.user}</td>
 		  <td>
 		  <if condition="$v.zffs1 eq 1" >银行</if>
@@ -107,7 +107,7 @@ $(document).ready(function(){
         <td>{$v.wait_day}天</td>
         <td>{$v|paidui_day=###}天--剩余匹配天数<b style="color:red"> {$v|pipei_day=###} </b>天</td>
         <td>{$v.date}</td>
-        <td><a href="/admin.php/Home/Index/tgbz_list_sd/id/{$v.id}/">手动匹配</a></td>
+        <td><a href="/luhu.php/Home/Index/tgbz_list_sd/id/{$v.id}/">手动匹配</a></td>
         </tr> 
        </foreach>
         </tbody>

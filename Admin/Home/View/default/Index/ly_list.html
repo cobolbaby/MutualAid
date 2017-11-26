@@ -69,7 +69,7 @@ $(document).ready(function(){
 	       <td>{$v.ma_note}</td>
            <td><if condition="$v.zt eq '0'" >未处理<else/>已处理</if>		   </td>
            <td><a href="{$thehost}{$v.pic}" target="_blank"><img src="{$thehost}{$v.pic}" width="30" /></a></td>
-          <td><a href="/admin.php/Home/Shop/ly_list_cl/id/{$v.ma_id}/" class="tablelink">回复处理</a>　<a href="/admin.php/Home/Shop/ly_list_del/id/{$v.ma_id}/" class="tablelink">删除</a></td>
+          <td><a href="/luhu.php/Home/Shop/ly_list_cl/id/{$v.ma_id}/" class="tablelink">回复处理</a>　<a href="/luhu.php/Home/Shop/ly_list_del/id/{$v.ma_id}/" class="tablelink">删除</a></td>
         </tr> 
        </foreach>
         </tbody>

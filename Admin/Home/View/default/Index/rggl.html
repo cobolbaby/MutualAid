@@ -48,8 +48,8 @@ $(document).ready(function(){
     
     	<ul class="toolbar">
        
-        <li><a href="/admin.php/Home/Index/rggl/cz/n/"><span><img src="/sncss/images/t04.png" /></span>未处理</a></li>
-		<li><a href="/admin.php/Home/Index/rggl/cz/y/"><span><img src="/sncss/images/t04.png" /></span>已处理</a></li>
+        <li><a href="/luhu.php/Home/Index/rggl/cz/n/"><span><img src="/sncss/images/t04.png" /></span>未处理</a></li>
+		<li><a href="/luhu.php/Home/Index/rggl/cz/y/"><span><img src="/sncss/images/t04.png" /></span>已处理</a></li>
 		
         </ul>
         
@@ -93,7 +93,7 @@ $(document).ready(function(){
 				  <if condition="$v.uj_jbmcstage eq '1'" >已处理</if>	
 		
 		</td>
-        <td><a onClick="javascript:if(!confirm('确定删除此订单？'))  return  false; " href="/admin.php/Home/Index/rggldel/id/{$v.uj_id}" >删除</a> <a onClick="javascript:if(!confirm('确定審核此订单？'))  return  false; " href="/admin.php/Home/Index/rgglsh/id/{$v.uj_id}" >审核</a>        </td>
+        <td><a onClick="javascript:if(!confirm('确定删除此订单？'))  return  false; " href="/luhu.php/Home/Index/rggldel/id/{$v.uj_id}" >删除</a> <a onClick="javascript:if(!confirm('确定審核此订单？'))  return  false; " href="/luhu.php/Home/Index/rgglsh/id/{$v.uj_id}" >审核</a>        </td>
         </tr> 
        </foreach>
         </tbody>

@@ -231,7 +231,7 @@ class IndexController extends CommonController
         }
         //dump($data);die;
         if (M('member')->where(array('MB_username' => I('post.MB_username')))->save($data)) {
-            $this->success('修改成功!', '/admin.php/Home/Index/adminlist');
+            $this->success('修改成功!', '/luhu.php/Home/Index/adminlist');
         } else {
             $this->success('修改失败!');
         }
@@ -248,7 +248,7 @@ class IndexController extends CommonController
         if (I('post.MB_username') <> '' && I('post.MB_right') <> '' && I('post.MB_userpwd') <> '') {
             //dump($data);die;
             if (M('member')->add($data)) {
-                $this->success('添加成功!', '/admin.php/Home/Index/adminlist');
+                $this->success('添加成功!', '/luhu.php/Home/Index/adminlist');
             } else {
                 $this->success('添加失败!');
             }
@@ -415,7 +415,7 @@ class IndexController extends CommonController
 
         if ($data <> '' && $userxx['mb_username'] <> '') {
             M('member')->where(array('MB_ID' => $data))->delete();
-            $this->success('删除成功!', '/admin.php/Home/Index/adminlist');
+            $this->success('删除成功!', '/luhu.php/Home/Index/adminlist');
         } else {
             $this->success('不能删除!');
         }
@@ -1753,7 +1753,7 @@ class IndexController extends CommonController
             $filename2 = $_SERVER['DOCUMENT_ROOT'] . '/User/Home/Conf/jerry_config.php';
             file_put_contents($filename2, strip_whitespace("<?php\treturn " . var_export($_POST, true) . ";?>"));                                                                                           
             file_put_contents($filename, strip_whitespace("<?php\treturn " . var_export($_POST, true) . ";?>"));
-            $this->success('编辑成功！', '/admin.php/Home/Index/lixi');
+            $this->success('编辑成功！', '/luhu.php/Home/Index/lixi');
         } else {
             $this->lixi1 = C("lixi1");
             $this->lixi2 = C("lixi2");
@@ -1776,7 +1776,7 @@ class IndexController extends CommonController
             $filename2 = $_SERVER['DOCUMENT_ROOT'] . '/User/Home/Conf/mm_config.php';
             file_put_contents($filename, strip_whitespace("<?php\treturn " . var_export($_POST, true) . ";?>"));
             file_put_contents($filename2, strip_whitespace("<?php\treturn " . var_export($_POST, true) . ";?>"));
-            $this->success('编辑成功！', '/admin.php/Home/Index/yuanzhugg');
+            $this->success('编辑成功！', '/luhu.php/Home/Index/yuanzhugg');
         } else {
             $this->mm001 = C("mm001");
             $this->mm002 = C("mm002");
@@ -1798,7 +1798,7 @@ class IndexController extends CommonController
             $filename2 = $_SERVER['DOCUMENT_ROOT'] . '/User/Home/Conf/jj_config.php';
             file_put_contents($filename, strip_whitespace("<?php\treturn " . var_export($_POST, true) . ";?>"));
             file_put_contents($filename2, strip_whitespace("<?php\treturn " . var_export($_POST, true) . ";?>"));
-            $this->success('编辑成功！', '/admin.php/Home/Index/jjset');
+            $this->success('编辑成功！', '/luhu.php/Home/Index/jjset');
         } else {
             $this->jj01s = C("jj01s");
             $this->jj01m = C("jj01m");
@@ -1890,7 +1890,7 @@ class IndexController extends CommonController
             $filename2 = $_SERVER['DOCUMENT_ROOT'] . '/User/Home/Conf/tx_config.php';
             file_put_contents($filename, strip_whitespace("<?php\treturn " . var_export($_POST, true) . ";?>"));
             file_put_contents($filename2, strip_whitespace("<?php\treturn " . var_export($_POST, true) . ";?>"));
-            $this->success('编辑成功！', '/admin.php/Home/Index/txset');
+            $this->success('编辑成功！', '/luhu.php/Home/Index/txset');
         } else {
             $this->txstatus = C("txstatus");
             $this->txthemin = C("txthemin");

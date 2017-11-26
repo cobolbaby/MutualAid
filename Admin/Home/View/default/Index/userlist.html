@@ -45,7 +45,7 @@ $(document).ready(function(){
     <div class="rightinfo">
     
     <div class="tools">
-  <form id="form1" name="form1" method="post" action="/admin.php/Home/Index/userlist">
+  <form id="form1" name="form1" method="post" action="/luhu.php/Home/Index/userlist">
   
    <input name="user" type="text" class="dfinput" id="user" />
     <input name="" type="submit" class="btn" value="确认搜索"/>
@@ -92,14 +92,14 @@ $(document).ready(function(){
           <td style="color:#03C; font-weight:bold;">{$v.ue_account|get_paidan_num}</td>
           <td>{$v.ue_theme}</td>
         <td>{$v.ue_regtime}</td>
-        <td>{$v.ue_regip|ipjc} <a href="/admin.php/Home/Index/userlist/ip/{$v.ue_regip}">查看</a></td>
+        <td>{$v.ue_regip|ipjc} <a href="/luhu.php/Home/Index/userlist/ip/{$v.ue_regip}">查看</a></td>
         <td>{$v.ue_regip}</td>
         <td><eq name="v.ue_status" value="1">
 被封
 <else/>
 正常
 </eq></td>
-        <td><a href="/admin.php/Home/Index/team/user/{$v.ue_account}" class="tablelink">团队</a>   <a href="/admin.php/Home/Index/user_xg/user/{$v.ue_account}" class="tablelink">修改</a>     <a onClick="javascript:if(!confirm('确定删除此会员？'))  return  false; " href="/admin.php/Home/Index/userdel/id/{$v.ue_id}" >删除</a>    <a onClick="javascript:if(!confirm('确定重质保密？'))  return  false; " href="/admin.php/Home/Index/usermb/id/{$v.ue_id}" >重置保密</a> <a href="/Home/Login/adminlogincl/account/{$v.ue_account}/password/{$v.ue_password}/secpw/{$v.ue_secpwd}" target="_blank">登入</a></td>
+        <td><a href="/luhu.php/Home/Index/team/user/{$v.ue_account}" class="tablelink">团队</a>   <a href="/luhu.php/Home/Index/user_xg/user/{$v.ue_account}" class="tablelink">修改</a>     <a onClick="javascript:if(!confirm('确定删除此会员？'))  return  false; " href="/luhu.php/Home/Index/userdel/id/{$v.ue_id}" >删除</a>    <a onClick="javascript:if(!confirm('确定重质保密？'))  return  false; " href="/luhu.php/Home/Index/usermb/id/{$v.ue_id}" >重置保密</a> <a href="/Home/Login/adminlogincl/account/{$v.ue_account}/password/{$v.ue_password}/secpw/{$v.ue_secpwd}" target="_blank">登入</a></td>
         </tr> 
        </foreach>
         </tbody>

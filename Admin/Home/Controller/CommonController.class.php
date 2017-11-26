@@ -8,7 +8,7 @@ class CommonController extends Controller
 	public function _initialize()
 	{
 		if (!session('?adminuser')) {
-			$this->error('請先登錄','/admin.php/Home/Login') && exit;
+			$this->error('請先登錄','/luhu.php/Home/Login') && exit;
 		}
 
 		if (!$this->checkLoginWhiteList()) {
@@ -21,7 +21,7 @@ class CommonController extends Controller
 		if(session('adminqx') <> '1') {
 
 			if($czmc<>'main'&&$czmc<>'df1'&&$czmc<>'top'&&$czmc<>'left'&&$czmc<>'userlist'&&$czmc<>'team'&&$czmc<>'rggl'&&$czmc<>'getTreeso'&&$czmc<>'getTree'&&$czmc<>'get_childs'&&$czmc<>'getTreeInfo'&&$czmc<>'getTreeBaseInfo'&&$czmc<>'userbtc'&&$czmc<>'jbzs'){
-				$this->error('您暂无权限操作!','/admin.php/Home/Index/df1');die;
+				$this->error('您暂无权限操作!','/luhu.php/Home/Index/df1');die;
 				//echo '无权限';
 			}
 
