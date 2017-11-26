@@ -400,42 +400,6 @@
     $("#gd_amount").keyup(function() {
       $("#show_gd_amount").html(format_monetary_value($(this).val()))
     });
-    if (false) {
-      $("#recalc-ep-message").text("您的额外回酬已计算。请稍候片刻再尝试。");
-      $("#recalc-ep-button").attr("disabled", "disabled");
-      setTimeout(function() {
-        $("#recalc-ep-button").removeAttr("disabled");
-        $("#recalc-ep-message").text("")
-      },
-      0)
-    }
-    $("#recalc-ep-button").on("click",
-    function(e) {
-      e.preventDefault();
-      $("#recalc-ep-message").text("您的额外回酬已计算成功。如果想再计算，请稍候片刻再尝试。");
-      $(this).attr("disabled", "disabled");
-      $.ajax({
-        url: '?aj=1&type=recalc_user_ep',
-        data: {
-          'uid': 82662186
-        },
-        type: 'post',
-        dataType: 'json',
-        error: function(data) {
-          console.log(data)
-        },
-        success: function(data) {
-          if (data.percent > 0) {
-            $("#current_ep").html(data.percent)
-          }
-        }
-      });
-      setTimeout(function() {
-        $("#recalc-ep-button").removeAttr("disabled");
-        $("#recalc-ep-message").text("")
-      },
-      1800000)
-    })
   });
 </script>
 <script type="text/javascript">
