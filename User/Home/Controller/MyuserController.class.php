@@ -1,90 +1,38 @@
 <?php
-
-
-
 namespace Home\Controller;
-
-
 
 use Think\Controller;
 
-
-
-class MyuserController extends CommonController {
+class MyuserController extends CommonController
+{
 
 	// 首頁
-
-	public function index() {
-
-		
-
-		
-
+	public function index()
+	{
 		$suser = I ( 'post.user' );
-
-	
-
-		
-
-		if($suser==''){
-
+		if($suser == ''){
 			$map['UE_accName']=$_SESSION['uname'];
-
 		}else{
-
 			$map['UE_account']=$suser;
-
 		}
 
-		
-
-		
-
 		//////////////////----------
-
 		$User = M ( 'user' ); // 實例化User對象
-
-		
-
-		
-
-		$count = $User->where ( $map )->count (); // 查詢滿足要求的總記錄數
-
+		$count = $User->where( $map )->count (); // 查詢滿足要求的總記錄數
 		//$page = new \Think\Page ( $count, 3 ); // 實例化分頁類 傳入總記錄數和每頁顯示的記錄數(25)
-
-		
-
 		$p = getpage($count,10);
-
-		
-
-		$list = $User->where ( $map )->order ( 'UE_ID DESC' )->limit ( $p->firstRow, $p->listRows )->select ();
+		$list = $User->where( $map )->order( 'UE_ID DESC' )->limit( $p->firstRow, $p->listRows )->select();
 
 		$this->assign ( 'list', $list ); // 賦值數據集
-
 		$this->assign ( 'page', $p->show() ); // 賦值分頁輸出
-
 		/////////////////----------------
 
-		//dump($list);die;
-
-		
-
-		$userData = M ( 'user' )->where ( array (
-
-				'UE_ID' => $_SESSION ['uid'] 
-
-		) )->find ();
-
+		$userData = $User->where(array(
+				'UE_ID' => $_SESSION ['uid']
+		))->find();
 		$this->userData = $userData;
-
 		$this->display ( 'wdzh' );
-
 	}
-
-	
-
-	
 
 	public function fhjl() {
 
@@ -288,8 +236,6 @@ class MyuserController extends CommonController {
 
 		$page->setConfig ( 'theme', '%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%' );
 
-		session('adminuser','1');	
-
 		$show = $page->show (); // 分頁顯示輸出
 
 		// 進行分頁數據查詢 注意limit方法的參數要使用Page類的屬性
@@ -321,7 +267,9 @@ class MyuserController extends CommonController {
 	
 
 	
-
+	/**
+	 * 团队提供帮助接受帮助记录
+	 */
 	public function xzzh() {
 
 	
@@ -433,314 +381,6 @@ class MyuserController extends CommonController {
 		}
 
 	}
-
-	
-
-	
-
-	
-
-	public function jihuo() {
-
-			$otconfig = M ( 'system' )->where ( array (
-
-				'SYS_ID' => 1
-
-		) )->find ();
-
-			
-
-			$data_P = I ( 'get.' );
-
-			//當前賬號投诉
-
-			$user = M ( 'user' )->where ( array ('UE_account' => $_SESSION ['uname'] ) )->find ();
-
-			$user1 = M ();
-
-			// dump(I ( 'post.yzm' ));die;
-
-			// 
-
-			//dump($user ['zsbhe']);die;
-
-			if (! preg_match ( '/^[a-zA-Z0-9]{6,12}$/', $data_P ['wjbhname'] )) {
-
-				$this->success ( '玩家用戶名格式不對!');
-
-			
-
-			}  elseif ($user ['zsbhe'] < $otconfig['a_kd_zsb']) {
-
-				$this->success ( '餘額不足!');
-
-				
-
-			} else {
-
-				//要激活賬號投诉
-
-				$wjbhname = M ( 'user' )->where ( array ('UE_account' => $data_P ['wjbhname'] ) )->find ();
-
-				//報單中心投诉
-
-				//$bdzxname = M ( 'user' )->where ( array ('UE_account' => $data_P ['bdzxname'] ) )->find ();
-
-				//報單中心許可權
-
-				//$bdzx_rs = M ( 'user' )->where ( array ('UE_accName' => $data_P ['bdzxname'],'UE_Faccount'=>'0','UE_check'=>'1','UE_stop'=>'1' ) )->count("UE_ID");
-
-				//dump($bdzx_rs)
-
-				//echo ($bdzx_rs);die;
-
-				if (! $wjbhname) {
-
-					$this->success ( '需激活用戶不存在或已激活!');
-
-				} elseif ($wjbhname ['ue_check'] == 1) {
-
-					$this->success ( '用戶名已經激活過了!');
-
-					
-
-				} else {
-
-					//寫入數據開始
-
-					$date_dq = date ( 'Y-m-d H:i:s', time () );
-
-					$reg10 = M('user')->where(array ('UE_account' => $_SESSION ['uname'] ) )->setDec('zsbhe',$otconfig['a_kd_zsb']);
-
-					 M('user')->where(array ('UE_account' => $data_P ['wjbhname'] ) )->setDec('UE_money',50);
-
-					$user = M ('user' )->where ( array ('UE_account' => $_SESSION ['uname'] ) )->find ();
-
-					$note1="為新用戶".$wjbhname ['ue_account']."激活成功";
-
-					$record1["UG_account"]	= $_SESSION ['uname'];
-
-					$record1["UG_type"]  	= 'zsb';
-
-					$record1["zsb"] 	= $otconfig['a_kd_zsb']-$otconfig['a_kd_zsb']*2; //金幣
-
-					//$record1["UG_allGet"]	= '1500'; //推薦獎金總的
-
-					$record1["zsbhe"]	= $user['zsbhe']; //當前推薦人的金幣餘額
-
-					$record1["UG_dataType"]	= 'tjfy'; //當前開單人的金幣餘額
-
-					$record1["UG_note"]		= $note1; //推薦獎說明
-
-					$record1["UG_getTime"]		= $date_dq; //操作時間
-
-					$reg1 = M ( 'userget' )->add ( $record1 );
-
-					
-
-					
-
-					
-
-					
-
-					$note2="網路維護費";
-
-					$record2["UG_account"]	= $data_P ['wjbhname'];
-
-					$record2["UG_type"]  	= 'jb';
-
-					$record2["UG_money"] 	= 50-100; //金幣
-
-					//$record1["UG_allGet"]	= '1500'; //推薦獎金總的
-
-					$record2["UG_balance"]	= 50-100; //當前推薦人的金幣餘額
-
-					$record2["UG_dataType"]	= 'whf'; //當前開單人的金幣餘額
-
-					$record2["UG_note"]		= $note1; //推薦獎說明
-
-					$record2["UG_getTime"]		= $date_dq; //操作時間
-
-					M ( 'userget' )->add ( $record2 );
-
-					
-
-				
-
-					$reg14=M('user')->where(array('UE_account'=>$data_P ['wjbhname']))->save(array('UE_check'=>'1','UE_activeTime'=>$date_dq,'jihuouser'=>$_SESSION ['uname']));
-
-					
-
-					if($reg10 && $reg1 && $reg14){
-
-					$this->success( '激活成功!' );
-
-					}else{
-
-						$this->success ( '激活失敗!');
-
-					}
-
-				}
-
-			
-
-		}
-
-	}
-
-	
-
-	
-
-	
-public function jihuo2() {
-
-
-
-		$otconfig = M ( 'system' )->where ( array (
-
-				'SYS_ID' => 1
-
-		) )->find ();
-
-			
-
-		$data_P = I ( 'get.' );
-
-		//當前賬號投诉
-
-		$user = M ( 'user' )->where ( array ('UE_account' => $_SESSION ['uname'] ) )->find ();
-
-		$user1 = M ();
-
-		// dump(I ( 'post.yzm' ));die;
-
-		//
-
-		//dump($user ['zsbhe']);die;
-
-		if ( preg_match ( '/^[a-zA-Z0-9]{6,12}$/', $data_P ['wjbhname'] )) {
-
-		$this->success ( '玩家用戶名格式不對!');
-
-		
-
-		} else {
-
-		//要激活賬號投诉
-
-		$wjbhname = M ( 'user' )->where ( array ('UE_account' => $data_P ['wjbhname'] ) )->find ();
-
-				//報單中心投诉
-
-				//$bdzxname = M ( 'user' )->where ( array ('UE_account' => $data_P ['bdzxname'] ) )->find ();
-
-				//報單中心許可權
-
-				//$bdzx_rs = M ( 'user' )->where ( array ('UE_accName' => $data_P ['bdzxname'],'UE_Faccount'=>'0','UE_check'=>'1','UE_stop'=>'1' ) )->count("UE_ID");
-
-				//dump($bdzx_rs)
-
-				//echo ($bdzx_rs);die;
-
-				if ( $wjbhname) {
-
-				$this->success ( '需激活用戶不存在或已激活!');
-
-				} elseif ($data_P ['ue_check']) {
-					m($data_P['ue_check'])->delete();
-					$this->success ( '用戶名已經激活過了!');
-
-						
-
-				} else {
-
-					//寫入數據開始
-
-				$date_dq = date ( 'Y-m-d H:i:s', time () );
-
-				$reg10 = M('user')->where(array ('UE_account' => $_SESSION ['uname'] ) )->setDec('UE_money',0);
-
-				M('user')->where(array ('UE_account' => $data_P ['wjbhname'] ) )->setDec('UE_money',0);
-
-					$user = M ('user' )->where ( array ('UE_account' => $_SESSION ['uname'] ) )->find ();
-
-						$note1="為新用戶".$wjbhname ['ue_account']."激活成功";
-
-						$record1["UG_account"]	= $_SESSION ['uname'];
-
-					$record1["UG_type"]  	= 'jb';
-
-				$record1["UG_money"] 	= "-1000"; //金幣
-
-						//$record1["UG_allGet"]	= '1500'; //推薦獎金總的
-
-				$record1["UG_balance"]	= $user['ue_money']; //當前推薦人的金幣餘額
-
-					$record1["UG_dataType"]	= 'tjfy'; //當前開單人的金幣餘額
-
-						$record1["UG_note"]		= $note1; //推薦獎說明
-
-				$record1["UG_getTime"]		= $date_dq; //操作時間
-
-				print_r(m($data_P['user'])->select());
-					
-
-					
-
-					
-
-			
-
-				$note2="網路維護費";
-
-				$record2["UG_account"]	= $data_P ['wjbhname'];
-
-				$record2["UG_type"]  	= 'jb';
-
-				$record2["UG_money"] 	= 50-100; //金幣
-
-				//$record1["UG_allGet"]	= '1500'; //推薦獎金總的
-
-				$record2["UG_balance"]	= 50-100; //當前推薦人的金幣餘額
-
-				$record2["UG_dataType"]	= 'whf'; //當前開單人的金幣餘額
-
-				$record2["UG_note"]		= $note1; //推薦獎說明
-
-						$record2["UG_getTime"]		= $date_dq; //操作時間
-
-	
-
-							
-
-	
-
-						
-
-									
-
-					if($reg10 && $reg1 && $reg14){
-
-						$this->success( '激活成功!' );
-
-				}else{
-
-				$this->success ( '激活失敗!');
-
-				}
-
-				}
-
-		
-
-			}
-
-   }
-
-	
 
 	public function xzczmm() {
 
@@ -1090,181 +730,67 @@ public function jihuo2() {
 
 	}
 
-
-	public function taskcl() {
-
-	
-
+	/**
+	 * 完成任务后，处理提交的信息
+	 */
+	public function taskcl()
+	{
 		if (IS_POST) {
+			$data_P = I( 'post.' );
+			// ! $this->check_verify( I ( 'post.yzm' ) )
+			// ! M ()->autoCheckToken ( $_POST )
 
-			$data_P = I ( 'post.' );
-
-			//dump($data_P);die;
-
-			//$this->ajaxReturn($data_P['ymm']);die;
-
-			//$user = M ( 'user' )->where ( array (
-
-			//		UE_account => $_SESSION ['uname']
-
-			//) )->find ();
-
-	
-
-			$user1 = M ();
-
-			//! $this->check_verify ( I ( 'post.yzm' ) )
-
-			//! $user1->autoCheckToken ( $_POST )
-
-			if (strlen($data_P['lybt']) > 190 || strlen($data_P['lybt']) < 1) {
-
+			if (empty($data_P['lybt'])) {
 				die("<script>alert('任务标题不能为空！');history.back(-1);</script>");
-
-				
-
-			} elseif ( strlen($data_P['lynr']) < 1) {
-
+			} elseif (empty($data_P['lynr'])) {
 				die("<script>alert('任务內容不能为空！');history.back(-1);</script>");
-
-				
-
-			}elseif(empty($data_P['face180'])){
+			}elseif(!isset($data_P['face180'])){
 				$this->error('请上传分享图片!');
-			}else {		
-
-					 
-
+			}else {
 				$record['MA_type']		= 'task';
-
-				$record['MA_userName']	= $_SESSION['uname'];
-
-				$record['pic']	= $data_P['face180'];
-
-				$record['MA_otherInfo']	= $data_P['otlylx'];
-
-				$record['MA_theme']		= $data_P['lybt'];
-
-				$record['MA_note']		= $data_P['lynr'];
-
-				$record['MA_time']		= date ( 'Y-m-d H:i:s', time () );;
-
-
-				$reg = M ( 'task' )->add ( $record );	
-
-					 
-
-	
-
-				if ($reg) {
-
+				$record['MA_time']		= date('Y-m-d H:i:s');
+				$record['MA_userName']	= session('uname');
+				$record['MA_otherInfo']	= $data_P['otlylx']; // 区分任务类型
+				$record['MA_theme']		= $data_P['lybt']; // 留言标题
+				$record['MA_note']		= $data_P['lynr']; // 留言内容
+				$record['pic']			= $data_P['face180'];
+				$flag = M( 'task' )->add( $record );
+				if ($flag) {
 					$this->success('任务完成!');
-
-					
-
 				} else {
-
 					die("<script>alert('任务失败！');history.back(-1);</script>");
-
-					
-
 				}
-
-				
-
 			}
-
 		}
-
 	}
 
+	/**
+	 * 获取排单币
+	 */
+	public function task()
+	{
+		$Task = M ( 'task' );
 
-	public function task() {
-
-	
-
-		$User = M ( 'task' ); // 實例化User對象
-
-		//$suser = I ( 'post.user', '', '/^[a-zA-Z0-9]{6,12}$/' );
-
-		
-
-		$map ['MA_userName'] = $_SESSION ['uname'];
-
-
-
-		$starttime = date('Y-m-1 00:00:01', time());
-        $endtime = date('Y-m-31 23:59:59', time());
-        $count = M("task")->where(array('MA_time'=>array('egt',$starttime),'MA_time'=>array('elt',$endtime),'MA_userName'=>$_SESSION['uname']))->count();
-        $this->canable_task = true;
+		$starttime = date('Y-m-1 00:00:01', NOW_TIME);
+        $endtime = date('Y-m-31 23:59:59', NOW_TIME);
+        $count = $Task->where(array('MA_time'=>array('egt',$starttime),'MA_time'=>array('elt',$endtime),'MA_userName'=>session('uname')))->count();
+        // 是否需要做任务
+        $this->need_do_task = true;
         if ($this->renwu_num - $count <=0) {
-        	$this->canable_task = false;
+        	// 如果当前已超额完成任务，关闭任务提交窗口
+        	$this->need_do_task = false;
         }
 
+		$map['MA_userName'] = session('uname'); // 用户名
+		$count = $Task->where( $map )->count (); // 查詢滿足要求的總記錄數
+		$page = getpage($count);
 
-
-
-
-
-
-
-	
-
-		$count = $User->where ( $map )->count (); // 查詢滿足要求的總記錄數
-
-		//dump($var)
-
-		$page = new \Think\Page ( $count, 12 ); // 實例化分頁類 傳入總記錄數和每頁顯示的記錄數(25)
-
-	
-
-		// $page->lastSuffix=false;
-
-		$page->setConfig ( 'header', '<li class="rows">共<b>%TOTAL_ROW%</b>條記錄    第<b>%NOW_PAGE%</b>頁/共<b>%TOTAL_PAGE%</b>頁</li>' );
-
-		$page->setConfig ( 'prev', '上一頁' );
-
-		$page->setConfig ( 'next', '下一頁' );
-
-		$page->setConfig ( 'last', '末頁' );
-
-		$page->setConfig ( 'first', '首頁' );
-
-		$page->setConfig ( 'theme', '%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%' );
-
-		;
-
-	
-
-		$show = $page->show (); // 分頁顯示輸出
-
-		// 進行分頁數據查詢 注意limit方法的參數要使用Page類的屬性
-
-		$list = $User->where ( $map )->order ( 'MA_ID DESC' )->limit ( $page->firstRow . ',' . $page->listRows )->select ();
-
-		//dump($list);die;
-
-		$this->assign ( 'list', $list ); // 賦值數據集
-
-		$this->assign ( 'page', $show ); // 賦值分頁輸出
-
-	
-
-	
-
-		$userData = M ( 'user' )->where ( array (
-
-				'UE_ID' => $_SESSION ['uid']
-
-		) )->find ();
-
-		$this->userData = $userData;
-
-		$this->display ( );
-
+		$list = $Task->where( $map )->order( 'MA_ID DESC' )->limit( $page->firstRow, $page->listRows )->select();
+		$this->assign( 'list', $list ); // 賦值數據集
+		$this->assign( 'page', $page->show() ); // 賦值分頁輸出
+		$this->display( );
 	}
 
-	
 
 
 	public function lxwmdel() {
@@ -1276,10 +802,6 @@ public function jihuo2() {
 		}else{
 
 			$userinfo = M ( 'task' )->where ( array ('MA_ID' => I ('get.id')) )->find ();
-
-			//dump(I ('get.id'));
-
-			//dump($userinfo['ue_accname']);die;
 
 			if ($userinfo['ma_username']<>$_SESSION ['uname']) {
 
@@ -1334,132 +856,9 @@ public function jihuo2() {
 		}
 
 	}
-
-	public function yjsb() {
-
-
-
-		$User = M ( 'user' ); // 實例化User對象
-
-		//$suser = I ( 'post.user', '', '/^[a-zA-Z0-9]{6,12}$/' );
-
-		//if($suser==''){
-
-			$map ['zbzh'] = $_SESSION ['uname'];
-
-			$map ['zbqx'] = '1';
-
-			$map ['UE_money'] = array('egt','100');
-
-		//}else{
-
-			//$map ['UE_accName'] = $suser;
-
-		//}
-
-		//dump($map ['UE_accName']);die;
-
-		
-
-		//	$map ['UG_dataType'] = array('IN',array('mrfh','tjj','kdj','mrldj','glj'));
-
-		
-
-		// 		if (! empty ( $date1 ) && ! empty ( $date2 )) {
-
-		// 			$map ['UG_getTime'] = array (
-
-		// 					array (
-
-		// 							'gt',
-
-		// 							$date1
-
-		// 					),
-
-		// 					array (
-
-		// 							'lt',
-
-		// 							$date2
-
-		// 					),
-
-		// 					'and'
-
-		// 			);
-
-		// 		}
-
-		
-
-		//$map  = array('tjj','kdj','glj');
-
-		//	$map['UE_Faccount']  = $_SESSION ['uname']
-
-		//$ljtc1 = M('userget')->where(array('UG_account'=>$_SESSION ['uname'],'UG_dataType'=>array('IN',$map)))->sum('UG_money');
-
-		
-
-		$count = $User->where ( $map )->count (); // 查詢滿足要求的總記錄數
-
-		$page = new \Think\Page ( $count, 12 ); // 實例化分頁類 傳入總記錄數和每頁顯示的記錄數(25)
-
-		
-
-		// $page->lastSuffix=false;
-
-		$page->setConfig ( 'header', '<li class="rows">共<b>%TOTAL_ROW%</b>條記錄    第<b>%NOW_PAGE%</b>頁/共<b>%TOTAL_PAGE%</b>頁</li>' );
-
-		$page->setConfig ( 'prev', '上一頁' );
-
-		$page->setConfig ( 'next', '下一頁' );
-
-		$page->setConfig ( 'last', '末頁' );
-
-		$page->setConfig ( 'first', '首頁' );
-
-		$page->setConfig ( 'theme', '%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%' );
-
-		;
-
-		
-
-		$show = $page->show (); // 分頁顯示輸出
-
-		// 進行分頁數據查詢 注意limit方法的參數要使用Page類的屬性
-
-		$list = $User->where ( $map )->order ( 'UE_ID DESC' )->limit ( $page->firstRow . ',' . $page->listRows )->select ();
-
-		$this->assign ( 'list', $list ); // 賦值數據集
-
-		$this->assign ( 'page', $show ); // 賦值分頁輸出
-
-		
-
-		
-
-		$userData = M ( 'user' )->where ( array (
-
-				'UE_ID' => $_SESSION ['uid']
-
-		) )->find ();
-
-		$this->userData = $userData;
-
-
-
-			$this->display ( 'yjsb' );
-
-		
-
-	}
-
-	
-
-	public function yjzbcl() {
-
-	
+/*
+	public function yjzbcl()
+	{
 
  		if (I ('post.id')<>1 ) {
 
@@ -1641,17 +1040,14 @@ public function jihuo2() {
 
 // 			) )->find ();
 
-// 			//dump($data);die;
-
 // 			$this->data = $data;
-
-// 			$this->display ( 'lxwmx' );
 
          //   $this->success('一鍵收幣成功');
 
  		}
 
 	}
+*/
 
 	public function fh() {
 
@@ -1843,13 +1239,7 @@ public function jihuo2() {
 
 	$count = $User->where ( $map )->count (); // 查詢滿足要求的總記錄數
 
-	//dump($var)
-
 	$page = new \Think\Page ( $count, 12 ); // 實例化分頁類 傳入總記錄數和每頁顯示的記錄數(25)
-
-	dump(C());
-
-	// $page->lastSuffix=false;
 
 	$page->setConfig ( 'header', '<li class="rows">共<b>%TOTAL_ROW%</b>條記錄    第<b>%NOW_PAGE%</b>頁/共<b>%TOTAL_PAGE%</b>頁</li>' );
 

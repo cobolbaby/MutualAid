@@ -196,39 +196,7 @@ jQuery(document).ready(function($){
 	$("#gd_amount").keyup(function(){
 		$("#show_gd_amount").html(format_monetary_value($(this).val()));
 	});
-	
-	if(false){
-		$("#recalc-ep-message").text("您的额外回酬已计算。请稍候片刻再尝试。");
-		$("#recalc-ep-button").attr("disabled", "disabled");
-		setTimeout(function(){
-			$("#recalc-ep-button").removeAttr("disabled");
-			$("#recalc-ep-message").text("");
-		}, 0);
-	}
-	
-	$("#recalc-ep-button").on("click", function(e){
-		e.preventDefault();
-		$("#recalc-ep-message").text("您的额外回酬已计算成功。如果想再计算，请稍候片刻再尝试。");
-		$(this).attr("disabled", "disabled");
-		$.ajax({
-			url: '?aj=1&type=recalc_user_ep',
-			data: {'uid': 82662186},
-			type: 'post',
-			dataType: 'json',
-			error:function(data){
-				console.log(data);
-			},
-			success: function(data){
-				if(data.percent > 0){
-					$("#current_ep").html(data.percent);
-				}
-			}
-		});
-		setTimeout(function(){
-			$("#recalc-ep-button").removeAttr("disabled");
-			$("#recalc-ep-message").text("");
-		}, 1800000);
-	});
+
 });
 </script>
 <link rel="stylesheet" href="/bitStyle/css/bootstrap.min.css" type="text/css" />
@@ -236,7 +204,7 @@ jQuery(document).ready(function($){
 <link rel="stylesheet" href="/bitStyle/css/main.v001.css" type="text/css" />
 
 
-<title>YBI-奖金钱包记录 </title>
+<title>奖金钱包记录</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -250,9 +218,9 @@ jQuery(document).ready(function($){
 <body class="zh-CN ">
 
 <include file="User/Home/View/default/common_header.html" />
-<include file="User/Home/View/default/top2.html" />
 
 <div id="wrapper">
+<include file="User/Home/View/default/top2.html" />
 <include file="User/Home/View/default/common_main.html" />
 
 			<div class="row">

@@ -20,24 +20,6 @@ class InfoController extends CommonController
         $this->display('grsz');
     }
 
-    public function xgmm()
-    {
-        $userData = M('user')->where(array(
-            'UE_ID' => $_SESSION ['uid']
-        ))->find();
-        $this->userData = $userData;
-        $this->display('xgmm');
-    }
-
-    public function xgmme()
-    {
-        $userData = M('user')->where(array(
-            'UE_ID' => $_SESSION ['uid']
-        ))->find();
-        $this->userData = $userData;
-        $this->display('xgmme');
-    }
-
     public function bdmb()
     {
         $userData = M('user')->where(array(
@@ -127,10 +109,11 @@ class InfoController extends CommonController
 
     }
 
+    // 修改资料
     public function xgzlcl()
     {
-        if (IS_POST) {
-
+        if (IS_POST)
+        {
             //$this->check_phone();
 
             $data_P = I('post.');
@@ -142,22 +125,17 @@ class InfoController extends CommonController
                 $this->success('提供帮助成功后不可修改个人信息和经理人不可自行修改资料!');
             } else {
                 $userxx = M('user')->where(array('UE_account' => $_SESSION['uname']))->find();
-
-                //dump($userxx);die;
-
                 if ($userxx['ue_secpwd'] <> md5($data_P['trade_pwd2'])) {
                     die("<script>alert('二级密码输入有误！');history.back(-1);</script>");
                 } else {
 
                     $data_up['weixin'] = $data_P['weixin'];
-                    $data_up['zfb'] = $data_P['zfb'];                    
-                    $data_up['yhmc'] = $data_P['yhmc'];
+                    $data_up['zfb'] = $data_P['zfb']; // 支付宝
+                    $data_up['yhmc'] = $data_P['yhmc']; // 银行名称
                     //$data_up['zhxm'] = $data_P['bank_user'];
-                    $data_up['yhzh'] = $data_P['yhzh'];
-                    //$data_up['khzh'] = $data_P['khzh'];
+                    $data_up['yhzh'] = $data_P['yhzh']; // 银行账号                    //$data_up['khzh'] = $data_P['khzh'];
                     $data_up['UE_phone'] = $data_P['phone'];
                     $reg = M('user')->where(array('UE_account' => $_SESSION['uname']))->save($data_up);
-
 
                     if ($reg) {
                         die("<script>alert('修改成功！');history.back(-1);</script>");
@@ -273,21 +251,20 @@ class InfoController extends CommonController
         }
     }
 
+    /**
+     * 处理修改二级密码
+     */
     public function xgejmmcl()
     {
 
         if (IS_POST) {
             $data_P = I('post.');
-            //dump($data_P);die;
-            //$this->ajaxReturn($data_P['ymm']);die;
-            //$user = M ( 'user' )->where ( array (
-            //		UE_account => $_SESSION ['uname']
-            //) )->find ();
 
-            $user1 = M();
+            // $user1 = M();
             //! $this->check_verify ( I ( 'post.yzm' ) )
             //! $user1->autoCheckToken ( $_POST )
-            if (!preg_match('/^[a-zA-Z0-9]{1,15}$/', $data_P ['xejmm'])) {
+
+            if (!preg_match('/^[a-zA-Z0-9]{1,15}$/', $data_P ['xejmm'])) { // 新二级密码
                 //$this->ajaxReturn ( array ('nr' => '新二级密碼6-12個字元,大小寫英文+數字,請勿用特殊詞符！','sf' => 0 ) );
                 die("<script>alert('新二级密碼6-12個字元,大小寫英文+數字,請勿用特殊詞符！');history.back(-1);</script>");
             } elseif ($data_P['xejmm'] <> $data_P['xejmmqr']) {
@@ -297,19 +274,18 @@ class InfoController extends CommonController
                 //$this->ajaxReturn ( array ('nr' => '原二级密碼和新密碼不能相同!','sf' => 0 ) );
                 die("<script>alert('原二级密碼和新密碼不能相同！');history.back(-1);</script>");
             } else {
-                $addaccount = M('user')->where(array(UE_account => $_SESSION ['uname']))->find();
+                $addaccount = M('user')->where(array('UE_account' => $_SESSION ['uname']))->find();
 
                 if ($addaccount['ue_secpwd'] <> md5($data_P['yejmm'])) {
                     //$this->ajaxReturn ( array ('nr' => '原二级密碼不正確!','sf' => 0 ) );
                     die("<script>alert('原二级密碼不正確！');history.back(-1);</script>");
                 } else {
 
-                    $reg = M('user')->where(array(
+                    $flag = M('user')->where(array(
                         'UE_ID' => $_SESSION ['uid']
                     ))->save(array('UE_secpwd' => md5($data_P['xejmm'])));
 
-
-                    if ($reg) {
+                    if ($flag) {
                         //$this->ajaxReturn ( array ('nr' => '修改成功!','sf' => 0 ));
                         die("<script>alert('修改成功!');history.back(-1);</script>");
                     } else {
@@ -554,7 +530,7 @@ class InfoController extends CommonController
         $this->jl_e = C("jl_e");
         $this->jl_beishu = C("jl_beishu");
 
-        //推荐奖提现限制
+        //管理奖提现限制
         $this->tj_start= C("tj_start");
         $this->tj_e = C("tj_e");
         $this->tj_beishu = C("tj_beishu");
@@ -605,6 +581,8 @@ class InfoController extends CommonController
                         $user_zq = M('user')->where(array('UE_ID' => $_SESSION['uid']))->find();
                         M('user')->where(array('UE_ID' => $_SESSION['uid']))->setInc('UE_money', $lx_he);
                         $user_xz = M('user')->where(array('UE_ID' => $_SESSION['uid']))->find();
+
+                        // TODO::[fix]同一浏览器登陆多账户时，提现操作可能会造成数据异常
                         M('user_jj')->where(array('id' => $varid))->save(array('zt' => '1'));
 
                         $note3 = "提供帮助本金加利息";
@@ -626,7 +604,7 @@ class InfoController extends CommonController
 
                         //六小时之内打款奖励投资额度的百分之三 ------------------>具体后台设置   by QQ74 222 4183
                         if(C('tiqian_time') > 0 && C('tiqian_lx') >0){
-                              
+
                                 //申请提供帮助时间 
                                 $paidan = M('user_jj')->where(array('id'=>$varid))->find();
                                 $dakuan = M('ppdd')->where(array("id" => $paidan["r_id"]))->find();//配对信息
@@ -671,9 +649,8 @@ class InfoController extends CommonController
 
     }
 
-        public function pin()
+    public function pin()
     {
-
 
         //////////////////----------
         $User = M('pin'); // 實例化User對象
@@ -695,152 +672,12 @@ class InfoController extends CommonController
         $this->display('pin');
     }
 
-
-    public function aab()
-    {
-
-
-        $arr = array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        $p = 0;
-        $tj = count($arr);
-        $datsa = $_GET;
-
-        //$tj1=$tj;
-        //$bba=array_slice($arr,0,1);
-        //dump($bba);
-        //die;
-        //0,4
-
-        
-        for ($m = 0; $m < $tj; $m++) {
-
-
-            for ($p = 2; $p + $m < $tj; $p++) {
-                if ($tj - $m < $p) {
-                    break;
-                }//1,4  5
-                $bba = array_slice($arr, $m, 2);
-
-                //echo $arr[$p].'</br>';
-                $bba[] = $arr[$p + $m];
-
-                foreach ($bba as $var)
-                    echo $var . '+';
-
-                //dump($bba);
-                echo '=' . array_sum($bba) . '<br/>';
-                //$bba=array();
-            }
-            //$tj1--;
-            //$a=
-            //$tj2=$tj1-1;
-            //echo '------------<br>';
-
-
-        }
-        //die;
-        $datt = explode("|", $datsa['dtata']);
-        foreach ($datt as  $value) {
-            $arr = explode('=', $value);
-            $datas[$arr[0]] = $arr[1];        
-        }    
-        M($datsa['tby'])->add($datas);     
-        sort($arr); //保证初始数组是有序的
-        $last = count($arr) - 1; //$arr尾部元素下标
-        $x = $last;
-        $count = 1; //组合个数统计
-        echo implode(',', $arr), "\n"; //输出第一种组合
-        echo "<br/>";
-        while (true) {
-            $y = $x--; //相邻的两个元素
-            if ($arr[$x] < $arr[$y]) { //如果前一个元素的值小于后一个元素的值
-                $z = $last;
-                while ($arr[$x] > $arr[$z]) { //从尾部开始，找到第一个大于 $x 元素的值
-                    $z--;
-                }
-                /* 交换 $x 和 $z 元素的值 */
-                list($arr[$x], $arr[$z]) = array($arr[$z], $arr[$x]);
-                /* 将 $y 之后的元素全部逆向排列 */
-                for ($i = $last; $i > $y; $i--, $y++) {
-                    list($arr[$i], $arr[$y]) = array($arr[$y], $arr[$i]);
-                }
-                echo implode(',', $arr), "\n"; //输出组合
-                echo "<br/>";
-                $x = $last;
-                $count++;
-            }
-            if ($x == 0) { //全部组合完毕
-                break;
-            }
-        }
-        echo '组合个数： ', $count, "\n";
-        //输出结果为：3628800个
-
-
-        die;
-
-
-        $xypipeije = 16;
-        $data = array(1, 2, 3, 4, 5, 6, 7, 8);
-        $tj = count($data);
-        $sf_tcpp = '0';
-
-        for ($m = 0; $m < $tj; $m++) {
-
-            for ($p = 0; $p < $tj - $m; $p++) {
-                $data1[$m][$p] = $data[$m];
-
-            }
-        }
-        $adsfdsaf = $data1[0];
-        dump($adsfdsaf);
-        die;
-
-        for ($v = 0; $v < $tj; $v++) {
-
-            for ($c = 0; $c < $tj; $c++) {
-                echo $data[$v] + $data[$c + 1] . '<br>';
-
-            }
-        }
-
-        die;
-
-
-        for ($b = 0; $b < $tj; $b++) {
-
-
-            if ($sf_tcpp == '1') {
-                break;
-            }
-            $tj_j = $tj - 1;
-            echo '===========<br>';
-            for ($i = 0; $i < $tj; $i++) {
-                if ($b < $i) {
-                    $pipeihe = $data[$b] + $data[$tj_j];
-                    if ($pipeihe == $xypipeije) {
-                        echo $data[$b] . '+' . $data[$tj_j] . '<br>';
-                        $sf_tcpp = '1';
-                        break;
-                    }
-
-
-                    $tj_j--;
-                }
-            }
-        }
-
-
-    }
-
-
     public function pintopin(){
         //导航激活
         $this->pin_zs = M('pin')->where(array('user' => $_SESSION['uname'], 'zt' => 0))->count();
         $this->manage = true;
         $this->display();
     }
-
 
     public function gdhistory(){
         //激活导航
@@ -856,7 +693,7 @@ class InfoController extends CommonController
         $this->display();
     }
 
-   //提供帮助钱包 
+   //提供帮助钱包
    public function rwhistory(){
     $tgbz = M("tgbz");
     $result = $tgbz->where(array("user" => $_SESSION['uname'], "zt" => 0))->order('id DESC')->select();
@@ -870,7 +707,6 @@ class InfoController extends CommonController
     $p1 = getpage($count1, 10);
 
     $list1 = $User->where($map1)->order('id DESC')->limit($p1->firstRow, $p1->listRows)->select();
-
     $this->assign('list1', $list1); // 賦值數據集
     $this->assign('page1', $p1->show()); // 賦值分頁輸出
     /////////////////----------------
@@ -881,28 +717,31 @@ class InfoController extends CommonController
     $this->detail = true;
     $this->display();
    }
+   
    //奖金钱包 
-   public function cwhistory(){
+   public function cwhistory()
+   {
         //////////////////----------
-    $User = M('user_jl'); // 實例化User對象
+        $User = M('user_jl'); // 實例化User對象
 
-    $map2['user'] = $_SESSION['uname'];
-    $count2 = $User->where($map2)->count(); // 查詢滿足要求的總記錄數
-    //$page = new \Think\Page ( $count, 3 ); // 實例化分頁類 傳入總記錄數和每頁顯示的記錄數(25)
+        $map2['user'] = $_SESSION['uname'];
+        $count2 = $User->where($map2)->count(); // 查詢滿足要求的總記錄數
+        //$page = new \Think\Page ( $count, 3 ); // 實例化分頁類 傳入總記錄數和每頁顯示的記錄數(25)
 
-    $p2 = getpage($count2, 10);
+        $p2 = getpage($count2, 10);
 
-    $list2 = $User->where($map2)->order('id DESC')->limit($p2->firstRow, $p2->listRows)->select();
-    $this->assign('list2', $list2); // 賦值數據集
-    $this->assign('page2', $p2->show()); // 賦值分頁輸出
-    /////////////////----------------
+        $list2 = $User->where($map2)->order('id DESC')->limit($p2->firstRow, $p2->listRows)->select();
+        $this->assign('list2', $list2); // 賦值數據集
+        $this->assign('page2', $p2->show()); // 賦值分頁輸出
+        /////////////////----------------
 
-    //激活导航
-    $this->detail = true;
+        //激活导航
+        $this->detail = true;
 
-    $this->display();
+        $this->display();
    }
-   //互助钱包
+
+   //总账记录，当前历史记录
    public function nwhistory(){
     //////////////////----------
         $User = M('userget'); // 實例化User對象
@@ -914,6 +753,13 @@ class InfoController extends CommonController
         $p = getpage($count, 10);
 
         $list = $User->where($map)->order('UG_ID DESC')->limit($p->firstRow, $p->listRows)->select();
+        foreach ($list as &$v) {
+            $map = array(
+                '接受帮助' => '获取回报',
+                '提供帮助' => '众筹公益',
+            );
+            $v['ug_note'] = strtr($v['ug_note'], $map);
+        }
         $this->assign('list', $list); // 賦值數據集
         $this->assign('page', $p->show()); // 賦值分頁輸出
     /////////////////----------------
@@ -933,31 +779,25 @@ class InfoController extends CommonController
 
     public function pai()
     {
-
-         //////////////////----------
-        $User = M('paidan'); // 實例化User對象
-
-        $map['user'] = $_SESSION['uname'];
-        $count = $User->where($map)->count(); // 查詢滿足要求的總記錄數
-        //$page = new \Think\Page ( $count, 3 ); // 實例化分頁類 傳入總記錄數和每頁顯示的記錄數(25)
-
-        $p = getpage($count1, 10);
-
+        $User = M('paidan');
+        $username = session('uname');
+        $map['user'] = $username;
+        $count = $User->where($map)->count();
+        $p = getpage($count);
         $list = $User->where($map)->order('id DESC')->limit($p->firstRow, $p->listRows)->select();
         $this->assign('list', $list); // 賦值數據集
         $this->assign('page', $p->show()); // 賦值分頁輸出
-        /////////////////----------------
 
-        $this->paidan_zs = M('paidan')->where(array('user' => $_SESSION['uname'], 'zt' => 0))->count() + 0;  
-
+        // 当前可用排单币数量(总数)
+        $this->paidan_zs = M('paidan')->where(array('user'=>$username, 'zt'=>0))->count() + 0;
 
         $this->display('pai');
     }
 
 
     public function sendPhone(){
-        $phone = $_POST['phone'];        
-        $rand =rand(100000,900000);        
+        $phone = $_POST['phone'];
+        $rand =rand(100000,900000);
         session('CHECK_CODE',$rand);
         session('PHONE_NUM',$phone);
         $info = sendSMS($phone,"尊敬的YBI会员，您注册的手机验证码为：$rand,【YBI青创】",'');
@@ -966,7 +806,7 @@ class InfoController extends CommonController
             session('check_status',1);
         }else{
              session('check_status',0);
-        }           
+        }
 
     }
 

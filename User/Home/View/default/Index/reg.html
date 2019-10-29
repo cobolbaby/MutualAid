@@ -25,7 +25,7 @@
 </script>
 <script type="text/javascript" src="/bitStyle/js/selectivizr.js">
 </script>
-<script type="text/javascript" src="/bitStyle//js/jquery.cookie.js">
+<script type="text/javascript" src="/bitStyle/js/jquery.cookie.js">
 </script>
 <script type="text/javascript" src="/bitStyle/js/scripts.js">
 </script>
@@ -119,7 +119,7 @@
 <link rel="stylesheet" href="/bitStyle/css/main.v001.css" type="text/css"/>
 <link rel="stylesheet" href="/bitStyle/css/fileupload.css" type="text/css"/>
 
-<title>蚂蚁社区
+<title>{:C('WEBSITE_NAME')}
 </title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -130,19 +130,18 @@
 </head>
 <body class="zh-CN ">
 <include file="User/Home/View/default/common_header.html" />
-<include file="User/Home/View/default/top2.html" />
 <!-- Main Wrapper -->
 <div id="wrapper">
+<include file="User/Home/View/default/top2.html" />
 <include file="User/Home/View/default/common_main.html" />
 
-<div class="row">
-    <div class="col-md-12">  
+<!-- <div class="row">
+    <div class="col-md-12">
     	<span style="color: #333;" >你的推广链接：<a href="{$tgurl}">{$tgurl}</a> <img src="{:U('Index/qrcode')}" height="20" onmouseover="$('#output').show();" onmouseout="$('#output').hide();" /></span>
       <div id="output" style="display:none;position: absolute;z-index: 2;margin-left: 450px;border: 5px solid #003D74;"></div>
     </div>
 </div>
-<br/>
-
+<br/> -->
 <div class="row">
     <div class="col-md-12">                                                                                             
 	<form class="margin-none" name="register_form" action="{:U('Index/regadd')}" method="post" id="register_form">                 
@@ -348,7 +347,7 @@
                  <div id="example_wrapper" class="dataTables_wrapper no-footer">
                    <table id="example" cellpadding="1" cellspacing="1" class="table table-bordered table-striped cus_datatable dataTable no-footer" role="grid" aria-describedby="example_info">
                 <thead>
-                  <tr role="row"><th class="sorting_desc" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-sort="descending" aria-label="编号: activate to sort column ascending" style="width: 99px;">编号</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="用户: activate to sort column ascending" style="width: 299px;">用户</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="MMMPIN码: activate to sort column ascending" style="width: 284px;">蚂蚁社区 
+                  <tr role="row"><th class="sorting_desc" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-sort="descending" aria-label="编号: activate to sort column ascending" style="width: 99px;">编号</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="用户: activate to sort column ascending" style="width: 299px;">用户</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="MMMPIN码: activate to sort column ascending" style="width: 284px;">{:C('WEBSITE_NAME')} 
 激活码</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="新用户: activate to sort column ascending" style="width: 283px;">新用户</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="注册时间: activate to sort column ascending" style="width: 254px;">注册时间</th></tr>
                 </thead>
                 <tbody>

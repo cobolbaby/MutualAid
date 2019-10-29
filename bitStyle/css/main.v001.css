@@ -284,12 +284,18 @@ float: right;
 /* HEADER ================================================== */
 header[role="header"]{
 	background-color: #fff;
-    border-top:8px solid #003D74;
+    /*border-top:8px solid #003D74;*/
 	border-bottom: 1px solid #ccc;
 	margin-bottom: 0;
 }
 
-#wrapper {;background: url('../images/ybibx.png') repeat center top;background-color: #f1f8ff}
+#wrapper {
+	/*background: url('../images/body-bg.jpg') no-repeat center #342954;
+	background-attachment: fixed;*/
+	min-height: 1000px;
+	background-color: #342954;
+}
+
 /* Navbar Brand - Logo ============== */
 .navbar-brand{
 	padding: 10px;
@@ -533,10 +539,9 @@ ul.walletNav li .wallet{
 	background: #fff;
 	margin: 0 auto 15px;
 	position: relative;
-	border: 1px solid #0061b8;
+	/*border: 1px solid #0061b8;*/
 	border-radius: 5px;
 	box-shadow: 0 3px 0 0 #dbdbdb;
-	
 }
 	.widget .widget-head {
 		background-color: #003d74;
@@ -903,9 +908,9 @@ ul.walletNav li .wallet{
 input[type=radio], input[type=checkbox]{margin-top: 3px;}
 
 .form-control{
-	height: 30px;
-	padding: 3px 3px;
 	font-size: 12px;
+	/*padding: 3px 3px;*/
+	height: 30px;
 	line-height: 1.5;
 	border-radius: 2px;
 }
@@ -1125,11 +1130,6 @@ a:hover .g-donation, #donationWrap .btn#gdBtn.active .g-donation {background: ur
 	text-align: center;
 	text-shadow: 0px 1px 2px #000;
 }
-
-.blue-bg {
-	background: url('../images/ybibx.png') repeat center top;
-}
-
 
 /* Progressbar ============== */
 .progress-custom{

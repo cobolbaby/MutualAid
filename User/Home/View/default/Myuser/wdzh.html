@@ -19,20 +19,6 @@
 <script type="text/javascript" src="/bitStyle/js/9acba5c0d35076a1ccd574dfc21b8b2b.js"></script>
     <script type="text/javascript">
       var _gNow = new Date();
-      
-      setInterval(function(){
-        $.ajax({
-          url: '?aj=1&type=check_login',
-          data: {'uid': 82662186},
-          dataType: 'json',
-          error: function(){},
-          success: function(data){
-            if(data.loggedout == '1'){
-              window.location.href = "/bitStyle/zh-CN/";
-            }
-          }
-        })
-      }, 300000); //5min
     </script>
     
 
@@ -213,39 +199,7 @@ jQuery(document).ready(function($){
   $("#gd_amount").keyup(function(){
     $("#show_gd_amount").html(format_monetary_value($(this).val()));
   });
-  
-  if(false){
-    $("#recalc-ep-message").text("您的额外回酬已计算。请稍候片刻再尝试。");
-    $("#recalc-ep-button").attr("disabled", "disabled");
-    setTimeout(function(){
-      $("#recalc-ep-button").removeAttr("disabled");
-      $("#recalc-ep-message").text("");
-    }, 0);
-  }
-  
-  $("#recalc-ep-button").on("click", function(e){
-    e.preventDefault();
-    $("#recalc-ep-message").text("您的额外回酬已计算成功。如果想再计算，请稍候片刻再尝试。");
-    $(this).attr("disabled", "disabled");
-    $.ajax({
-      url: '?aj=1&type=recalc_user_ep',
-      data: {'uid': 82662186},
-      type: 'post',
-      dataType: 'json',
-      error:function(data){
-        console.log(data);
-      },
-      success: function(data){
-        if(data.percent > 0){
-          $("#current_ep").html(data.percent);
-        }
-      }
-    });
-    setTimeout(function(){
-      $("#recalc-ep-button").removeAttr("disabled");
-      $("#recalc-ep-message").text("");
-    }, 1800000);
-  });
+
 });
 </script>
 <link rel="stylesheet" href="/bitStyle/css/bootstrap.min.css" type="text/css" />
@@ -268,7 +222,7 @@ jQuery(document).ready(function($){
 <body class="zh-CN " id="">
 
 <include file="User/Home/View/default/common_header.html" />
-<include file="User/Home/View/default/top2.html" />
+
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -305,7 +259,7 @@ $(document).ready(function() {
 
 
 <div id="wrapper">
-  
+<include file="User/Home/View/default/top2.html" />
 <include file="User/Home/View/default/common_main.html" />
 
 
@@ -489,7 +443,7 @@ function taa(e) {
     <div class="core_con">
   <div style="font-size:9pt;"><form action="" method="get"><input name="user1" id="user1"  type="hidden" value="{$user}" />我的家谱 : <input id="user" name="user" type="text"> <input name="" type="button" id="btn" value="搜索" class="btn btn-info btn-sm">
   <span id="daishu"></span></form></div>
-  	<div class="teamSummary mt15" id="teamSummary">正在载入团队体系，请稍后...</div>
+  	<div class="teamSummary mt15" id="teamSummary" style="color: #C6C4C4">正在载入团队体系，请稍后...</div>
   
     <div class="content_wrap mt5 mb40">
   <div class="zTreeDemoBackground ">

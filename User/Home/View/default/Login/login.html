@@ -3,367 +3,327 @@
 <!--[if IE 7]>    <html class="ie lt-ie9 lt-ie8 fluid top-full sticky-top sidebar sidebar-full sticky-sidebar"> <![endif]-->
 <!--[if IE 8]>    <html class="ie lt-ie9 fluid top-full sticky-top sidebar sidebar-full sticky-sidebar"> <![endif]-->
 <!--[if gt IE 8]> <html class="ie gt-ie8 fluid top-full sticky-top sidebar sidebar-full sticky-sidebar"> <![endif]-->
-<!--[if !IE]><!--><html><!-- <![endif]-->
+<!--[if !IE]><!-->
+<html>
+<!-- <![endif]-->
+
 <head>
-
-
-<script type="text/javascript" src="/bitStyle/js/jquery.js"></script>
-<script type="text/javascript" src="/bitStyle/js/remaining.js"></script>
-<script type="text/javascript">
-  var _gNow = new Date();
-</script>
-
-<script type="text/javascript">
-jQuery(document).ready(function($){
-  var _allsecs = new Array();
-  var _allsecs2 = new Array();
-  var _i18n = {
-    weeks: ['星期', '星期'],
-    days: ['天', '天'],
-    hours: ['小时', '小时'],
-    minutes: ['分', '分'],
-    seconds: ['秒', '秒']
-  };
-  $('.login_remain_time').each(function(){
-    var _rid = $(this).attr('id');
-    var _seconds = parseInt($(this).attr('rel'));
-    if(_seconds > 0){
-     $(this).html(
-        remaining.getString(_seconds, _i18n, false)
-      );
+    <title>会员登录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+    <link rel="shortcut icon" href="/bitStyle/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/bitStyle/css/bootstrap.min.css" type="text/css">
+    <style type="text/css">
+    .login {
+        background-color: #342954;
+        background-repeat: repeat;
     }
-    else{
-      $(this).html('剩余0天');
+    
+    .login .navbar {
+        min-height: initial;
+        background: #0068b2;
     }
-    _allsecs[_rid] = _seconds;
-    _allsecs2[_rid] = _seconds;
-  });
-  timer = setInterval(function(){
-    var now = new Date();  //by QQ 74222 4183
-    true_elapsed = Math.round((now.getTime() - _gNow.getTime()) / 1000);    $('.login_remain_time').each(function(){
-      var _rid = $(this).attr('id');
-      if(typeof _allsecs[_rid] == 'undefined'){
-        _allsecs[_rid] = parseInt($(this).attr('rel'));
-      }
-      _seconds = _allsecs[_rid];
-      if(typeof _allsecs2[_rid] == 'undefined'){
-        _allsecs2[_rid] = parseInt($(this).attr('rel'));
-      }
-      //synchronize
-      _diff_sec = _allsecs2[_rid] - _seconds;
-      if(_diff_sec < true_elapsed){
-        _seconds = _allsecs2[_rid] - true_elapsed;
-      }
-      if(_seconds > 0){
-        $(this).html(
-          remaining.getString(_seconds, _i18n, false)
-        );
-        _allsecs[_rid] = --_seconds;
-      }
-      else{
-        $("#too_many_user").hide();
-        $("#login_btn").removeAttr("disabled");
-        $(this).html('剩余0天');
-      }
-    });
-  }, 1000);
-});
-</script>
-<link rel="stylesheet" href="/bitStyle/css/bootstrap.min.css" type="text/css" />
-
-
-<title>会员登录 </title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
-
-<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-
-
-<style>
-.login{
- 
-  background-color:#0068b2;
-  background-repeat: repeat;
-}
-.login .navbar {
-  min-height: initial;
-  background: #0068b2;
-}
-.login ul[role="sub-navigation"] {margin:0}
-.login .wrapper{
-  max-width: 454px;
-  min-width: 300px;
-  margin: 100px auto 0;
-  position: relative;
-}
-  .login .wrapper .brand{
-    margin-bottom: 20px;
-    text-align: center;
-  }
-    .login .wrapper .brand h2{
-      font-size: 22px;
-      color: #FFF;
-      line-height: 32px;
-      margin: 0;
-      font-style: italic;
-      text-shadow: 0px 1px 1px rgba(0,0,0,0.8);
+    
+    .login ul[role="sub-navigation"] {
+        margin: 0
     }
-  .login .wrapper .widget{
-    background: transparent;
-    margin: 0 auto 15px;
-  }
-  .login .wrapper .widget .widget-body{
-    background: rgba(250,250,250,1);
-    -background:none;
-    position: relative;
-    padding: 15px;
-    text-align:center;
-    /*border: 2px solid #003d74;*/
-    margin-top: 20px;
-    /* -webkit-box-shadow: 0 3px 2px 2px rgba(5,5,5,0.3);
-    box-shadow: 0 3px 2px 2px rgba(5,5,5,0.3); */
-  }
-  .login .wrapper .widget .widget-body h1{
-    font-size: 20pt;
-    margin: 10px 0 20px 0;
-    color: #686868;
-  }
-  .login .wrapper .widget .widget-body label{
-    font-size: 14px;
-    color: #7c7c7c;
-    font-weight:bold;
-  }
-  
-  .login .wrapper input[type="text"], .login .wrapper input[type="password"] {
-   font-size: 13px;
-    height: auto;
-    padding: 10px 9px;
-    box-shadow: none;
-    /* background: #000; */
-    border: 1px solid #D2D2D2;
-  }
-  body.login .wrapper .password {
-    float: right;
-    font-size: 12px;
-    font-weight: 400;
-  }
-  body.login .wrapper .separator{padding: 0 0 20px;}
-  
-  .form-control { border:0; border-radius:0;}
-  
-  /* Navbar ============== */
-  .navbar-nav > li > a {
-    color: #fff;
-    font-size: 12px;
-    padding: 10px 15px;
-  }
-  .navbar-nav > li.active > a,
-  .navbar-nav > li > a:active,
-  .navbar-nav > li > a:focus,
-  .navbar-nav > li > a:hover{
-    background-color: #003d74;
-    color: #F7CB18;
-  }
-  .nav .open>a, .nav .open>a:hover, .nav .open>a:focus{
-    background: #003d74;
-  }
-  
-  .navbar-nav>li>.dropdown-menu {
-    background: #003d74;
-    border: 0px;
-    min-width:auto;
-  }
-    .navbar-nav>li>.dropdown-menu li a{
-      color: #FFF;
-      font-size: 12px;
-      padding: 10px 15px;
+    
+    .login .wrapper {
+        max-width: 454px;
+        min-width: 300px;
+        margin: 100px auto 0;
+        position: relative;
     }
+    
+    .login .wrapper .brand {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    
+    .login .wrapper .brand h2 {
+        font-size: 22px;
+        color: #FFF;
+        line-height: 32px;
+        margin: 0;
+        font-style: italic;
+        text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
+    }
+    
+    .login .wrapper .widget {
+        background: transparent;
+        margin: 0 auto 15px;
+    }
+    
+    .login .wrapper .widget .widget-body {
+        background: rgba(250, 250, 250, 1);
+        -background: none;
+        position: relative;
+        padding: 15px;
+        text-align: center;
+        /*border: 2px solid #003d74;*/
+        margin-top: 20px;
+        /* -webkit-box-shadow: 0 3px 2px 2px rgba(5,5,5,0.3);
+        box-shadow: 0 3px 2px 2px rgba(5,5,5,0.3); */
+    }
+    
+    .login .wrapper .widget .widget-body h1 {
+        font-size: 20pt;
+        margin: 10px 0 20px 0;
+        color: #686868;
+    }
+    
+    .login .wrapper .widget .widget-body label {
+        font-size: 14px;
+        color: #7c7c7c;
+        font-weight: bold;
+    }
+    
+    .login .wrapper input[type="text"],
+    .login .wrapper input[type="password"] {
+        font-size: 13px;
+        height: auto;
+        padding: 10px 9px;
+        box-shadow: none;
+        /* background: #000; */
+        border: 1px solid #D2D2D2;
+    }
+    
+    body.login .wrapper .password {
+        float: right;
+        font-size: 12px;
+        font-weight: 400;
+    }
+    
+    body.login .wrapper .separator {
+        padding: 0 0 20px;
+    }
+    
+    .form-control {
+        border: 0;
+        border-radius: 0;
+    }
+    /* Navbar ============== */
+    
+    .navbar-nav > li > a {
+        color: #fff;
+        font-size: 12px;
+        padding: 10px 15px;
+    }
+    
+    .navbar-nav > li.active > a,
+    .navbar-nav > li > a:active,
+    .navbar-nav > li > a:focus,
+    .navbar-nav > li > a:hover {
+        background-color: #003d74;
+        color: #F7CB18;
+    }
+    
+    .nav .open>a,
+    .nav .open>a:hover,
+    .nav .open>a:focus {
+        background: #003d74;
+    }
+    
+    .navbar-nav>li>.dropdown-menu {
+        background: #003d74;
+        border: 0px;
+        min-width: auto;
+    }
+    
+    .navbar-nav>li>.dropdown-menu li a {
+        color: #FFF;
+        font-size: 12px;
+        padding: 10px 15px;
+    }
+    
     .navbar-nav>li>.dropdown-menu li a:focus,
-    .navbar-nav>li>.dropdown-menu li a:hover{
-      background: #0068b2;
+    .navbar-nav>li>.dropdown-menu li a:hover {
+        background: #0068b2;
     }
+    
     .dropdown-menu>.active>a,
     .dropdown-menu>.active>a:hover,
-    .dropdown-menu>.active>a:focus{background: #003d74;}
-  
-  /* Navbar Right - Language Dropdown ============== */
-  [class*="language-sel-"] {
-    width:16px;
-    height:11px;
-    top: 0px;
-    margin-right:5px;
-    position: relative;
-    display: inline-block;
-  }
-  .language-sel-en{background: url(../../bitStyle/images/gb.png) no-repeat 0 0 !important}
-  .language-sel-zh-CN{background: url(../../bitStyle/images/cn.png) no-repeat 0 0 !important}
-  
-  /* Button ============== */
-  .btn-inverse{
-    background: #45484d;
-    color: #fff;
-  }
-  .btn-inverse:focus,
-  .btn-inverse:hover{
-    color: #fff;
-    background: #222;
-  }
-   .btn {padding: 8px 12px;}
-   
-   .btn-primary {margin-bottom: 10px;}
-   
-   .btn-primary {
-    color: #428bca;
-    background-color: #fff;
-    border-color:  #428bca;
-  }
-  
-  .btn-primary:hover,
-  .btn-primary:focus  {
-    color: #fff;
-    background-color: #428bca;
-    border-color:  #428bca;
-  }
-
-  .form-group{ text-align:left;}
-  /* Copyright ============== */
-  .copyright{
-    color: #FFF;
-    text-align: center;
-    text-shadow: 0px 1px 2px #000;
-  }
-  
-  
-  @media (max-width: 767px){
-    .navbar-toggle .icon-bar{background: #FFF;}
+    .dropdown-menu>.active>a:focus {
+        background: #003d74;
+    }
+    /* Navbar Right - Language Dropdown ============== */
     
-    nav[role="main-navigation"]{
-      float: none;
-      margin: 0 !important;
+    [class*="language-sel-"] {
+        width: 16px;
+        height: 11px;
+        top: 0px;
+        margin-right: 5px;
+        position: relative;
+        display: inline-block;
     }
     
-    ul[role="sub-navigation"]{text-align: right; margin: 0;}
-    ul[role="sub-navigation"] > li{display: inline-block;}
-    ul[role="sub-navigation"] .open .dropdown-menu{
-      position: absolute;
-      float: left;
-      left: auto;
-      right: 0;
-      background-color: #000
+    .language-sel-en {
+        background: url(/bitStyle/images/gb.png) no-repeat 0 0 !important
     }
-    ul[role="sub-navigation"] .open .dropdown-menu li a{
-      text-align: left;
-      padding: 5px 15px;
+    
+    .language-sel-zh-CN {
+        background: url(/bitStyle/images/cn.png) no-repeat 0 0 !important
     }
-  }
-</style>
+    /* Button ============== */
+    
+    .btn-inverse {
+        background: #45484d;
+        color: #fff;
+    }
+    
+    .btn-inverse:focus,
+    .btn-inverse:hover {
+        color: #fff;
+        background: #222;
+    }
+    
+    .btn {
+        padding: 8px 12px;
+    }
+    
+    .btn-primary {
+        margin-bottom: 10px;
+    }
 
+    .btn-primary {
+        color: #FFFFFF;
+        background-color: #DD7F0E;
+        border-color: #DD7F0E;
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus {
+        color: #FFFFFF;
+        background-color: #DD7F0E;
+        border-color: #DD7F0E;
+    }
+
+    .form-group {
+        text-align: left;
+    }
+    /* Copyright ============== */
+    
+    .copyright {
+        color: #FFF;
+        text-align: center;
+        text-shadow: 0px 1px 2px #000;
+    }
+    
+    @media (max-width: 767px) {
+        .navbar-toggle .icon-bar {
+            background: #FFF;
+        }
+        nav[role="main-navigation"] {
+            float: none;
+            margin: 0 !important;
+        }
+        ul[role="sub-navigation"] {
+            text-align: right;
+            margin: 0;
+        }
+        ul[role="sub-navigation"] > li {
+            display: inline-block;
+        }
+        ul[role="sub-navigation"] .open .dropdown-menu {
+            position: absolute;
+            float: left;
+            left: auto;
+            right: 0;
+            background-color: #000
+        }
+        ul[role="sub-navigation"] .open .dropdown-menu li a {
+            text-align: left;
+            padding: 5px 15px;
+        }
+    }
+    </style>
 </head>
+
 <body class="login">
-
-
-
-<header class="navbar navbar-static-top" id="top" role="header" style="background-color:#003d74">
-  <div class="container">
-    <ul class="nav navbar-nav navbar-right" role="sub-navigation">
-            <li class="dropdown" id="lang_nav">
-        <a href="#" data-toggle="dropdown">
-          <span class="language-sel-zh-CN fa-lang"></span>
-          <span class="language-text">简体中文</span>
-        </a>
-        <ul class="dropdown-menu" role="languageMenu">
-                                        <li><a href="/Home/Login/english.html"><span class="language-sel-en"></span>English</a></li>
-                                                              
-                                      </ul>
-      </li>
-    </ul>
-  </div>
-</header>
-
-
-<div class="wrapper">
-  
-
-  <div class="widget">
-      <div class="widget-head" style="text-align:center;">
-  <img src="/assets/img/YBI1.png" alt="YBI">
-      </div>
-    <div class="widget-body" style="background-color:#FFFFFF;border:3px solid #003d74">
-        <div class="alert alert-danger">
-        用户名或密码不正确。      </div>    
-            <form name="login_form" action="" method="post">
-    <div class="form-group"> <label class="control-label" for="username">用户名</label>
-    <input type="text" class="form-control" name="account" autofocus id="username" value="" placeholder="用户名">
-    <span class="help-block small">您在蚂蚁社区的登录用户名</span>
-    </div>
-    <div class="form-group">
-    <label class="control-label" for="password">密码</label>
-    <input type="password" class="form-control"  name="password"  id="password" placeholder="登录密码" value="">
-     <span class="help-block small">登录密码</span>
-    </div>
-    <div class="form-group">
-        <span style="width:50%;float:left;"><input name="mycode" type="text" class="form-control" id="mycode" title="请输入验证码" placeholder="请输入验证码" required ></span>
-        <span style="width:50%;"><img src="/Home/login/verify.html" name="myHeader" height="35" id="myHeader" onClick="this.src='/Home/login/verify?'+Math.random();" /></span>
-    </div>
-        
-        
-
-        <div class="separator bottom clearfix"></div>
-        <div class="row" style="text-align:center;">
-          <div class="col-md-6">
-                    </div>
-          <div class="col-md-12">
-            <input class="btn btn-block btn-primary" style=" background-color:#0068B2; border-color:#005896; color:#FFFFFF" type="button" name="submit" value="登录" id="login_btn" />
-      <input type="hidden" name="ip" id="ip" value="183.8.141.208" />
-      <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>  
-      <script>document.getElementById('ip').value=returnCitySN["cip"];</script>
-            <a class="btn btn-block btn-primary"  type="button" name="submit"  id="login_btn" href="/Home/Reg/forgot.html" />忘记密码</a>
-
-          </div>
+    <header class="navbar navbar-static-top" id="top" role="header" style="background-color:#003d74; display: none;">
+        <div class="container">
+            <ul class="nav navbar-nav navbar-right" role="sub-navigation">
+                <li class="dropdown" id="lang_nav">
+                    <a href="#" data-toggle="dropdown"><span class="language-text">简体中文</span></a>
+                    <ul class="dropdown-menu" role="languageMenu">
+                        <li><a href="javascript:void(0);">English</a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
-      </form>
-          </div>
-  </div>
-  
-</div>
-
-
-<script type="text/javascript" src="/bitStyle/js/modernizr.js"></script>
-<script type="text/javascript" src="/bitStyle/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/bitStyle/js/jquery.cookie.js"></script>
-
-<script type="text/javascript">
-$(document).ready(function($){
-  $('.alert-danger').hide();
-  $('input#login_btn').click(function(){
-    $('input#login_btn').attr('disabled','disabled');
-    var url = "/Home/Login/logincl.html";
-    var account = $("#username").val();
-    var password = $("#password").val();
-    var mycode = $("#mycode").val();
-  
-    $.post(url,{account:account,password:password,mycode:mycode},function(data){
-      if(data.sf){
-        document.location.href='/';
-      }else{
-    console.log(data.nr);
-    if(data.nr){
-        $('.alert-danger').html(data.nr).show();
-    }else{
-        $('.alert-danger').html('登錄失敗').show();
-    }
-    $('input#login_btn').removeAttr("disabled");
-      }
-    },'json');
-  });
-  
-    $('#username').focus();
-    
-  $.removeCookie("alert", { path: '/' });
-});
-</script>
-
+    </header>
+    <div class="wrapper">
+        <div class="widget">
+            <div class="widget-head" style="text-align:center;">
+                <img src="/bitStyle/images/login-page-logo.png" alt="MYHOME">
+            </div>
+            <div class="widget-body" style="background-color:#FFFFFF; border:3px solid #003d74">
+                <div class="alert alert-danger" style="display:none"></div>
+                <form name="login_form" action="" method="post">
+                    <div class="form-group">
+                        <label class="control-label" for="username">用户名</label>
+                        <input type="text" class="form-control" name="account" id="username" value="" placeholder="用户名" autofocus=""> <span class="help-block small">您在{:C('WEBSITE_NAME')}的登录用户名</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="password">密码</label>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="登录密码" value=""> <span class="help-block small">登录密码</span>
+                    </div>
+                    <div class="form-group">
+                        <span style="width:50%;float:left;"><input name="mycode" type="text" class="form-control" id="mycode" title="请输入验证码" placeholder="请输入验证码" required=""></span> <span style="width:50%;"><img src="/Home/login/verify" name="myHeader" height="35" id="myHeader" onclick="this.src='/Home/login/verify?'+Math.random();"></span>
+                    </div>
+                    <div class="separator clearfix"></div>
+                    <div class="row" style="text-align:center;">
+                        <div class="col-md-12">
+                            <input class="btn btn-block btn-primary" style=" " type="button" name="submit" value="登录" id="login_btn">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/bitStyle/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="/bitStyle/js/modernizr.js">
+    </script>
+    <script type="text/javascript" src="/bitStyle/js/bootstrap.min.js">
+    </script>
+    <script type="text/javascript" src="/bitStyle/js/jquery.cookie.js">
+    </script>
+    <script type="text/javascript">
+    $(document).ready(function($) {
+        $('.alert-danger').hide();
+        $('input#login_btn').click(function() {
+            $('input#login_btn').attr('disabled', 'disabled');
+            var url = "/Home/Login/logincl";
+            var account = $("#username").val();
+            var password = $("#password").val();
+            var mycode = $("#mycode").val();
+            $.post(url, {
+                account: account,
+                password: password,
+                mycode: mycode
+            }, function(data) {
+                if (data.sf) {
+                    document.location.href = '/';
+                } else {
+                    console.log(data.nr);
+                    if (data.nr) {
+                        $('.alert-danger').html(data.nr).show();
+                    } else {
+                        $('.alert-danger').html('登錄失敗').show();
+                    }
+                    $('input#login_btn').removeAttr("disabled");
+                }
+            }, 'json');
+        });
+        $('#username').focus();
+        $.removeCookie("alert", {
+            path: '/'
+        });
+    });
+    </script>
 </body>
+
 </html>

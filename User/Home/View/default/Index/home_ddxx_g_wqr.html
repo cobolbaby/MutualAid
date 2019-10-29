@@ -27,7 +27,6 @@
 <script src="/cssmmm/homer.js"></script>
 <script src="/cssmmm/alert.js"></script>
 <script src="/cssmmm/charts.js"></script>
-<script type="text/javascript" src="/cssmmm/socket.io.js"></script>
 
 <script>
     
@@ -288,7 +287,7 @@
             }
 
         });
-        {$userData|iniInfo=###}
+        {$userData}
         $("#select_fanshi3").click(function(){
 
             var id = $("#completid").val();
@@ -481,38 +480,6 @@ $('input:checkbox').each(function() {
     }
 
 
-    try {
-        var socket = io('http://174.139.194.157:1338');
-    } catch (err) {
-        console.log('server errr');
-    }
-    var $show = $("#show");
-
-    var $total = $("#total");
-
-    socket.on('num', function (data) {
-
-        $total.html(data.num);
-
-    });
-
-    socket.on('show', function (data) {
-        console.log(data);
-
-        $total.html(data.num);
-
-        var reallen = $show.find('div').length;
-
-        if (reallen > 500) {
-
-            $show.find('div').last().remove();
-
-        }
-
-        $show.prepend('<div><span>' + formatDate(Number(data.data.add_time) * 1000, 'second') + '   </span><span>   ' + data.data.city + ' 的会员做了一次操作</span></div>');
-
-    });
-
 </script>
     <!-- Page title -->
     <title>TVB国际互助 | 互助 慈善 付出 赠与</title>
@@ -520,7 +487,7 @@ $('input:checkbox').each(function() {
     <!-- Place favicon.ico and apple-tby-touch-icon.png in the root directory -->
 
     <!-- Vendor styles -->
-    <link rel="stylesheet" href="/assets/vendor/fontawesome/css/font-awesome.css">
+    
     <link rel="stylesheet" href="/assets/vendor/metisMenu/dist/metisMenu.css">
     <link rel="stylesheet" href="/assets/vendor/animate.css/animate.css">
     <link rel="stylesheet" href="/assets/vendor/bootstrap/dist/css/bootstrap.css">
@@ -531,7 +498,6 @@ $('input:checkbox').each(function() {
     <!-- App styles -->
     <link rel="stylesheet" href="/assets/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
     <link rel="stylesheet" href="/assets/fonts/pe-icon-7-stroke/css/helper.css">
-    <link rel="stylesheet" href="/assets/styles/style.css">
 <link rel="stylesheet" href="__PUBLIC__/Uploadify/uploadify.css"/>
 <script type="text/javascript" src='__PUBLIC__/Uploadify/jquery.uploadify.min.js'></script>
  <script type='text/javascript'>

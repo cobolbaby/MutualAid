@@ -1,83 +1,35 @@
 <?php
-
-
-
 namespace Home\Controller;
-
-
 
 use Think\Controller;
 
-
-
-class CommonController extends Controller {
-
-
-
-	
-
-	
-
-	
+class CommonController extends Controller
+{
+	protected $tgbz_full = false;
 
 	public function _initialize() {
 
 		header("Content-Type:text/html; charset=utf-8");
-
-// 		echo cookie('uid2');
-
-// 	if( $_COOKIE ['uid2'] ==''){
-
-// 		session_unset();
-
-// 		session_destroy();
-
-// 		$this->redirect('Login/index');
-
-// 	}
-
-		$zt=M('system')->where(array('SYS_ID'=>1))->find();
-
-// 		$time2 = date('H');
-
-		if($zt['zt']<>0){
-
-			$this->error('系统升级中,请稍后访问!','/Home/Login/index');die;
-
+		// 系统状态
+		$zt = M('system')->where(array('SYS_ID'=>1))->find();
+		if($zt['zt'] <> 0)
+		{
+			$this->error('系统升级中,请稍后访问!', '/Home/Login/index');
+			exit;
 		}
-
-		
-
-		
 
 		//推广链接
 		$tgurl = "http://" . $_SERVER["HTTP_HOST"] . u("Reg/index", array("uname" => $_SESSION['uname']));
 		$this->tgurl = $tgurl;
 
-		
-
         $czmcsy = CONTROLLER_NAME . ACTION_NAME;
-
 		$czmc = ACTION_NAME;
 
-		//echo $czmcsy;die;
-
 		if($czmcsy<>'Indexindex'){
-
-			
-
-		if (! isset ( $_SESSION ['uid'] )) {
-
-			// $this->error('請先登錄!',U('Login/index'));
-
-			
-
-			$this->redirect ( 'Login/index' );
-
-		}
-
-		$this->checkAdminSession();
-
+			if (!isset( $_SESSION ['uid'] )) {
+				$this->redirect ( 'Login/index' );
+			}
+			$this->checkAdminSession();
 		}
 
 		$_SESSION['user_jb'] = 1;
@@ -128,62 +80,50 @@ class CommonController extends Controller {
 		$this->assign('tj_e',C('tj_e'));
 		$this->assign ( 'tj_beishu', C("tj_beishu") );
 
-
+        $uname = $_SESSION['uname'];
+		// 每天排单金币数
 		$paidan_jbs = C('paidan_jbs');
-        if($paidan_jbs>0){
-        	$uname = $_SESSION ['uname'];
+        if($paidan_jbs > 0){
 			$starttime = date('Y-m-d 00:00:01', time());
             $endtime = date('Y-m-d 23:59:59', time());
-            $count = M("tgbz")->where("date>='$starttime' and date<='$endtime' and user='$uname'")->sum('jb');		     
+            $count = M("tgbz")->where("date>='$starttime' and date<='$endtime' and user='$uname'")->sum('jb');
             if ($count >= $paidan_jbs) {
                	$this->tgbz_full = true;
             }
     	}
 
-
-		//排单币
+		// 排单币
 		$paidan_db = M('paidan');
-		$this->paidan_num  = $paidan_db->where(array('user'=>$_SESSION['uname'],'zt'=>0))->count()+0;
-		$this->paidans = $paidan_db->where(array('user'=>$_SESSION['uname'],'zt'=>0))->find();
+		$this->paidan_num  = $paidan_db->where(array('user'=>$uname,'zt'=>0))->count()+0;
+		$this->paidans = $paidan_db->where(array('user'=>$uname,'zt'=>0))->find();
 
-		//激活码
+		// 激活码
 		$pin_db = M('pin');
-		$this->pin_zs = $pin_db->where(array('user'=>$_SESSION['uname'],'zt'=>0))->count()+0;
+		$this->pin_zs = $pin_db->where(array('user'=>$uname,'zt'=>0))->count()+0;
 
-
-		//会员任务  by扣扣  74 2 24183
-
+		// 会员任务
 		$level_array = explode(',', C('jjaccountlevel'));
-		$task_arr = explode(',', C('per_task'));
-		if(!empty($level_array) && !empty($userData['levelname'])){
+		$task_arr = explode(',', C('per_task')); // 每月任务最大数
+		if(count($level_array) && !empty($userData['levelname'])){
 			foreach ($level_array as $key => $value) {
 				if($userData['levelname'] == $value){
-					$this->renwu_num = $task_arr[$key];
+					$this->renwu_num = isset($task_arr[$key]) ? $task_arr[$key] : 0; // 任务数量
 				}
 			}
 		}
 
-		$starttime = date('Y-m-1 00:00:01', time());
-        $endtime = date('Y-m-31 23:59:59', time());
-        $this->tasked = M("task")->where(array('MA_time'=>array('egt',$starttime),'MA_time'=>array('elt',$endtime),'MA_userName'=>$_SESSION['uname']))->count();
+		// $starttime = date('Y-m-1 00:00:01', time());
+  		// $endtime = date('Y-m-31 23:59:59', time());
+        // $this->tasked = M("task")->where(array('MA_time'=>array('egt',$starttime),'MA_time'=>array('elt',$endtime),'MA_userName'=>$uname))->count();
 		
-
-
-		
-
 		$this->userData=$userData;
-
 	}
 
-	function   _empty(){
-
-                    header( " HTTP/1.0  404  Not Found" );
-
-                    $this->display( ' Public:404 ' );
-
+	public function  _empty()
+	{
+		header( " HTTP/1.0  404  Not Found" );
+		$this->display( ' Public:404 ' );
      }
-
-	
 
 	public function checkAdminSession() {
 
@@ -211,17 +151,11 @@ class CommonController extends Controller {
 
 	
 
-	function check_verify($code) {
-
+	public function check_verify($code)
+	{
 		$verify = new \Think\Verify ();
-
 		return $verify->check ( $code );
-
 	}
-
-	
-
-	
 
 	public function getTreeBaseInfo($id) {
 
@@ -308,8 +242,6 @@ class CommonController extends Controller {
 
 		$_SESSION['user_jb']++;
 
-		//echo $_SESSION['user_jb'].'<br>';
-
 		foreach ( $ids as $v ) {
 
 			
@@ -389,9 +321,6 @@ class CommonController extends Controller {
 		$znote [] = $base;
 
 
-
-		// dump($znote);die;
-
 		/*
 
 		 * $znote = array(array("id" => 1, "pId" => 0, "name"=>"1000001"), array("id" => 2, "pId" => 1, "name"=>"1000002"), array("id" => 3, "pId" => 2, "name"=>"1000003"), array("id" => 5, "pId" => 2, "name"=>"1000003"), array("id" => 4, "pId" => 1, "name"=>"1000004") );
@@ -399,8 +328,8 @@ class CommonController extends Controller {
 		 */
 
 		
-
-		echo json_encode ( array ("status" => 0,"data" => $znote ,'count'=>$this->userData['tj_num']) );
+		// [fix]通过$this->userData['tj_num']获取团队成员的统计数目可能与实际不符
+		echo json_encode( array("status" => 0,"data" => $znote ,'count'=>$this->userData['tj_num']) );
 
 	}
 
@@ -515,99 +444,5 @@ class CommonController extends Controller {
 		}
 
 	}
-
-	
-
-	
-
-	/*public function uploadFace() {
-
-	
-
-		//if (!$this->isPost()) {
-
-		//	$this->error('页面不存在');
-
-		//}
-
-		//echo 'asdfsaf';die;
-
-		$upload = $this->_upload('Pic');
-
-		$this->ajaxReturn($upload);
-
-	}
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	Private function _upload ($path) {
-
-		import('ORG.Net.UploadFile');	//引入ThinkPHP文件上传类
-
-		$obj = new \Think\Upload();	//实例化上传类
-
-		$obj->maxSize = 2000000;	//图片最大上传大小
-
-		$obj->savePath =  $path . '/';	//图片保存路径
-
-		$obj->saveRule = 'uniqid';	//保存文件名
-
-		$obj->uploadReplace = true;	//覆盖同名文件
-
-		$obj->allowExts = array('jpg','jpeg','png','gif');	//允许上传文件的后缀名
-
-	
-
-		$obj->autoSub = true;	//使用子目录保存文件
-
-		$obj->subType = 'date';	//使用日期为子目录名称
-
-		$obj->dateFormat = 'Y_m';	//使用 年_月 形式
-
-		//$obj->upload();die;
-
-		$info   =   $obj->upload();
-
-		if (!$info) {
-
-			return array('status' => 0, 'msg' => $obj->getErrorMsg());
-
-		} else {
-
-			foreach($info as $file){
-
-				$pic = $file['savepath'].$file['savename'];
-
-			}
-
-			//$pic =  $info[0][savename];
-
-			//echo $pic;die;
-
-			return array(
-
-					'status' => 1,
-
-					'path' => $pic
-
-			);
-
-		}
-
-	}*/
-
-	
-
-	
-
-	
 
 }

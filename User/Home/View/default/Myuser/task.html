@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <!--[if lt IE 7]>
 <html class="ie lt-ie9 lt-ie8 lt-ie7 fluid top-full sidebar sidebar-full sticky-sidebar">
@@ -17,273 +16,246 @@
 <!--<![endif]-->
 
 <head>
-<script type="text/javascript" src="/bitStyle/js/jquery.js">
-</script>
-<script type="text/javascript" src="/bitStyle/js/bootstrap.min.js">
-</script>
-<script type="text/javascript" src="/bitStyle/js/modernizr.js">
-</script>
-<script type="text/javascript" src="/bitStyle/js/selectivizr.js">
-</script>
-<script type="text/javascript" src="/bitStyle//js/jquery.cookie.js">
-</script>
-<script type="text/javascript" src="/bitStyle/js/scripts.js">
-</script>
-<script type="text/javascript" src="/bitStyle/js/remaining.js">
-</script>
-<script type="text/javascript" src="/bitStyle/js/fn_number_format.js">
-</script>
-<script type="text/javascript" src="/bitStyle/js/9acba5c0d35076a1ccd574dfc21b8b2b.js">
-</script>
-<script type="text/javascript" src="/bitStyle/js/layer.js"></script>
-<script src="/cssmmm/jquery.countdown.js"></script>
-<script type="text/javascript">
+    <script type="text/javascript" src="/bitStyle/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="/bitStyle/js/bootstrap.min.js">
+    </script>
+    <script type="text/javascript" src="/bitStyle/js/modernizr.js">
+    </script>
+    <script type="text/javascript" src="/bitStyle/js/selectivizr.js">
+    </script>
+    <script type="text/javascript" src="/bitStyle/js/jquery.cookie.js">
+    </script>
+    <script type="text/javascript" src="/bitStyle/js/scripts.js">
+    </script>
+    <script type="text/javascript" src="/bitStyle/js/remaining.js">
+    </script>
+    <script type="text/javascript" src="/bitStyle/js/fn_number_format.js">
+    </script>
+    <script type="text/javascript" src="/bitStyle/js/9acba5c0d35076a1ccd574dfc21b8b2b.js">
+    </script>
+    <script type="text/javascript" src="/bitStyle/js/layer.js"></script>
+    <script src="/cssmmm/jquery.countdown.js"></script>
+    <script type="text/javascript">
+    var _gNow = new Date();
 
-  var _gNow = new Date();
+    jQuery(document).ready(function($) {
+        var gdBtn = $('#gdBtn');
+        var pdBtn = $('#pdBtn');
+        pdBtn.click(function() {
+            $(this).toggleClass('active');
+            gdBtn.removeClass('active');
+            $('#pdWrap').stop(true, false).slideToggle('fast');
+            $('#gdWrap').stop(true, false).slideUp('fast').removeClass('open');
+            return false
+        });
+        gdBtn.click(function() {
+            $(this).toggleClass('active');
+            pdBtn.removeClass('active');
+            $('#gdWrap').stop(true, false).slideToggle('fast');
+            $('#pdWrap').stop(true, false).slideUp('fast').removeClass('open');
+            return false
+        });
+        $('.tip').tooltip({
+            placement: 'top'
+        });
+        $('.tipr').tooltip({
+            placement: 'right'
+        });
+        $('.tipb').tooltip({
+            placement: 'bottom'
+        });
+        $('.tipl').tooltip({
+            placement: 'left'
+        });
+        $("a[href='#top']").click(function() {
+            $("html, body").animate({
+                    scrollTop: 0
+                },
+                "slow");
+            return false
+        });
+        var _server_time = new Date(),
+            _server_time2 = new Date(),
+            _local_time = new Date(),
+            _local_time2 = new Date();
+        _server_time2 = new Date(),
+            _local_time = new Date(),
+            _local_time2 = new Date();
+        _timer = setInterval(function() {
+                var now = new Date();
+                true_elapsed = Math.round((now.getTime() - _gNow.getTime()) / 1000);
+                second = _local_time.getTime() + 1000;
+                elapsed = Math.round((second - _local_time2.getTime()) / 1000);
+                if (elapsed < true_elapsed) {
+                    diff = true_elapsed - elapsed;
+                    second += (diff * 1000)
+                } //扣 扣 74222 4183
+                _local_time.setTime(second);
+                second = _server_time.getTime() + 1000;
+                elapsed = Math.round((second - _server_time2.getTime()) / 1000);
+                if (elapsed < true_elapsed) {
+                    diff = true_elapsed - elapsed;
+                    second += (diff * 1000)
+                }
+                _server_time.setTime(second);
+                date_text = padNumber(_server_time.getHours()) + ':' + padNumber(_server_time.getMinutes()) + ':' + padNumber(_server_time.getSeconds());
+                date_text += ' ' + _server_time.getDate() + '/' + (_server_time.getMonth() + 1) + '/' + _server_time.getFullYear();
+                $('#server_time_text').html(date_text);
+                date_text = padNumber(_local_time.getHours()) + ':' + padNumber(_local_time.getMinutes()) + ':' + padNumber(_local_time.getSeconds());
+                date_text += ' ' + _local_time.getDate() + '/' + (_local_time.getMonth() + 1) + '/' + _local_time.getFullYear();
+                $('#local_time_text').html(date_text)
+            },
+            1000);
 
-  jQuery(document).ready(function($) {
-    var gdBtn = $('#gdBtn');
-    var pdBtn = $('#pdBtn');
-    pdBtn.click(function() {
-      $(this).toggleClass('active');
-      gdBtn.removeClass('active');
-      $('#pdWrap').stop(true, false).slideToggle('fast');
-      $('#gdWrap').stop(true, false).slideUp('fast').removeClass('open');
-      return false
+        function padNumber(number) {
+            return (number >= 0 && number < 10) ? '0' + number : number
+        }
     });
-    gdBtn.click(function() {
-      $(this).toggleClass('active');
-      pdBtn.removeClass('active');
-      $('#gdWrap').stop(true, false).slideToggle('fast');
-      $('#pdWrap').stop(true, false).slideUp('fast').removeClass('open');
-      return false
-    });
-    $('.tip').tooltip({
-      placement: 'top'
-    });
-    $('.tipr').tooltip({
-      placement: 'right'
-    });
-    $('.tipb').tooltip({
-      placement: 'bottom'
-    });
-    $('.tipl').tooltip({
-      placement: 'left'
-    });
-    $("a[href='#top']").click(function() {
-      $("html, body").animate({
-        scrollTop: 0
-      },
-      "slow");
-      return false
-    });
-    var _server_time = new Date(),
-        _server_time2 = new Date(),
-        _local_time = new Date(),
-        _local_time2 = new Date();
-        _server_time2 = new Date(),
-        _local_time = new Date(),
-        _local_time2 = new Date();
-    _timer = setInterval(function() {
-      var now = new Date();
-      true_elapsed = Math.round((now.getTime() - _gNow.getTime()) / 1000);
-      second = _local_time.getTime() + 1000;
-      elapsed = Math.round((second - _local_time2.getTime()) / 1000);
-      if (elapsed < true_elapsed) {
-        diff = true_elapsed - elapsed;
-        second += (diff * 1000)
-      } //扣 扣 74222 4183
-      _local_time.setTime(second);
-      second = _server_time.getTime() + 1000;
-      elapsed = Math.round((second - _server_time2.getTime()) / 1000);
-      if (elapsed < true_elapsed) {
-        diff = true_elapsed - elapsed;
-        second += (diff * 1000)
-      }
-      _server_time.setTime(second);
-      date_text = padNumber(_server_time.getHours()) + ':' + padNumber(_server_time.getMinutes()) + ':' + padNumber(_server_time.getSeconds());
-      date_text += ' ' + _server_time.getDate() + '/' + (_server_time.getMonth() + 1) + '/' + _server_time.getFullYear();
-      $('#server_time_text').html(date_text);
-      date_text = padNumber(_local_time.getHours()) + ':' + padNumber(_local_time.getMinutes()) + ':' + padNumber(_local_time.getSeconds());
-      date_text += ' ' + _local_time.getDate() + '/' + (_local_time.getMonth() + 1) + '/' + _local_time.getFullYear();
-      $('#local_time_text').html(date_text)
-    },
-    1000);
-    function padNumber(number) {
-      return (number >= 0 && number < 10) ? '0' + number: number
-    }
-  });
-</script>
-<link rel="stylesheet" href="/bitStyle/css/bootstrap.min.css" type="text/css"/>
-<link rel="stylesheet" href="/bitStyle/css/font-awesome.min.css" type="text/css"/>
-<link rel="stylesheet" href="/bitStyle/css/main.v001.css" type="text/css"/>
-<link rel="stylesheet" href="/bitStyle/css/fileupload.css" type="text/css"/>
-<title>蚂蚁社区
-</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE"/>
-<!--Favicons-->
-<link rel="shortcut icon" href="/bitStyle/favicon.ico" type="image/x-icon">
+    </script>
+    <link rel="stylesheet" href="/bitStyle/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="/bitStyle/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="/bitStyle/css/main.v001.css" type="text/css" />
+    <link rel="stylesheet" href="/bitStyle/css/fileupload.css" type="text/css" />
+    <title>{:C('WEBSITE_NAME')}
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+    <!--Favicons-->
+    <link rel="shortcut icon" href="/bitStyle/favicon.ico" type="image/x-icon">
 </head>
+
 <body class="zh-CN ">
-<include file="User/Home/View/default/common_header.html" />
-<include file="User/Home/View/default/top2.html" />
-<!-- Main Wrapper -->
-<div id="wrapper">
-<include file="User/Home/View/default/common_main.html" />
-<div class="row">
-    <div class="col-md-12">
-	<div class="panel panel-default">
-	    <div class="panel-body" style="background-color:#003d74; color:#FFFFFF">
-		<h4 class="font-light m-b-xs">完成任务，获得排单币。每天限完成一次!</h4>
-                <font style="font-size:14px;">
-		
-                    1、只有完成蚂蚁社区的每日任务，才能获得排单币！<br>
-		    2、每个会员每天只能完成一次任务，完成后提交截图凭证，后台24小时内审核通过直接发放排单币。<br>
-		    3、收到排单币短信后，刷新页面，就可以进入首页“申请提供帮助”。每天最多排2单。<br><br>
-		    <p style="color:#ffff00;">蚂蚁社区为了给所有会员制造一个公平公正稳定的平台，所有排单币都是人工审核发放，虽然这样的工作量很大，但这就是蚂蚁社区控盘最严密的一道防线。最近平台发现有会员囤积排单币通过连续排单刷推荐奖和利息的作弊行为。平台已经监控到这样的现象，对于存在作弊嫌疑的帐号，蚂蚁社区将延后其排单币的审核发放。</p>
-                </font>
-	    </div>
-	</div>
-    </div>
-    <div class="col-md-12 mb40">
-	<div class="row">
-	    
-	  
-	    
-	    <div class="col-md-12">
-		<div class="widget widget-body-white padding-none">
-		    <div class="widget-head">
-			<h4 class="heading">任务2-转发朋友圈-可获1个排单币</h4>
-		    </div>
-		    <div class="widget-body">
-			<div class="p-sm">
-			    <p class="vertical-date text-success"><small>每日任务</small></p>
-			    <p>在你的朋友圈里转发一条和蚂蚁社区相关的内容。您可以转发我们蚂蚁社区上的文章、项目，或者你自己的感受体会，或者转发其他蚂蚁社区会员的朋友圈内容. 转发后截图上传提交凭证就可以了。
-				转发后截图上传提交凭证就可以了。<br/>特别提醒：现在起，如果您没有上传截图凭证，没有真实转发朋友圈的，平台一概审核不通过不给发放众筹币哦！</p>
-			    <p>我们希望每位会员都认真做任务，不作弊不敷衍。一旦发现有作弊行为或者转发后立刻删除的情况，帐号做冻结处理。</p>
-			    <!--<p>加YBI的客服微信号：<font style="color:#ff0000; font-weight:bold; font-size:16px;">ybimiao</font>，你每天要做任务的时候，转发他朋友圈里最新的文章到你的朋友圈，然后截图上传提交凭证就可以了。我们会在24小时内审核你的任务并给你发放排单币。
-我们希望每位会员都认真做任务，不作弊不敷衍。一旦发现有作弊行为或者转发后立刻删除的情况，帐号做冻结处理。</p>
-			    <p><img alt="" src="/Public/0228.png"></p>-->
-			</div>
-			<div class="panel-footer">
-			   完成本任务，并上传提交截图凭证，可获得1个众筹币。                               
-			</div>
-		    </div>
-		</div>
-	    </div>
-	    
-	    <div class="col-md-12">
-		<div class="widget widget-body-white padding-none">
-		    <div class="widget-head">
-			<h4 class="heading">任务3-录制视频-可获3个排单币</h4>
-		    </div>
-		    <div class="widget-body">
-			<div class="p-sm">
-			    <p class="vertical-date text-success"><small>长期有效任务</small></p>
-			    <p>扫描下面的二维码图片加蚂蚁社区客服的微信，然后用手机录制一段收米分享视频，通过微信发给蚂蚁社区客服。把聊天记录截图，然后上传提交凭证。我们会在24小时内审核你的任务并给你发放排单币。</p>
-			    <p><font color="#FF0000">视频中必须包含以下内容：1、我是蚂蚁社区的会员某某某。2、我于某月某日顺利收米。3、我信赖蚂蚁社区，我感谢蚂蚁社区！4、聊一些你的心得和感受。</font></p>
-			    <p><img alt="" src="/Public/renwu.png"></p>
-			</div>
-			<div class="panel-footer">
-			   完成本任务，并上传提交截图凭证，可获得3个排单币。
-			</div>
-		    </div>
-		</div>
-	    </div>
-	</div>
-    </div>
-    <div class="col-md-5 tablet-column-reset">
-	<div class="widget widget-body-white padding-none">
-	    <div class="widget-head">
-		<h4 class="heading">完成任务，提交凭证截图</h4>
-	    </div>
-	    <form class="form-horizontal margin-none" action="{:U('Home/Myuser/taskcl')}" name="xgmm" id="xgmm" method="post">
-		<div class="widget-body">
-		    <div class="form-group">
-			<label class="col-sm-3 control-label">选择任务</label>
-
-			<div class="col-sm-9">
-
-			    <select class="form-control m-b" name="otlylx" id="otlylx">
-				<option value="任务1">任务1</option>
-				<option value="任务2">任务2</option>
-				<option value="任务3">任务3</option>
-			    </select>
-
-			</div>
-		    </div>
-
-		    <div class="form-group">
-			<label class="col-sm-3 control-label">执行结果</label>
-
-			<div class="col-sm-9">
-			    <input type="text" required name="lybt" id="lybt" value="我已完成任务" class="form-control">
-
-			</div>
-		    </div>
-
-		    <div class="form-group">
-			<label class="col-sm-3 control-label">详细描述</label>
-			<div class="col-sm-9">
-			    <textarea rows="4" required name="lynr" id="lynr" class="form-control" style="width: 100%;">我已经完成该任务，并承诺任务真实有效，请管理员审核通过并发放排单币！</textarea>
-			</div>
-		    </div>
-		    <div class="text-center">
-		    <ul id="ul_pics" class="ul_pics clearfix"></ul>
-		    <if condition="$allDone">
-			<p class="text-success">当天已经提交过任务，请明天再来！</p>
-		    <else/>
-			<p>必须上传截图凭证，任务才能通过审核！</p>
-			<if condition="$canable_task">
-				<a class="btn btn-info btn-sm" id="btn">上传截图凭证</a> <input name="" class="btn btn-primary btn-sm" type="submit" id="btn" value="提交审核">
-			<else/>
-				<button class="btn btn-info btn-sm" disabled>本月任务数已经完成</button>
-			</if>
-			<script type="text/javascript" src="/js/xz/jquery.js"></script>
-			<script type="text/javascript" src="/plupload/plupload.full.min.js"></script>
-			<script type="text/javascript" src="/js/xz/sucaihuo.js"></script>
-		    </if>
-		    </div>
-		</div>
-	    </form>
-	</div>
-    </div>
-    <div class="col-md-7 tablet-column-reset">
-	<div class="widget widget-body-white padding-none">
-	    <div class="widget-head">
-		<h4 class="heading">排单币任务记录</h4>
-	    </div>
-	    <form class="form-horizontal margin-none" id="" method="post" action="{:U('Info/xgejmmcl')}">
-		<div class="widget-body">
-		    <div class="table-responsive">
-			<div id="example_wrapper" class="dataTables_wrapper no-footer">
-			    <table cellpadding="1" id="example" cellspacing="1" class="table table-bordered table-striped cus_datatable dataTable no-footer" role="grid" aria-describedby="example_info">
-				<thead>
-                                <tr role="row"><th class="sorting_desc" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-sort="descending" aria-label="编号: activate to sort column ascending" style="width: 61px;">申请时间</th>
-                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="时间: activate to sort column ascending" style="width: 61px;">任务结果</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="问题类别: activate to sort column ascending" style="width: 104px;">任务类别</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="发件人: activate to sort column ascending" style="width: 83px;">详细描述</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="状态: activate to sort column ascending" style="width: 62px;">审核时间</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="操作: activate to sort column ascending" style="width: 62px;">审核结果</th></tr>
-                                </thead>
-				<tbody>
-				    <foreach name='list' item='v'>
-				    <tr role="row" class="odd">
-					<td class="sorting_1">{$v.ma_time}</td>
-					<td>{$v.ma_theme}</td>
-					<td>{$v.ma_otherinfo}</td>
-					<td>{$v.ma_note}</td>
-					<td>{$v.ma_replytime}</td>
-					<td>{$v.ma_reply}</td>
-				    </tr>
-				    </foreach>
-				</tbody>
-                            </table>
-			    <div class="dataTables_paginate paging_simple_numbers" id="example_paginate">{$page}</div>
+    <include file="User/Home/View/default/common_header.html" />
+    <!-- Main Wrapper -->
+    <div id="wrapper">
+        <include file="User/Home/View/default/top2.html" />
+        <include file="User/Home/View/default/common_main.html" />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body" style="background-color:#003d74; color:#FFFFFF">
+                        <h4 class="font-light m-b-xs">完成任务，获得排单币。每天限完成一次!</h4>
+                        <font style="font-size:14px;">
+                            1、只有完成{:C('WEBSITE_NAME')}的每日任务，才能获得排单币！<br>
+                            2、每个会员每天只能完成一次任务，完成后提交截图凭证，后台24小时内审核通过直接发放排单币。<br>
+                            3、每天只可上传一次任务，上传2次（含）以上者属于恶意扰乱社区制度行为，一经发现立即冻结账号。<br>
+                            <br>
+                            <p style="color:#ffff00;">{:C('WEBSITE_NAME')}为了给所有会员制造一个公平公正稳定的平台，所有排单币都是人工审核发放，虽然这样的工作量很大，但这就是{:C('WEBSITE_NAME')}控盘最严密的一道防线。最近平台发现有会员囤积排单币通过连续排单刷管理奖和利息的作弊行为。平台已经监控到这样的现象，对于存在作弊嫌疑的帐号，{:C('WEBSITE_NAME')}将延后其排单币的审核发放。</p>
+                        </font>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 mb40">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="widget widget-body-white padding-none">
+                            <div class="widget-head">
+                                <h4 class="heading">任务-转发朋友圈-可获1个排单币</h4>
+                            </div>
+                            <div class="widget-body">
+                                <div class="p-sm">
+                                    <p class="vertical-date text-success"><small>每日任务</small></p>
+                                    <p>在你的朋友圈里转发一条和{:C('WEBSITE_NAME')}相关的内容。您可以转发我们{:C('WEBSITE_NAME')}上的文章、项目，或者你自己的感受体会，或者转发其他{:C('WEBSITE_NAME')}会员的朋友圈内容. 转发后截图上传提交凭证就可以了。 转发后截图上传提交凭证就可以了。<br/>
+                                    特别提醒：现在起，如果您没有上传截图凭证，没有真实转发朋友圈的，平台一概审核不通过不给发放排单币哦！</p>
+                                    <p>我们希望每位会员都认真做任务，不作弊不敷衍。一旦发现有作弊行为或者转发后立刻删除的情况，帐号做冻结处理。</p>
+                                </div>
+                                <div class="panel-footer">
+                                    完成本任务，并上传提交截图凭证，可获得1个排单币。
+                                </div>
+                            </div>
                         </div>
-		    </div>
-		</div>
-	    </form>
-	</div>
-    </div>
-</div>
-</body></html>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 tablet-column-reset">
+                <div class="widget widget-body-white padding-none">
+                    <div class="widget-head">
+                        <h4 class="heading">完成任务，提交凭证截图</h4>
+                    </div>
+                    <form class="form-horizontal margin-none" action="{:U('Home/Myuser/taskcl')}" name="xgmm" id="xgmm" method="post">
+                    <div class="widget-body">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">选择任务</label>
+                            <div class="col-sm-9">
+                                <select class="form-control m-b" name="otlylx" id="otlylx">
+                                    <option value="任务">任务</option>
+                                    <!-- <option value="任务2">任务2</option> -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">执行结果</label>
+                            <div class="col-sm-9">
+                                <input type="text" required name="lybt" id="lybt" value="我已完成任务" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">详细描述</label>
+                            <div class="col-sm-9">
+                                <textarea rows="4" required name="lynr" id="lynr" class="form-control" style="width: 100%;">我已经完成该任务，并承诺任务真实有效，请管理员审核通过并发放排单币！</textarea>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <ul id="ul_pics" class="ul_pics clearfix"></ul>
+                            <p>必须上传截图凭证，任务才能通过审核！</p>
+                            <if condition="$need_do_task">
+                                <a class="btn btn-info btn-sm" id="btn">上传截图凭证</a>
+                                <input name="" class="btn btn-primary btn-sm" type="submit" id="btn" value="提交审核">
+                                <else/>
+                                <button class="btn btn-info btn-sm" disabled>本月任务数已经完成</button>
+                            </if>
+                            <script type="text/javascript" src="/js/xz/jquery.js"></script>
+                            <script type="text/javascript" src="/js/xz/plupload.full.min.js"></script>
+                            <script type="text/javascript" src="/js/xz/sucaihuo.js"></script>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-7 tablet-column-reset">
+                <div class="widget widget-body-white padding-none">
+                    <div class="widget-head">
+                        <h4 class="heading">排单币任务记录</h4>
+                    </div>
+                    <form class="form-horizontal margin-none" id="" method="post" action="{:U('Info/xgejmmcl')}">
+                    <div class="widget-body">
+                        <div class="table-responsive">
+                            <div id="example_wrapper" class="dataTables_wrapper no-footer">
+                                <table cellpadding="1" id="example" cellspacing="1" class="table table-bordered table-striped cus_datatable dataTable no-footer" role="grid" aria-describedby="example_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="sorting_desc" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-sort="descending" aria-label="编号: activate to sort column ascending" style="width: 61px;">申请时间</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="时间: activate to sort column ascending" style="width: 61px;">任务结果</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="问题类别: activate to sort column ascending" style="width: 104px;">任务类别</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="发件人: activate to sort column ascending" style="width: 83px;">详细描述</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="状态: activate to sort column ascending" style="width: 62px;">审核时间</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="操作: activate to sort column ascending" style="width: 62px;">审核结果</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <foreach name='list' item='v'>
+                                            <tr role="row" class="odd">
+                                                <td class="sorting_1">{$v.ma_time}</td>
+                                                <td>{$v.ma_theme}</td>
+                                                <td>{$v.ma_otherinfo}</td>
+                                                <td>{$v.ma_note}</td>
+                                                <td>{$v.ma_replytime}</td>
+                                                <td>{$v.ma_reply}</td>
+                                            </tr>
+                                        </foreach>
+                                    </tbody>
+                                </table>
+                                <div class="dataTables_paginate paging_simple_numbers" id="example_paginate">{$page}</div>
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+</body>
+
+</html>

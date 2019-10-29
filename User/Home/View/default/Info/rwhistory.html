@@ -100,7 +100,7 @@ jQuery(document).ready(function($){
 <link rel="stylesheet" href="/bitStyle/css/main.v001.css" type="text/css" />
 
 
-<title>我的互助钱包 </title>
+<title>我的众筹钱包</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -114,10 +114,10 @@ jQuery(document).ready(function($){
 <body class="zh-CN " id="">
 
 <include file="User/Home/View/default/common_header.html" />
-<include file="User/Home/View/default/top2.html" />
 
 <div id="wrapper">
 		
+		<include file="User/Home/View/default/top2.html" />
 		<include file="User/Home/View/default/common_main.html" />
 
 			<div class="row">
@@ -126,7 +126,9 @@ jQuery(document).ready(function($){
 				<div class="col-md-12">
 					<div class="widget">
 						<div class="widget-head clearfix">
-							<h4 class="heading">我的互助钱包</h4>
+							<h4 class="heading">
+								我的众筹钱包
+							</h4>
 						</div>
 						<div class="widget-body innerAll overthrow">
 							<table class="table table-bordered table-primary">
@@ -151,7 +153,7 @@ jQuery(document).ready(function($){
                                             <tr role="row" class="odd">
                                                 <td class="sorting_1">{$aab=$v.id}</td>
                                                 <td>{$v.date}</td>
-                                                <td>提供帮助</td>
+                                                <td>众筹公益</td>
                                                 <td>{$v.jb}</td>
                                                 <td>{$v|w_peidui_lx=###}</td>
                                                 <td>{$v|w_peidui_day=###}</td>
@@ -176,9 +178,10 @@ jQuery(document).ready(function($){
                                                 <td>合计{$v.id|user_jj_zong_lx=###}</td>
                                                 <td>排单日息:{$paidui_lx}%，排队天数:{$v.id|pd_fenhong_day=###}天，排队利息:{$v.id|user_jj_paidui_lx=###}</td>
                                                 <td>
-                                                    <if condition="$v.zt eq '0'"><font color="#FF0000">恭喜你获得1.3%日息</font><br>({$ztrs1|user_jj_zt_z=$aab,###}) <a
-                                                            href="javascript:if(confirm('打款后利息2-3.2%/天，是您获利最佳的时机！大多数会员都不着急提现，而是等待计息。转出提现后将停止计息,确定要转出吗?'))location='/Home/Info/tgbz_tx_cl/id/{$v.id}/'">点击确认提款</a>
-                                                        <else/>
+                                                    <if condition="$v.zt eq '0'">
+                                                        <font color="#FF0000">恭喜你获得高息期利息</font><br>
+                                                        ({$ztrs1|user_jj_zt_z=$aab,###}) <a href="javascript:if(confirm('高息期是您获利最佳的时机！大多数会员都不着急提现，而是等待计息。转出提现后将停止计息,确定要转出吗?'))location='/Home/Info/tgbz_tx_cl/id/{$v.id}/'">点击确认提款</a>
+                                                    <else/>
                                                         已转出
                                                     </if>
                                                 </td>
@@ -199,91 +202,84 @@ jQuery(document).ready(function($){
 			</div>
 			<div class="col-md-12">
 	<div style=" background-color:#003d74; padding:10px; padding-bottom:20px; margin-bottom:20px; color:#fff;border-radius:5px;">
-	<h4 class="font-light m-b-xs">蚂蚁社区制度：</h4>
+	<h4 class="font-light m-b-xs">{:C('WEBSITE_NAME')}2.0全国招商制度：</h4>
 	<p><strong style="color:#ffff00;">会员与利息：</strong><br>
 	<table width="100%" border="1" align="center" bordercolor="#FFFFFF">
   <tr>
     <th scope="col">会员级别</th>
-    <th scope="col">升级条件</th>
-    <th scope="col">日息</th>
-    <th scope="col">推荐奖及代数</th>
-    <th scope="col">直推奖</th>
-    <th scope="col">每月排单次数(最少-最多)</th>
+    <th scope="col">晋升条件</th>
+    <th scope="col">高息期日息</th>
+    <th scope="col">管理奖(2代~6代)</th>
   </tr>
   <tr>
     <th scope="row">M1</th>
     <td>新注册用户</td>
-    <td>排队1%，打款后2%</td>
-    <td>拿1代，6%</td>
-    <td>0</td>
-    <td>1-3</td>
+    <td>打款后1%</td>
+    <td>只拿1代4%(直推奖)</td>
   </tr>
   <tr>
     <th scope="row">M2</th>
-    <td>伞下团队3人</td>
-    <td>排队1%，打款后2.2%</td>
-    <td>拿2代，6%&gt;5%</td>
-    <td>0</td>
-    <td>2-4</td>
+    <td>伞下团队9人直推3人</td>
+    <td>打款后1%</td>
+    <td>拿2代4%(直推奖) &gt; 2%(管理奖)</td>
   </tr>
   <tr>
     <th scope="row">M3</th>
-    <td>团队9人，直推2人</td>
-    <td>排队1%，打款后2.4%</td>
-    <td>拿3代,6%&gt;5%&gt;4%</td>
-    <td>0</td>
-    <td>3-5</td>
+    <td>团队27人直推5人</td>
+    <td>打款后1%</td>
+    <td>拿3代4% &gt; 2% &gt; 1%</td>
   </tr>
   <tr>
     <th scope="row">M4</th>
-    <td>团队27人，直推4人</td>
-    <td>排队1%，打款后2.6%</td>
-    <td>拿4代,6%&gt;5%&gt;4%&gt;3%</td>
-    <td>0</td>
-    <td>4-7</td>
+    <td>团队81人直推10人</td>
+    <td>打款后1%</td>
+    <td>拿4代4% &gt; 2% &gt; 1 % &gt; 0.5%</td>
   </tr>
   <tr>
     <th scope="row">M5</th>
-    <td>团队81人，直推6人</td>
-    <td>排队1%，打款后2.8%</td>
-    <td>拿5代,6%&gt;5%&gt;4%&gt;3%&gt;2%</td>
-    <td>0</td>
-    <td>5-9</td>
+    <td>团队243人直推20人</td>
+    <td>打款后1%</td>
+    <td>拿5代4% &gt; 2% &gt; 1% &gt; 0.5% &gt; 0.3%</td>
   </tr>
   <tr>
-    <th scope="row">蚂蚁社区经理</th>
-    <td>团队243人，直推8人</td>
-    <td>排队1%，打款后3.0%</td>
-    <td>拿6代,6%&gt;5%&gt;4%&gt;3%&gt;2%&gt;1%</td>
-    <td>0.4%无限代</td>
-    <td>6-11</td>
+    <th scope="row">MY经理</th>
+    <td>团队729人直推20人</td>
+    <td>打款后1%</td>
+    <td>拿6代4% &gt; 2% &gt; 1% &gt; 0.5% &gt; 0.3% &gt; 0.1%</td>
   </tr>
-  <tr>
-    <th scope="row">高级经理</th>
-    <td>团队729人，直推10人</td>
-    <td>排队1%，打款后3.2%</td>
-    <td>拿7代，6%&gt;5%&gt;4%&gt;3%&gt;2%&gt;1%&gt;0.5%</td>
-    <td>0.6%无限代</td>
-    <td>6-12</td>
-  </tr>
-</table><br>
+</table></p>
 	<p><strong style="color:#ffff00;">注册与排单：</strong><br>
-	1、注册激活码200元/个，注册成功后立返200到用户的互助钱包中(相当于不要钱)。<br>
-	3、排队期间日息1%，排队最多10天，玩家排单时自由选择排队天数。<br>
-	4、打款确认后进入"高息期"，日息(2%+级别加息)。不限制计息时间，提现后停止计息。<br>
-	5、提供帮助需要排单币，排单币不能购买，只有完成蚂蚁社区的每日任务，才能获得排单币！每天只能做一次任务！每天最多排2个单	</p>
+	1、注册激活码200元/个，在推荐人处购买，注册成功后立返200元到会员的众筹钱包中(相当于不花钱)<br>
+	2、排队期不计息。排单需要排单币，没有排单币不可以排单，排一单消耗一个，做任务可以获取。团队内部可转账买卖，100元一个，禁止低价倒售，一经发现永久冻结账号。<br>
+	3、排单金额3000-30000，必须是1000的整数倍，月最高排4单，每天限排1单。下次排单不得低于上次排单金额，例如上次排单1万下次排单必须1万（含）以上（防止投机者）<br>
+	4、打款确认后进入“高回报期”，日回报1%，高息期计息15天后可提现，若不提现可继续计息，最高计息30天停止计息。<br>
+	5、排单提示：请依据自己的非关键资金进行排单，排单即表示已了解风险且自愿参与。再次重申：金融启示不可避免，请用非关键资金参与！社区最大的风险取决于会员之间的诚信度和社区会员的不离不弃。互助，友爱，共赢是我们社区的宗旨。</p>
 	<p><strong style="color:#ffff00;">提现规则：</strong><br>
-	1、提供帮助匹配确认后进入高息期，高息期必须大于2天提现。<br>
-	2、互助钱包2000起提现，必须500的倍数。<br>
-	3、推荐奖钱包每次提现范围为1000-5000，500的倍数，每天限提现1次。每周提现封顶30000。<br>
-    4、直推奖钱包每次提现范围为1000-5000，500的倍数，每天限提现1次。每周提现封顶15000。</p>
-	<p><strong style="color:#ffff00;">匹配与打款：</strong><br>
-	1、提现后匹配时间为48小时。匹配后打款时间24小时，收款后确认时间24小时。<br>
-	2、超时未打款直接封号，并扣除上级金额500。<br>
-	3、超时未确认冻结账号。</p>
+	1、高息期订单在高息期15天后可提现，最高计息30天。<br>
+	2、众筹钱包3000起提，必须是500整数倍。<br>
+	3、提现时可排单或不排单，自由选择。 <br>
+	4、直推奖钱包提现额度1000-10000，必须是1000的整数倍（不限次数）<br>
+    5、管理奖钱包提现额度30000-60000，必须是30000的整数倍（不限次数）<br>
+    6、提直推奖和管理奖的时候必须有排队中的订单（排单金额上下级比例不能低于1:1，例如：下级只要有一个会员排单2万，上级必须排单2万），否则直推奖和管理奖清零处理！<br>
+    7、社区禁止串糖葫芦式大号套小号开户套取奖励，连套3级者一经发现，所有账号本金+利润全部冻结，永不解封！</p>
+    <p><strong style="color:#ffff00;">匹配规则：</strong><br>
+	1、获取回报时间：14:00-22:00<br>
+	2、高息期提现后，提现的订单在48小时内完成匹配，即当天提现会在后天完成匹配。<br>
+	3、前3个小时打款并且前3个小时确认奖励打款金额的1%。<br>
+	4、打款时间24小时（不打款直接封号永不解封，且上级3代领导人各扣500元）<br>
+    5、确认时间24小时（不确认直接封号永不解封，且上级3代领导人各扣500元）<br>
+    6、对方24小时之内不打款或者对方上传截图后20个小时内未收到款直接投诉，客服会24小时内匹配另外一个家人打款 <br>
+    7、对方不确认，点击24小时未确认投诉，系统自动确认。</p>
+    <p><strong style="color:#ffff00;">关于订单资料的问题：</strong><br>
+	1、若发现对方只绑定支付宝，没绑定银行卡，请勿汇款，这种情况下极有可能是黑客或者不诚信会员，请及时向后台反馈并奖励反馈者100元，对方领导人不负责罚500元。<br>
+	2、若发现对方资料和姓名不符，银行卡错误，请及时后台反馈并奖励反馈者100元，对方领导人不负责罚500元。
+	3、请勿听信对方私下提交的资料汇款！<br>
+	以上3点情况出现请勿汇款，并及时反馈，若执意汇款造成的损失，责任自负！<br>
+	再次重申，新会员开户时领导人务必协助及时绑定资料，银行卡必填项，支付宝可填可不填。收款时若发现资料为空，请及时反馈，奖励反馈者100元，对方领导人不负责罚500元。</p>
 	<p><strong style="color:#ffff00;">其他规则：</strong><br>
-	1、每个会员每月都有最少的排单数量要求，不同等级排单数量不同。如果当月未完成最低排单数量则冻结帐号。<br>
-	2、伞下如果有2个直推因未完成任务而冻结帐号(僵尸号)，则会员级别降一级。</p>
+	如果会员伞下有人级别超过他(平级不影响)，则他不能拿到这个会员的直推奖和这个会员伞下所有人的管理奖。</p>
+	<p><strong style="color:#ffff00;">关于社区宣传的说明：</strong><br>
+	社区禁止在百度、微博、论坛等一切网络平台上推广，以上行为已经发现永久冻结账号并且永久冻结上下级3代会员账号，钱包清零。社区指定推广途径：微信群、微信朋友圈、QQ群、QQ空间。超出范围均属恶意捣乱社区行为。低调才是长久之道！希望家人们共同维护我们的大家庭，互助、友爱、共赢，实现财富自由。金融启示不可避免，让我们一起改变世界！</p>
 	</div>
     </div>
 		</div>

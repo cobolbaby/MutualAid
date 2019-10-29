@@ -206,39 +206,7 @@ jQuery(document).ready(function($){
     $("#gd_amount").keyup(function(){
         $("#show_gd_amount").html(format_monetary_value($(this).val()));
     });
-    
-    if(false){
-        $("#recalc-ep-message").text("您的额外回酬已计算。请稍候片刻再尝试。");
-        $("#recalc-ep-button").attr("disabled", "disabled");
-        setTimeout(function(){
-            $("#recalc-ep-button").removeAttr("disabled");
-            $("#recalc-ep-message").text("");
-        }, 0);
-    }
-    
-    $("#recalc-ep-button").on("click", function(e){
-        e.preventDefault();
-        $("#recalc-ep-message").text("您的额外回酬已计算成功。如果想再计算，请稍候片刻再尝试。");
-        $(this).attr("disabled", "disabled");
-        $.ajax({
-            url: '?aj=1&type=recalc_user_ep',
-            data: {'uid': 82662186},
-            type: 'post',
-            dataType: 'json',
-            error:function(data){
-                console.log(data);
-            },
-            success: function(data){
-                if(data.percent > 0){
-                    $("#current_ep").html(data.percent);
-                }
-            }
-        });
-        setTimeout(function(){
-            $("#recalc-ep-button").removeAttr("disabled");
-            $("#recalc-ep-message").text("");
-        }, 1800000);
-    });
+
 });
 </script>
 <link rel="stylesheet" href="/bitStyle/css/bootstrap.min.css" type="text/css" />
@@ -292,19 +260,18 @@ jQuery(document).ready(function($){
                                         <input type="text" autocomplete="off" value="{$userData.ue_account}" id="usernameq" class="form-control" name="account" required readonly>
                                     </div>
                                 </div>
-                <div class="form-group">
+                                <div class="form-group">
                                     <label class="col-md-4 control-label">我的支付宝(<span style="color:#FF0000">*建议使用</span>)</label>
                                     <div class="col-md-8">
                                         <input type="text" autocomplete="off" value="{$userData.zfb}" id="" class="form-control" name="zfb" required>
                                     </div>
                                 </div>
-                                 <div class="form-group">
+                                 <!-- <div class="form-group">
                                     <label class="col-md-4 control-label">我的微信号</label>
                                     <div class="col-md-8">
-                                        <input type="text" required autocomplete="off"  id="wechat" class="form-control" name="weixin" value="{$userData.weixin}">
+                                        <input type="text" autocomplete="off" id="wechat" class="form-control" name="weixin" value="{$userData.weixin}">
                                     </div>
-                                </div>
-                                
+                                </div> -->
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">银行名称</label>
                                     <div class="col-md-8">
@@ -346,7 +313,7 @@ jQuery(document).ready(function($){
                                 </div>
                             </div>
                             <footer class="data-footer innerAll half text-right clearfix">
-                <font style="color:red;">官方提醒：需要手机验证码和二级密码输入都正确才能更改资料!</font>
+                <font style="color:red;">官方提醒：需要二级密码输入都正确才能更改资料!</font>
                                 <button type="submit" class="btn btn-primary btn-sm">更新</button>
                             </footer>
                         </form>
